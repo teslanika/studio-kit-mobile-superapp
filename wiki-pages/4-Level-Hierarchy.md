@@ -54,9 +54,9 @@ L3: Feature      → Single implementable behavior
 ### Create
 
 ```bash
-cypilot make PRD-PLATFORM
-cypilot make DESIGN-PLATFORM
-cypilot make DECOMPOSITION-PLATFORM
+cfs make PRD-PLATFORM
+cfs make DESIGN-PLATFORM
+cfs make DECOMPOSITION-PLATFORM
 ```
 
 ### File Location
@@ -87,9 +87,9 @@ architecture/
 ### Create
 
 ```bash
-cypilot make PRD-MINIAPP for learn
-cypilot make DESIGN-MINIAPP for learn
-cypilot make DECOMPOSITION-MINIAPP for learn
+cfs make PRD-MINIAPP for learn
+cfs make DESIGN-MINIAPP for learn
+cfs make DECOMPOSITION-MINIAPP for learn
 ```
 
 ### File Location
@@ -120,9 +120,9 @@ miniapps/learn/
 ### Create
 
 ```bash
-cypilot make PRD-EPIC for course-catalog
-cypilot make DESIGN-EPIC for course-catalog
-cypilot make DECOMPOSITION-EPIC for course-catalog
+cfs make PRD-EPIC for course-catalog
+cfs make DESIGN-EPIC for course-catalog
+cfs make DECOMPOSITION-EPIC for course-catalog
 ```
 
 ### File Location
@@ -154,8 +154,8 @@ miniapps/learn/capabilities/course-catalog/
 ### Create
 
 ```bash
-cypilot make FEATURE-MOBILE for course-list
-cypilot implement course-list
+cfs make FEATURE-MOBILE for course-list
+cfs implement course-list
 ```
 
 ### File Location

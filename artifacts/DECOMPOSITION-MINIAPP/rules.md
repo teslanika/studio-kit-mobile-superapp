@@ -31,7 +31,7 @@
 - [ ] Read MiniApp DESIGN for architectural context
 - [ ] Read Platform DECOMPOSITION for MiniApp boundaries
 - [ ] Load `config/kits/mobile-superapp/constraints.toml` for kit-level constraints
-- [ ] Load `{cypilot_path}/.core/architecture/specs/traceability.md` for ID formats
+- [ ] Load `{cf-studio-path}/.core/architecture/specs/traceability.md` for ID formats
 
 ---
 
@@ -132,7 +132,7 @@ If DECOMPOSITION-MINIAPP cannot be completed in a single session:
 - [ ] Generate Epic IDs: `cpt-{miniapp}-epic-{slug}`
 - [ ] Link to MiniApp FR IDs
 - [ ] Link to MiniApp component IDs
-- [ ] Verify uniqueness with `cypilot list-ids`
+- [ ] Verify uniqueness with `cfs list-ids`
 
 ### Phase 4: Quality Check
 
@@ -145,7 +145,7 @@ If DECOMPOSITION-MINIAPP cannot be completed in a single session:
 
 ### Phase 5: Table of Contents
 
-- [ ] Run `cypilot toc <path>` to generate/update Table of Contents
+- [ ] Run `cfs toc <path>` to generate/update Table of Contents
 - [ ] Verify TOC is present and complete
 
 ---
@@ -154,7 +154,7 @@ If DECOMPOSITION-MINIAPP cannot be completed in a single session:
 
 ### Phase 1: Structural Validation
 
-- [ ] Run `cypilot validate --artifact <path>` for:
+- [ ] Run `cfs validate --artifact <path>` for:
   - Template structure compliance
   - ID format validation
   - Cross-reference validity
@@ -200,14 +200,14 @@ Issues:
 ### Missing MiniApp DESIGN
 
 - [ ] If MiniApp DESIGN not found:
-  - Option 1: Run `/cypilot-generate DESIGN-MINIAPP` first (recommended)
+  - Option 1: Run `/cf-generate DESIGN-MINIAPP` first (recommended)
   - Option 2: Continue without DESIGN (component allocation will be incomplete)
   - Document "DESIGN pending" in DECOMPOSITION header
 
 ### Missing MiniApp PRD
 
 - [ ] If MiniApp PRD not found:
-  - Option 1: Run `/cypilot-generate PRD-MINIAPP` first
+  - Option 1: Run `/cf-generate PRD-MINIAPP` first
   - Option 2: Continue without PRD (requirements coverage will be incomplete)
   - Document requirements assumptions made
 
@@ -232,9 +232,9 @@ Issues:
 
 ### Options
 
-- [ ] DECOMPOSITION-MINIAPP complete → `/cypilot-generate PRD-EPIC` — create Epic PRD
-- [ ] DECOMPOSITION-MINIAPP complete → `/cypilot-generate DESIGN-EPIC` — create Epic DESIGN
-- [ ] DESIGN missing → `/cypilot-generate DESIGN-MINIAPP` — create MiniApp DESIGN first
-- [ ] PRD missing → `/cypilot-generate PRD-MINIAPP` — create MiniApp PRD first
+- [ ] DECOMPOSITION-MINIAPP complete → `/cf-generate PRD-EPIC` — create Epic PRD
+- [ ] DECOMPOSITION-MINIAPP complete → `/cf-generate DESIGN-EPIC` — create Epic DESIGN
+- [ ] DESIGN missing → `/cf-generate DESIGN-MINIAPP` — create MiniApp DESIGN first
+- [ ] PRD missing → `/cf-generate PRD-MINIAPP` — create MiniApp PRD first
 - [ ] DECOMPOSITION needs revision → continue editing DECOMPOSITION-MINIAPP
 - [ ] Ready for Epic work → create Epic folder structure

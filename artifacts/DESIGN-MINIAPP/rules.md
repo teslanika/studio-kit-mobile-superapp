@@ -29,7 +29,7 @@
 - [ ] Read parent MiniApp PRD for context
 - [ ] Read Platform DESIGN for architectural context
 - [ ] Load `config/kits/mobile-superapp/constraints.toml` for kit-level constraints
-- [ ] Load `{cypilot_path}/.core/architecture/specs/traceability.md` for ID formats
+- [ ] Load `{cf-studio-path}/.core/architecture/specs/traceability.md` for ID formats
 
 ---
 
@@ -118,7 +118,7 @@ If DESIGN-MINIAPP cannot be completed in a single session:
 - [ ] Link to MiniApp PRD capabilities
 - [ ] Reference Platform DESIGN principles
 - [ ] Reference relevant ADRs
-- [ ] Verify uniqueness with `cypilot list-ids`
+- [ ] Verify uniqueness with `cfs list-ids`
 
 ### Phase 4: Quality Check
 
@@ -129,7 +129,7 @@ If DESIGN-MINIAPP cannot be completed in a single session:
 
 ### Phase 5: Table of Contents
 
-- [ ] Run `cypilot toc <path>` to generate/update Table of Contents
+- [ ] Run `cfs toc <path>` to generate/update Table of Contents
 - [ ] Verify TOC is present and complete
 
 ---
@@ -138,7 +138,7 @@ If DESIGN-MINIAPP cannot be completed in a single session:
 
 ### Phase 1: Structural Validation
 
-- [ ] Run `cypilot validate --artifact <path>` for:
+- [ ] Run `cfs validate --artifact <path>` for:
   - Template structure compliance
   - ID format validation
   - Cross-reference validity
@@ -179,14 +179,14 @@ Issues:
 ### Missing MiniApp PRD
 
 - [ ] If parent MiniApp PRD not found:
-  - Option 1: Run `/cypilot-generate PRD-MINIAPP` first (recommended)
+  - Option 1: Run `/cf-generate PRD-MINIAPP` first (recommended)
   - Option 2: Continue without PRD (DESIGN will lack traceability)
   - Document "PRD pending" in DESIGN header
 
 ### Missing Platform DESIGN
 
 - [ ] If Platform DESIGN not found:
-  - Option 1: Run `/cypilot-generate DESIGN-PLATFORM` first
+  - Option 1: Run `/cf-generate DESIGN-PLATFORM` first
   - Option 2: Continue with assumptions documented
   - Document architectural assumptions made
 
@@ -202,8 +202,8 @@ Issues:
 
 ### Options
 
-- [ ] DESIGN-MINIAPP complete → `/cypilot-generate DECOMPOSITION-MINIAPP` — create epics manifest
-- [ ] Need architecture decision → `/cypilot-generate ADR` — document key decision
-- [ ] PRD missing/incomplete → `/cypilot-generate PRD-MINIAPP` — create/update PRD first
+- [ ] DESIGN-MINIAPP complete → `/cf-generate DECOMPOSITION-MINIAPP` — create epics manifest
+- [ ] Need architecture decision → `/cf-generate ADR` — document key decision
+- [ ] PRD missing/incomplete → `/cf-generate PRD-MINIAPP` — create/update PRD first
 - [ ] DESIGN needs revision → continue editing DESIGN-MINIAPP
-- [ ] Ready for Epic → `/cypilot-generate PRD-EPIC` — create Epic-level PRD
+- [ ] Ready for Epic → `/cf-generate PRD-EPIC` — create Epic-level PRD

@@ -75,7 +75,7 @@ class {UseCase}UseCase(
 
 ## Validation
 
-Run `cypilot validate --artifact constructor-sdk/feature/{module}/` to verify:
+Run `cfs validate --artifact constructor-sdk/feature/{module}/` to verify:
 - All design components have `@cpt-impl` markers in code
 - All code markers reference valid design IDs
 - Coverage meets minimum threshold

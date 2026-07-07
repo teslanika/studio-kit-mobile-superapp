@@ -1,6 +1,27 @@
 # Mobile SuperApp Kit Changelog
 
 [[releases]]
+version = "1.1.0"
+date = "2026-07-07"
+summary = "Constructor Studio migration: rebrand from Cypilot across kit content and docs"
+
+[[releases.changes]]
+type = "changed"
+description = "CLI references cpt -> cfs; verb prefix cypilot -> cfs across README, docs, and wiki-pages"
+
+[[releases.changes]]
+type = "changed"
+description = "Brand Cypilot -> Constructor Studio; kit format value Cypilot -> CFS; managed dir cypilot/ -> .cf-studio/"
+
+[[releases.changes]]
+type = "changed"
+description = "Kit source repo renamed teslanika/cyber-pilot-kit-mobile-superapp -> teslanika/studio-kit-mobile-superapp"
+
+[[releases.changes]]
+type = "unchanged"
+description = "Retained @cpt-* / cpt- Canonical Provenance Trace identifiers per Constructor Studio v4.0.0 spec"
+
+[[releases]]
 version = "1.0.0"
 date = "2026-03-16"
 summary = "Initial release of Mobile SuperApp Kit"

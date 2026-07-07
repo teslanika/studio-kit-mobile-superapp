@@ -28,16 +28,16 @@ This kit provides a **4-level documentation hierarchy** for large-scale mobile a
 
 ```bash
 # Install the kit
-cpt kit install teslanika/cyber-pilot-kit-mobile-superapp
+cfs kit install teslanika/studio-kit-mobile-superapp
 
 # Enable in chat
-cypilot on
+cfs on
 
 # Create your first artifact
-cypilot make PRD-PLATFORM
+cfs make PRD-PLATFORM
 ```
 
 ## Support
 
-- [GitHub Issues](https://github.com/teslanika/cyber-pilot-kit-mobile-superapp/issues)
-- [Documentation Site](https://teslanika.github.io/cyber-pilot-kit-mobile-superapp)
+- [GitHub Issues](https://github.com/teslanika/studio-kit-mobile-superapp/issues)
+- [Documentation Site](https://teslanika.github.io/studio-kit-mobile-superapp)

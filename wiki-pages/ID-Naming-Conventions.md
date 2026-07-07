@@ -9,7 +9,7 @@ cpt-{scope}-{kind}-{slug}
 ```
 
 Where:
-- `cpt` — Cypilot prefix (required)
+- `cpt` — Constructor Studio prefix (required)
 - `{scope}` — Hierarchy context (platform, miniapp, epic)
 - `{kind}` — Element type (fr, component, flow, etc.)
 - `{slug}` — Kebab-case identifier

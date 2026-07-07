@@ -8,7 +8,7 @@
 #
 # The complex 4-level hierarchy (Platform → MiniApp → Epic → Feature)
 # is enforced through templates and documented conventions rather than
-# constraints.toml validation, as Cypilot's constraint system is
+# constraints.toml validation, as Constructor Studio's constraint system is
 # designed for single-level artifact validation.
 #
 # KEY ID PATTERNS (for reference):

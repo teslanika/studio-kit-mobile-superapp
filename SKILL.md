@@ -3,7 +3,7 @@ name: mobile-superapp
 description: "Mobile SuperApp documentation kit with 4-level hierarchy: Platform → MiniApp → Epic → Feature, with cascading requirement traceability"
 ---
 
-# Cypilot Skill — Kit `mobile-superapp`
+# Constructor Studio Skill — Kit `mobile-superapp`
 
 ## Overview
 
@@ -115,23 +115,23 @@ Implementation reference documents linking code to product docs.
 
 ### Validation
 ```bash
-cypilot validate --artifact <path>
-cypilot validate --check=fr-cascade
-cypilot validate --check=platform-fr-coverage
-cypilot validate --check=feature-impl-coverage
+cfs validate --artifact <path>
+cfs validate --check=fr-cascade
+cfs validate --check=platform-fr-coverage
+cfs validate --check=feature-impl-coverage
 ```
 
 ### Language Check (run after every artifact generation)
 
 ```bash
 # Check entire architecture tree (default)
-python3 cypilot/config/kits/mobile-superapp/scripts/check-language.py
+python3 .cf-studio/config/kits/mobile-superapp/scripts/check-language.py
 
 # Check a specific file or directory
-python3 cypilot/config/kits/mobile-superapp/scripts/check-language.py architecture/miniapps/student/
+python3 .cf-studio/config/kits/mobile-superapp/scripts/check-language.py architecture/miniapps/student/
 
 # Quiet mode — violations only, no summary header
-python3 cypilot/config/kits/mobile-superapp/scripts/check-language.py -q architecture/
+python3 .cf-studio/config/kits/mobile-superapp/scripts/check-language.py -q architecture/
 ```
 
 Script: `{kit_path}/scripts/check-language.py`
@@ -151,9 +151,9 @@ Exit codes: `0` = all clean, `1` = violations found.
 
 ### ID Operations
 ```bash
-cypilot list-ids --kind feature
-cypilot where-defined --id <id>
-cypilot where-used --id <id>
+cfs list-ids --kind feature
+cfs where-defined --id <id>
+cfs where-used --id <id>
 ```
 
 ## Workflows

@@ -152,16 +152,16 @@ DECOMPOSITION-MINIAPP: epic course-catalog [x]
 
 ```bash
 # Check all markers
-cypilot validate code
+cfs validate code
 
 # Check specific feature
-cypilot validate code for course-list
+cfs validate code for course-list
 
 # Find orphaned markers
-cypilot validate code orphans
+cfs validate code orphans
 
 # Check coverage
-cypilot validate code coverage
+cfs validate code coverage
 ```
 
 ## Best Practices

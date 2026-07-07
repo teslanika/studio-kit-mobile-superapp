@@ -101,7 +101,7 @@ The IMPL MUST document code marker format:
 
 The IMPL MUST include validation:
 
-- [ ] Validation command (`cypilot validate --artifact {path}`)
+- [ ] Validation command (`cfs validate --artifact {path}`)
 - [ ] What validation checks (design components have markers)
 - [ ] What validation verifies (markers reference valid IDs)
 - [ ] Coverage threshold mention

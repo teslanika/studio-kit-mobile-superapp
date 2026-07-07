@@ -18,5 +18,5 @@
 - [Examples](Examples)
 
 **Links**
-- [GitHub Repo](https://github.com/teslanika/cyber-pilot-kit-mobile-superapp)
-- [Documentation Site](https://teslanika.github.io/cyber-pilot-kit-mobile-superapp)
+- [GitHub Repo](https://github.com/teslanika/studio-kit-mobile-superapp)
+- [Documentation Site](https://teslanika.github.io/studio-kit-mobile-superapp)

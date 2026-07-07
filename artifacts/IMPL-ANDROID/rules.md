@@ -32,7 +32,7 @@
 - [ ] Read Epic DESIGN for component definitions
 - [ ] Read IMPL-KMP for shared logic reference
 - [ ] Load `config/kits/mobile-superapp/constraints.toml` for kit-level constraints
-- [ ] Load `{cypilot_path}/.core/architecture/specs/traceability.md` for ID formats
+- [ ] Load `{cf-studio-path}/.core/architecture/specs/traceability.md` for ID formats
 
 ---
 
@@ -154,7 +154,7 @@ If IMPL-ANDROID cannot be completed in a single session:
 
 ### Phase 5: Validation Commands
 
-- [ ] Document `cypilot validate` command for this module
+- [ ] Document `cfs validate` command for this module
 - [ ] Verify validation checks are appropriate
 
 ---
@@ -163,7 +163,7 @@ If IMPL-ANDROID cannot be completed in a single session:
 
 ### Phase 1: Structural Validation
 
-- [ ] Run `cypilot validate --artifact android-app/feature/{module}/` for:
+- [ ] Run `cfs validate --artifact android-app/feature/{module}/` for:
   - Template structure compliance
   - ID format validation
   - Cross-reference validity
@@ -211,14 +211,14 @@ Issues:
 ### Missing FEATURE-MOBILE
 
 - [ ] If parent FEATURE-MOBILE not found:
-  - Option 1: Run `/cypilot-generate FEATURE-MOBILE` first (recommended)
+  - Option 1: Run `/cf-generate FEATURE-MOBILE` first (recommended)
   - Option 2: Continue without FEATURE (traceability will be incomplete)
   - Document "FEATURE pending" in IMPL header
 
 ### Missing IMPL-KMP
 
 - [ ] If IMPL-KMP not found:
-  - Option 1: Run `/cypilot-generate IMPL-KMP` first (recommended)
+  - Option 1: Run `/cf-generate IMPL-KMP` first (recommended)
   - Option 2: Continue without KMP reference
   - Document KMP dependency assumptions
 
@@ -242,8 +242,8 @@ Issues:
 ### Options
 
 - [ ] IMPL-ANDROID complete → Implement actual Kotlin/Compose code with `@cpt-impl` markers
-- [ ] IMPL-ANDROID complete → `/cypilot-generate IMPL-IOS` — create iOS implementation reference
-- [ ] IMPL-KMP missing → `/cypilot-generate IMPL-KMP` — create KMP reference first
-- [ ] FEATURE missing → `/cypilot-generate FEATURE-MOBILE` — create FEATURE first
+- [ ] IMPL-ANDROID complete → `/cf-generate IMPL-IOS` — create iOS implementation reference
+- [ ] IMPL-KMP missing → `/cf-generate IMPL-KMP` — create KMP reference first
+- [ ] FEATURE missing → `/cf-generate FEATURE-MOBILE` — create FEATURE first
 - [ ] IMPL needs revision → continue editing IMPL-ANDROID
-- [ ] Ready for code review → validate markers with `cypilot validate`
+- [ ] Ready for code review → validate markers with `cfs validate`

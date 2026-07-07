@@ -84,7 +84,7 @@ fun {Feature}Screen(
 
 ## Validation
 
-Run `cypilot validate --artifact android-app/feature/{module}/` to verify:
+Run `cfs validate --artifact android-app/feature/{module}/` to verify:
 - All design components have `@cpt-impl` markers in code
 - All code markers reference valid design IDs
 - Coverage meets minimum threshold

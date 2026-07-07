@@ -118,7 +118,7 @@ The IMPL MUST include dependencies:
 
 The IMPL MUST include validation:
 
-- [ ] Validation command (`cypilot validate --artifact {path}`)
+- [ ] Validation command (`cfs validate --artifact {path}`)
 - [ ] What validation checks
 - [ ] Coverage threshold mention
 

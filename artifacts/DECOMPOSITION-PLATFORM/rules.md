@@ -30,7 +30,7 @@
 - [ ] Read Platform PRD for requirements context
 - [ ] Read Platform DESIGN for architectural context
 - [ ] Load `config/kits/mobile-superapp/constraints.toml` for kit-level constraints
-- [ ] Load `{cypilot_path}/.core/architecture/specs/traceability.md` for ID formats
+- [ ] Load `{cf-studio-path}/.core/architecture/specs/traceability.md` for ID formats
 
 ---
 
@@ -126,7 +126,7 @@ If DECOMPOSITION-PLATFORM cannot be completed in a single session:
 - [ ] Link to Platform FR IDs
 - [ ] Link to Platform component IDs
 - [ ] Link to Platform integration IDs
-- [ ] Verify uniqueness with `cypilot list-ids`
+- [ ] Verify uniqueness with `cfs list-ids`
 
 ### Phase 4: Quality Check
 
@@ -139,7 +139,7 @@ If DECOMPOSITION-PLATFORM cannot be completed in a single session:
 
 ### Phase 5: Table of Contents
 
-- [ ] Run `cypilot toc <path>` to generate/update Table of Contents
+- [ ] Run `cfs toc <path>` to generate/update Table of Contents
 - [ ] Verify TOC is present and complete
 
 ---
@@ -148,7 +148,7 @@ If DECOMPOSITION-PLATFORM cannot be completed in a single session:
 
 ### Phase 1: Structural Validation
 
-- [ ] Run `cypilot validate --artifact <path>` for:
+- [ ] Run `cfs validate --artifact <path>` for:
   - Template structure compliance
   - ID format validation
   - Cross-reference validity
@@ -194,14 +194,14 @@ Issues:
 ### Missing Platform DESIGN
 
 - [ ] If Platform DESIGN not found:
-  - Option 1: Run `/cypilot-generate DESIGN-PLATFORM` first (recommended)
+  - Option 1: Run `/cf-generate DESIGN-PLATFORM` first (recommended)
   - Option 2: Continue without DESIGN (component allocation will be incomplete)
   - Document "DESIGN pending" in DECOMPOSITION header
 
 ### Missing Platform PRD
 
 - [ ] If Platform PRD not found:
-  - Option 1: Run `/cypilot-generate PRD-PLATFORM` first
+  - Option 1: Run `/cf-generate PRD-PLATFORM` first
   - Option 2: Continue without PRD (requirements coverage will be incomplete)
   - Document requirements assumptions made
 
@@ -225,9 +225,9 @@ Issues:
 
 ### Options
 
-- [ ] DECOMPOSITION-PLATFORM complete → `/cypilot-generate PRD-MINIAPP` — create MiniApp PRD
-- [ ] DECOMPOSITION-PLATFORM complete → `/cypilot-generate DESIGN-MINIAPP` — create MiniApp DESIGN
-- [ ] DESIGN missing → `/cypilot-generate DESIGN-PLATFORM` — create Platform DESIGN first
-- [ ] PRD missing → `/cypilot-generate PRD-PLATFORM` — create Platform PRD first
+- [ ] DECOMPOSITION-PLATFORM complete → `/cf-generate PRD-MINIAPP` — create MiniApp PRD
+- [ ] DECOMPOSITION-PLATFORM complete → `/cf-generate DESIGN-MINIAPP` — create MiniApp DESIGN
+- [ ] DESIGN missing → `/cf-generate DESIGN-PLATFORM` — create Platform DESIGN first
+- [ ] PRD missing → `/cf-generate PRD-PLATFORM` — create Platform PRD first
 - [ ] DECOMPOSITION needs revision → continue editing DECOMPOSITION-PLATFORM
 - [ ] Ready for MiniApp work → create MiniApp folder structure

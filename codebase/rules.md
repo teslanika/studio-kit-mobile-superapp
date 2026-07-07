@@ -25,15 +25,15 @@
 - [ ] Read project `AGENTS.md` for code conventions
 - [ ] Load source artifact/description (FEATURE-MOBILE preferred)
 - [ ] Load `config/kits/mobile-superapp/codebase/checklist.md` for quality guidance
-- [ ] Load `{cypilot_path}/.core/requirements/code-checklist.md` for generic code quality checks
+- [ ] Load `{cf-studio-path}/.core/requirements/code-checklist.md` for generic code quality checks
 - [ ] If FEATURE source: identify all IDs with `to_code="true"` attribute
 - [ ] Determine Traceability Mode (FULL vs DOCS-ONLY)
-- [ ] If Traceability Mode FULL: load `{cypilot_path}/.core/architecture/specs/traceability.md`
+- [ ] If Traceability Mode FULL: load `{cf-studio-path}/.core/architecture/specs/traceability.md`
 - [ ] Load `config/kits/mobile-superapp/constraints.toml` for kit-level constraints
 
 **Source** (one of, in priority order):
 1. FEATURE-MOBILE design — registered artifact with `to_code="true"` IDs
-2. Other Cypilot artifact — PRD-MINIAPP, PRD-EPIC, DESIGN-*, DECOMPOSITION-*
+2. Other Constructor Studio artifact — PRD-MINIAPP, PRD-EPIC, DESIGN-*, DECOMPOSITION-*
 3. Similar content — user-provided description, feature, or requirements
 4. Prompt only — direct user instructions
 
@@ -57,7 +57,7 @@
 
 ### Traceability
 
-**Reference**: `{cypilot_path}/.core/architecture/specs/traceability.md` for full specification
+**Reference**: `{cf-studio-path}/.core/architecture/specs/traceability.md` for full specification
 
 - [ ] Traceability Mode determined per feature (FULL vs DOCS-ONLY)
 - [ ] If Mode FULL: markers follow feature syntax (`@cpt-*`, `@cpt-begin`/`@cpt-end`)
@@ -166,10 +166,10 @@ PRD/DESIGN: referenced IDs [x] when ALL downstream refs [x]
 
 **Resolve Source** (priority order):
 1. FEATURE-MOBILE design (registered) — Traceability FULL possible
-2. Other Cypilot artifact (PRD/DESIGN) — DOCS-ONLY
+2. Other Constructor Studio artifact (PRD/DESIGN) — DOCS-ONLY
 3. User-provided description — DOCS-ONLY
 4. Prompt only — DOCS-ONLY
-5. None — suggest `/cypilot-generate FEATURE-MOBILE` first
+5. None — suggest `/cf-generate FEATURE-MOBILE` first
 
 **Load Context**:
 - [ ] Read project `AGENTS.md` for code conventions
@@ -191,7 +191,7 @@ PRD/DESIGN: referenced IDs [x] when ALL downstream refs [x]
 7. If Traceability Mode FULL: update FEATURE-MOBILE checkboxes
 8. Proceed to next work package
 
-### Phase 3: Cypilot Markers (Traceability Mode FULL only)
+### Phase 3: Constructor Studio Markers (Traceability Mode FULL only)
 
 Apply markers per feature:
 - **Scope markers**: `@cpt-{kind}:{cpt-id}:p{N}` — single-line, at function/class entry point
@@ -484,19 +484,19 @@ Each feature module MUST have an IMPL.md file:
 ### After Success
 
 - [ ] Feature complete → update feature status to IMPLEMENTED in DECOMPOSITION-EPIC
-- [ ] All features done → `/cypilot-analyze DESIGN-EPIC` — validate epic completion
-- [ ] New feature needed → `/cypilot-generate FEATURE-MOBILE` — design next feature
-- [ ] Want expert review only → `/cypilot-analyze semantic` — semantic validation
+- [ ] All features done → `/cf-analyze DESIGN-EPIC` — validate epic completion
+- [ ] New feature needed → `/cf-generate FEATURE-MOBILE` — design next feature
+- [ ] Want expert review only → `/cf-analyze semantic` — semantic validation
 
 ### After Issues
 
-- [ ] Design mismatch → `/cypilot-generate FEATURE-MOBILE` — update feature design
-- [ ] Missing tests → continue `/cypilot-generate CODE` — add tests
-- [ ] Code quality issues → continue `/cypilot-generate CODE` — refactor
+- [ ] Design mismatch → `/cf-generate FEATURE-MOBILE` — update feature design
+- [ ] Missing tests → continue `/cf-generate CODE` — add tests
+- [ ] Code quality issues → continue `/cf-generate CODE` — refactor
 - [ ] Platform-specific bug → fix in respective platform module
 
 ### No Design
 
-- [ ] Implementing new feature → `/cypilot-generate FEATURE-MOBILE` first
-- [ ] Implementing from PRD → `/cypilot-generate DESIGN-EPIC` then DECOMPOSITION-EPIC
+- [ ] Implementing new feature → `/cf-generate FEATURE-MOBILE` first
+- [ ] Implementing from PRD → `/cf-generate DESIGN-EPIC` then DECOMPOSITION-EPIC
 - [ ] Quick prototype → proceed without traceability, suggest FEATURE-MOBILE later

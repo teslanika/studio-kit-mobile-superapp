@@ -1,8 +1,8 @@
 # Mobile SuperApp Kit Quick Start
 
-**Learn Cypilot Mobile SuperApp in 10 minutes with real prompts and examples**
+**Learn Constructor Studio Mobile SuperApp in 10 minutes with real prompts and examples**
 
-Cypilot Mobile SuperApp works through the `cypilot` skill — enable it with `cypilot on` and use natural language prompts prefixed with `cypilot`. The skill handles artifact discovery, template loading, validation, and traceability automatically.
+Constructor Studio Mobile SuperApp works through the Constructor Studio skill — enable it with `cfs on` and use natural language prompts prefixed with `cf`. The skill handles artifact discovery, template loading, validation, and traceability automatically.
 
 ---
 
@@ -67,14 +67,53 @@ Learn what each artifact means: [TAXONOMY.md](TAXONOMY.md)
 
 | Prompt | What happens |
 |--------|--------------|
-| `cypilot on` | Enables Cypilot mode, discovers config, loads project context |
-| `cypilot init` | Creates `cypilot/` directory with `.core/`, `.gen/`, `config/` and initializes `artifacts.toml` |
-| `cypilot show pipeline` | Displays current artifact hierarchy and validation status |
+| `Constructor Studio on` | Enables Constructor Studio mode, discovers config, loads project context |
+| `cfs init` | Creates `.cf-studio/` directory with `.core/`, `.gen/`, `config/` and initializes `artifacts.toml` |
+| `cfs show pipeline` | Displays current artifact hierarchy and validation status |
 
 **Install the kit:**
 ```bash
-cpt kit install mobile-superapp
+cfs kit install mobile-superapp
 ```
+
+---
+
+## Adopting After the Constructor Studio Migration
+
+The repo was migrated from Cypilot to Constructor Studio. `git pull` gives you the
+tracked config, `.cf-workspace.toml`, and agent integration files — but **not** the
+framework runtime (`.cf-studio/.core/`, `.cf-studio/.gen/`), which is gitignored and
+installed per-machine. Each developer does this once:
+
+**1. Replace the CLI** (old `cypilot`/`cpt` → `constructor-studio`/`cfs`):
+```bash
+pipx uninstall cypilot
+pipx install git+https://github.com/constructorfabric/studio.git
+cfs --version
+```
+
+**2. Materialize the runtime in the repo:**
+```bash
+git pull
+cfs update        # populates/repairs .cf-studio/.core/ and .gen/
+```
+(Use `cfs init` instead if `.cf-studio/.core/` is missing after a fresh clone.)
+
+**3. Activate in your AI coding tool** — keyword, not a terminal command:
+`cf` to enable, then `cf-help`, `cf-explore: ...`, `cf-coding: ...`.
+
+**Notes**
+- Agent integration files (`.claude/`, `.cursor/`, `.github/`, `.agents/`, `.codex/`,
+  `.windsurf/`) are tracked, so `cfs generate-agents` is **not** required — you get them
+  from git. Only regenerate to repair.
+- Pin one `constructor-studio` CLI version across the team so `.core` stays aligned with
+  the tracked `.cf-studio/version.toml`.
+
+| Was (cypilot) | Now (studio) |
+|---|---|
+| CLI `cpt` | `cfs` |
+| `/cypilot-*` | `/cf-*` |
+| `.cypilot-workspace.toml` | `.cf-workspace.toml` |
 
 ---
 
@@ -84,40 +123,40 @@ cpt kit install mobile-superapp
 
 | Prompt | What the agent does |
 |--------|---------------------|
-| `cypilot make PRD-PLATFORM` | Creates platform PRD with actors, capabilities, NFRs |
-| `cypilot make PRD-PLATFORM for Constructor SuperApp` | Generates PRD with context |
-| `cypilot make DESIGN-PLATFORM` | Creates platform architecture (KMP, modules, navigation) |
-| `cypilot make DECOMPOSITION-PLATFORM` | Breaks platform into MiniApps |
-| `cypilot validate PRD-PLATFORM` | Full validation |
+| `cfs make PRD-PLATFORM` | Creates platform PRD with actors, capabilities, NFRs |
+| `cfs make PRD-PLATFORM for Constructor SuperApp` | Generates PRD with context |
+| `cfs make DESIGN-PLATFORM` | Creates platform architecture (KMP, modules, navigation) |
+| `cfs make DECOMPOSITION-PLATFORM` | Breaks platform into MiniApps |
+| `cfs validate PRD-PLATFORM` | Full validation |
 
 ### MiniApp Level (L1)
 
 | Prompt | What the agent does |
 |--------|---------------------|
-| `cypilot make PRD-MINIAPP for learn` | Creates Learn MiniApp requirements |
-| `cypilot make DESIGN-MINIAPP for learn` | Creates Learn MiniApp architecture |
-| `cypilot make DECOMPOSITION-MINIAPP for learn` | Breaks MiniApp into Epics |
-| `cypilot validate DESIGN-MINIAPP for learn` | Validates MiniApp design |
+| `cfs make PRD-MINIAPP for learn` | Creates Learn MiniApp requirements |
+| `cfs make DESIGN-MINIAPP for learn` | Creates Learn MiniApp architecture |
+| `cfs make DECOMPOSITION-MINIAPP for learn` | Breaks MiniApp into Epics |
+| `cfs validate DESIGN-MINIAPP for learn` | Validates MiniApp design |
 
 ### Epic Level (L2)
 
 | Prompt | What the agent does |
 |--------|---------------------|
-| `cypilot make PRD-EPIC for course-catalog` | Creates Epic requirements |
-| `cypilot make DESIGN-EPIC for course-catalog` | Creates Epic architecture |
-| `cypilot make DECOMPOSITION-EPIC for course-catalog` | Breaks Epic into Features |
-| `cypilot validate PRD-EPIC for course-catalog` | Validates Epic PRD |
+| `cfs make PRD-EPIC for course-catalog` | Creates Epic requirements |
+| `cfs make DESIGN-EPIC for course-catalog` | Creates Epic architecture |
+| `cfs make DECOMPOSITION-EPIC for course-catalog` | Breaks Epic into Features |
+| `cfs validate PRD-EPIC for course-catalog` | Validates Epic PRD |
 
 ### Feature Level (L3)
 
 | Prompt | What the agent does |
 |--------|---------------------|
-| `cypilot make FEATURE-MOBILE for course-list` | Creates feature with MVI, CDSL, platform sections |
-| `cypilot validate FEATURE-MOBILE for course-list` | Full validation (flows, states, DoD) |
-| `cypilot implement course-list` | Generates KMP + Android + iOS code |
-| `cypilot implement course-list kmp` | KMP shared code only |
-| `cypilot implement course-list android` | Android Compose UI only |
-| `cypilot implement course-list ios` | iOS SwiftUI only |
+| `cfs make FEATURE-MOBILE for course-list` | Creates feature with MVI, CDSL, platform sections |
+| `cfs validate FEATURE-MOBILE for course-list` | Full validation (flows, states, DoD) |
+| `cfs implement course-list` | Generates KMP + Android + iOS code |
+| `cfs implement course-list kmp` | KMP shared code only |
+| `cfs implement course-list android` | Android Compose UI only |
+| `cfs implement course-list ios` | iOS SwiftUI only |
 
 ---
 
@@ -191,10 +230,10 @@ Code: @cpt-flow:cpt-course-list-flow-load-cached:p1
 
 | Prompt | What happens |
 |--------|--------------|
-| `cypilot trace cpt-platform-fr-offline-support` | Shows full path to code |
-| `cypilot trace cpt-learn-course-list-flow-load` | Shows feature to code path |
-| `cypilot find orphans` | Lists IDs with no downstream refs |
-| `cypilot coverage report` | Implementation coverage by level |
+| `cfs trace cpt-platform-fr-offline-support` | Shows full path to code |
+| `cfs trace cpt-learn-course-list-flow-load` | Shows feature to code path |
+| `cfs find orphans` | Lists IDs with no downstream refs |
+| `cfs coverage report` | Implementation coverage by level |
 
 ---
 
@@ -204,10 +243,10 @@ Code: @cpt-flow:cpt-course-list-flow-load-cached:p1
 
 | Prompt | What happens |
 |--------|--------------|
-| `cypilot validate PRD-PLATFORM` | Platform requirements validation |
-| `cypilot validate DESIGN-MINIAPP for learn` | MiniApp architecture validation |
-| `cypilot validate FEATURE-MOBILE for course-list` | Feature validation (CDSL, MVI, DoD) |
-| `cypilot validate code for course-list` | Code marker validation |
+| `cfs validate PRD-PLATFORM` | Platform requirements validation |
+| `cfs validate DESIGN-MINIAPP for learn` | MiniApp architecture validation |
+| `cfs validate FEATURE-MOBILE for course-list` | Feature validation (CDSL, MVI, DoD) |
+| `cfs validate code for course-list` | Code marker validation |
 
 ### Validation Modes
 
@@ -221,9 +260,9 @@ Append to any `validate` command:
 
 | Prompt | What happens |
 |--------|--------------|
-| `cypilot validate all` | Validates entire 4-level hierarchy |
-| `cypilot validate all refs` | Validates all cross-references |
-| `cypilot validate code coverage` | Reports implementation coverage % |
+| `cfs validate all` | Validates entire 4-level hierarchy |
+| `cfs validate all refs` | Validates all cross-references |
+| `cfs validate code coverage` | Reports implementation coverage % |
 
 ---
 
@@ -233,26 +272,26 @@ Append to any `validate` command:
 
 | Step | Prompt |
 |------|--------|
-| 1 | `cypilot make PRD-PLATFORM for {app-name}` |
-| 2 | `cypilot make DESIGN-PLATFORM` |
-| 3 | `cypilot make DECOMPOSITION-PLATFORM` |
-| 4 | `cypilot make PRD-MINIAPP for {miniapp}` |
-| 5 | `cypilot make DESIGN-MINIAPP for {miniapp}` |
-| 6 | `cypilot make DECOMPOSITION-MINIAPP for {miniapp}` |
-| 7 | `cypilot make PRD-EPIC for {epic}` |
-| 8 | `cypilot make DESIGN-EPIC for {epic}` |
-| 9 | `cypilot make DECOMPOSITION-EPIC for {epic}` |
-| 10 | `cypilot make FEATURE-MOBILE for {feature}` |
-| 11 | `cypilot implement {feature}` |
+| 1 | `cfs make PRD-PLATFORM for {app-name}` |
+| 2 | `cfs make DESIGN-PLATFORM` |
+| 3 | `cfs make DECOMPOSITION-PLATFORM` |
+| 4 | `cfs make PRD-MINIAPP for {miniapp}` |
+| 5 | `cfs make DESIGN-MINIAPP for {miniapp}` |
+| 6 | `cfs make DECOMPOSITION-MINIAPP for {miniapp}` |
+| 7 | `cfs make PRD-EPIC for {epic}` |
+| 8 | `cfs make DESIGN-EPIC for {epic}` |
+| 9 | `cfs make DECOMPOSITION-EPIC for {epic}` |
+| 10 | `cfs make FEATURE-MOBILE for {feature}` |
+| 11 | `cfs implement {feature}` |
 
 ### Validate Pipeline
 
 | Step | Prompt |
 |------|--------|
-| 1 | `cypilot validate PRD-PLATFORM` |
-| 2 | `cypilot validate DESIGN-PLATFORM` |
+| 1 | `cfs validate PRD-PLATFORM` |
+| 2 | `cfs validate DESIGN-PLATFORM` |
 | ... | Continue for each artifact |
-| Final | `cypilot validate all` |
+| Final | `cfs validate all` |
 
 ---
 

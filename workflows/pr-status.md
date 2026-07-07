@@ -112,7 +112,7 @@ For each affected FEATURE:
 |-------|--------|
 | @cpt-impl markers | ✅ All present / ❌ {count} missing |
 | IMPL.md files | ✅ Updated / ❌ Needs update |
-| cypilot validate | ✅ Pass / ❌ Fail |
+| cfs validate | ✅ Pass / ❌ Fail |
 
 ## Blocking Issues
 

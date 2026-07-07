@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-check-language.py — Language validation for Cypilot artifacts.
+check-language.py — Language validation for Constructor Studio artifacts.
 
 Scans Markdown documents for characters outside the allowed language set.
 Run after any artifact generation to catch non-English content early.
@@ -53,7 +53,7 @@ DEFAULT_SCAN_PATHS: list[str] = ["architecture"]
 SKIP_LINE_PATTERNS: list[re.Pattern] = [
     re.compile(r"^\s*<!--.*-->"),          # HTML comments
     re.compile(r"^\s*\|.*`cpt-.*`"),       # traceability ID table rows
-    re.compile(r"^\s*@cpt"),               # cypilot markers
+    re.compile(r"^\s*@cpt"),               # Constructor Studio provenance markers (@cpt-*)
 ]
 
 # Fenced code blocks: content between ``` or ~~~ is skipped entirely.
@@ -270,7 +270,7 @@ def main() -> int:
     else:
         # Default: scan relative to project root (two levels up from this script)
         script_dir = Path(__file__).resolve().parent
-        # scripts/ → mobile-superapp kit → kits/ → config/ → cypilot/ → project root
+        # scripts/ → mobile-superapp kit → kits/ → config/ → .cf-studio/ → project root
         project_root = script_dir.parents[4]
         roots = [project_root / p for p in DEFAULT_SCAN_PATHS]
 

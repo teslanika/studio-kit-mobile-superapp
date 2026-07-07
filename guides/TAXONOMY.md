@@ -310,7 +310,7 @@ Epics (L2) can belong to either the HostApp or a MiniApp:
 **Purpose**: The implementation layer validated against FEATURE IDs.
 
 **Defines**:
-- No new Cypilot IDs are defined in code. Code only references IDs that exist in artifacts.
+- No new Constructor Studio IDs are defined in code. Code only references IDs that exist in artifacts.
 
 **Platforms**:
 - KMP (Kotlin Multiplatform): shared domain, data, presentation
@@ -318,7 +318,7 @@ Epics (L2) can belong to either the HostApp or a MiniApp:
 - iOS: SwiftUI views with KMP wrappers
 
 **Traceability**:
-- Mark code with Cypilot markers as specified in `{cypilot_path}/.core/requirements/traceability.md`
+- Mark code with Constructor Studio markers as specified in `{cf-studio-path}/.core/requirements/traceability.md`
 
 **Files**:
 - Rules: [codebase/rules.md](../codebase/rules.md)
@@ -372,19 +372,19 @@ Each level must maintain references to upstream requirements it implements.
 
 | Command | What it validates |
 |---------|-------------------|
-| `cpt validate` | All artifacts + cross-references + code markers |
-| `cpt validate-kits` | Kit package integrity |
-| `cpt validate-toc` | Table of contents correctness |
+| `cfs validate` | All artifacts + cross-references + code markers |
+| `cfs validate-kits` | Kit package integrity |
+| `cfs validate-toc` | Table of contents correctness |
 
 ### Traceability & Search
 
 | Command | What it does |
 |---------|--------------|
-| `cpt list-ids` | Lists all IDs across all levels |
-| `cpt where-defined <id>` | Shows where an ID is defined |
-| `cpt where-used <id>` | Shows where an ID is referenced |
-| `cpt spec-coverage` | Measures code coverage by CDSL markers |
-| `cpt info` | Shows Cypilot configuration |
+| `cfs list-ids` | Lists all IDs across all levels |
+| `cfs where-defined <id>` | Shows where an ID is defined |
+| `cfs where-used <id>` | Shows where an ID is referenced |
+| `cfs spec-coverage` | Measures code coverage by CDSL markers |
+| `cfs info` | Shows Constructor Studio configuration |
 
 ---
 

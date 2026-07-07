@@ -9,30 +9,30 @@
 
 ```bash
 # Install latest version
-cpt kit install teslanika/cyber-pilot-kit-mobile-superapp
+cfs kit install teslanika/studio-kit-mobile-superapp
 
 # Install specific version
-cpt kit install teslanika/cyber-pilot-kit-mobile-superapp --version 1.0.0
+cfs kit install teslanika/studio-kit-mobile-superapp --version 1.0.0
 ```
 
 ## Update
 
 ```bash
-cpt kit update mobile-superapp
+cfs kit update mobile-superapp
 ```
 
 ## Validate Installation
 
 ```bash
-cpt validate-kits .
+cfs validate-kits .
 ```
 
 ## Project Structure After Installation
 
 ```
 your-project/
-├── cypilot/
-│   ├── .core/                    # Cypilot core (auto-managed)
+├── .cf-studio/
+│   ├── .core/                    # Constructor Studio core (auto-managed)
 │   ├── .gen/
 │   │   └── kits/
 │   │       └── mobile-superapp/  # Installed kit
@@ -42,14 +42,14 @@ your-project/
 
 ## Configuration
 
-After installation, configure your project in `cypilot/config/artifacts.toml`:
+After installation, configure your project in `.cf-studio/config/artifacts.toml`:
 
 ```toml
 version = "1.0"
 project_root = ".."
 
 [kits.mobile-superapp]
-format = "Cypilot"
+format = "CFS"
 path = ".gen/kits/mobile-superapp"
 
 [[systems]]

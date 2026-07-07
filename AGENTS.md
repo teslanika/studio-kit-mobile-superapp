@@ -74,14 +74,14 @@ When creating FEATURE:
 
 ```bash
 # Validate FR traceability cascade
-cpt validate --check=fr-cascade
+cfs validate --check=fr-cascade
 
 # Check coverage of Platform FRs → MiniApp FRs
-cpt validate --check=platform-fr-coverage
+cfs validate --check=platform-fr-coverage
 
 # Check coverage of MiniApp FRs → Epic FRs  
-cpt validate --check=miniapp-fr-coverage
+cfs validate --check=miniapp-fr-coverage
 
 # Check Feature implementation coverage
-cpt validate --check=feature-impl-coverage
+cfs validate --check=feature-impl-coverage
 ```

@@ -31,8 +31,8 @@
 - [ ] Read Epic DESIGN for architectural context
 - [ ] Read Epic DECOMPOSITION for feature boundaries
 - [ ] Load `config/kits/mobile-superapp/constraints.toml` for kit-level constraints
-- [ ] Load `{cypilot_path}/.core/architecture/specs/traceability.md` for ID formats
-- [ ] Load `{cypilot_path}/.core/architecture/specs/cdsl.md` for CDSL syntax
+- [ ] Load `{cf-studio-path}/.core/architecture/specs/traceability.md` for ID formats
+- [ ] Load `{cf-studio-path}/.core/architecture/specs/cdsl.md` for CDSL syntax
 
 ---
 
@@ -161,7 +161,7 @@ If FEATURE-MOBILE cannot be completed in a single session:
 - [ ] Generate unique `inst-{id}` for each CDSL step
 - [ ] Link to Epic PRD requirements
 - [ ] Link to Epic DESIGN components
-- [ ] Verify uniqueness with `cypilot list-ids`
+- [ ] Verify uniqueness with `cfs list-ids`
 
 ### Phase 4: Quality Check
 
@@ -174,7 +174,7 @@ If FEATURE-MOBILE cannot be completed in a single session:
 
 ### Phase 5: Table of Contents
 
-- [ ] Run `cypilot toc <path>` to generate/update Table of Contents
+- [ ] Run `cfs toc <path>` to generate/update Table of Contents
 - [ ] Verify TOC is present and complete
 
 ---
@@ -183,7 +183,7 @@ If FEATURE-MOBILE cannot be completed in a single session:
 
 ### Phase 1: Structural Validation
 
-- [ ] Run `cypilot validate --artifact <path>` for:
+- [ ] Run `cfs validate --artifact <path>` for:
   - Template structure compliance
   - ID format validation
   - CDSL syntax validation
@@ -241,14 +241,14 @@ Issues:
 ### Missing Epic DESIGN
 
 - [ ] If Epic DESIGN not found:
-  - Option 1: Run `/cypilot-generate DESIGN-EPIC` first (recommended)
+  - Option 1: Run `/cf-generate DESIGN-EPIC` first (recommended)
   - Option 2: Continue without DESIGN (implementation details will be assumptions)
   - Document "DESIGN pending" in FEATURE header
 
 ### Missing Epic PRD
 
 - [ ] If Epic PRD not found:
-  - Option 1: Run `/cypilot-generate PRD-EPIC` first
+  - Option 1: Run `/cf-generate PRD-EPIC` first
   - Option 2: Continue without PRD (requirements traceability will be incomplete)
   - Document requirements assumptions made
 
@@ -272,10 +272,10 @@ Issues:
 
 ### Options
 
-- [ ] FEATURE-MOBILE complete → `/cypilot-generate IMPL-KMP` — create KMP implementation reference
-- [ ] FEATURE-MOBILE complete → `/cypilot-generate IMPL-ANDROID` — create Android implementation reference
-- [ ] FEATURE-MOBILE complete → `/cypilot-generate IMPL-IOS` — create iOS implementation reference
-- [ ] DESIGN missing → `/cypilot-generate DESIGN-EPIC` — create Epic DESIGN first
-- [ ] PRD missing → `/cypilot-generate PRD-EPIC` — create Epic PRD first
+- [ ] FEATURE-MOBILE complete → `/cf-generate IMPL-KMP` — create KMP implementation reference
+- [ ] FEATURE-MOBILE complete → `/cf-generate IMPL-ANDROID` — create Android implementation reference
+- [ ] FEATURE-MOBILE complete → `/cf-generate IMPL-IOS` — create iOS implementation reference
+- [ ] DESIGN missing → `/cf-generate DESIGN-EPIC` — create Epic DESIGN first
+- [ ] PRD missing → `/cf-generate PRD-EPIC` — create Epic PRD first
 - [ ] FEATURE needs revision → continue editing FEATURE-MOBILE
 - [ ] Ready for implementation → start coding with FEATURE as spec

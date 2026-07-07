@@ -98,7 +98,7 @@ class {Feature}ViewModelWrapper: ObservableObject {
 
 ## Validation
 
-Run `cypilot validate --artifact ios-app/Features/{Module}/` to verify:
+Run `cfs validate --artifact ios-app/Features/{Module}/` to verify:
 - All design components have `@cpt-impl` markers in code
 - All code markers reference valid design IDs
 - Coverage meets minimum threshold

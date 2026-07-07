@@ -6,13 +6,13 @@
 
 ```bash
 # Install (--version is optional, defaults to latest)
-cpt kit install teslanika/cyber-pilot-kit-mobile-superapp
+cfs kit install teslanika/studio-kit-mobile-superapp
 
 # Update
-cpt kit update mobile-superapp
+cfs kit update mobile-superapp
 
 # Validate
-cpt validate-kits .
+cfs validate-kits .
 ```
 
 ## Overview
@@ -89,39 +89,39 @@ Each artifact type includes:
 
 ```bash
 # Use standard SDLC PRD for platform level
-cypilot generate PRD --path architecture/PRD.md
+cfs generate PRD --path architecture/PRD.md
 ```
 
 ### 2. Create Platform DESIGN
 
 ```bash
-cypilot generate DESIGN-PLATFORM --path architecture/DESIGN.md
+cfs generate DESIGN-PLATFORM --path architecture/DESIGN.md
 ```
 
 ### 3. Create MiniApp
 
 ```bash
 # PRD for MiniApp
-cypilot generate PRD-MINIAPP --path miniapps/student/PRD.md
+cfs generate PRD-MINIAPP --path miniapps/student/PRD.md
 
 # DESIGN for MiniApp
-cypilot generate DESIGN-MINIAPP --path miniapps/student/DESIGN.md
+cfs generate DESIGN-MINIAPP --path miniapps/student/DESIGN.md
 ```
 
 ### 4. Create Epic
 
 ```bash
 # PRD for Epic
-cypilot generate PRD-EPIC --path miniapps/student/capabilities/notification-history/PRD.md
+cfs generate PRD-EPIC --path miniapps/student/capabilities/notification-history/PRD.md
 
 # DESIGN for Epic
-cypilot generate DESIGN-EPIC --path miniapps/student/capabilities/notification-history/DESIGN.md
+cfs generate DESIGN-EPIC --path miniapps/student/capabilities/notification-history/DESIGN.md
 ```
 
 ### 5. Create Feature
 
 ```bash
-cypilot generate FEATURE-MOBILE --path miniapps/student/capabilities/notification-history/features/badge/FEATURE.md
+cfs generate FEATURE-MOBILE --path miniapps/student/capabilities/notification-history/features/badge/FEATURE.md
 ```
 
 ## Project Structure
@@ -168,16 +168,16 @@ mobile-superapp/
 
 ```bash
 # Validate single artifact
-cypilot validate --artifact miniapps/student/PRD.md
+cfs validate --artifact miniapps/student/PRD.md
 
 # Validate FR traceability cascade
-cypilot validate --check=fr-cascade
+cfs validate --check=fr-cascade
 
 # Check Platform FR → MiniApp FR coverage
-cypilot validate --check=platform-fr-coverage
+cfs validate --check=platform-fr-coverage
 
 # Check Feature implementation coverage
-cypilot validate --check=feature-impl-coverage
+cfs validate --check=feature-impl-coverage
 ```
 
 ## Technology Stack (Target)

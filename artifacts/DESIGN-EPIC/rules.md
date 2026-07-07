@@ -30,7 +30,7 @@
 - [ ] Read parent Epic PRD for requirements
 - [ ] Read parent MiniApp DESIGN for architectural context
 - [ ] Load `config/kits/mobile-superapp/constraints.toml` for kit-level constraints
-- [ ] Load `{cypilot_path}/.core/architecture/specs/traceability.md` for ID formats
+- [ ] Load `{cf-studio-path}/.core/architecture/specs/traceability.md` for ID formats
 
 ---
 
@@ -129,7 +129,7 @@ If DESIGN-EPIC cannot be completed in a single session:
 - [ ] Generate offline ID: `cpt-{miniapp}-{epic}-offline`
 - [ ] Link to Epic PRD requirements
 - [ ] Reference MiniApp DESIGN patterns
-- [ ] Verify uniqueness with `cypilot list-ids`
+- [ ] Verify uniqueness with `cfs list-ids`
 
 ### Phase 4: Quality Check
 
@@ -141,7 +141,7 @@ If DESIGN-EPIC cannot be completed in a single session:
 
 ### Phase 5: Table of Contents
 
-- [ ] Run `cypilot toc <path>` to generate/update Table of Contents
+- [ ] Run `cfs toc <path>` to generate/update Table of Contents
 - [ ] Verify TOC is present and complete
 
 ---
@@ -150,7 +150,7 @@ If DESIGN-EPIC cannot be completed in a single session:
 
 ### Phase 1: Structural Validation
 
-- [ ] Run `cypilot validate --artifact <path>` for:
+- [ ] Run `cfs validate --artifact <path>` for:
   - Template structure compliance
   - ID format validation
   - Cross-reference validity
@@ -194,14 +194,14 @@ Issues:
 ### Missing Epic PRD
 
 - [ ] If parent Epic PRD not found:
-  - Option 1: Run `/cypilot-generate PRD-EPIC` first (recommended)
+  - Option 1: Run `/cf-generate PRD-EPIC` first (recommended)
   - Option 2: Continue without PRD (DESIGN will lack traceability)
   - Document "PRD pending" in DESIGN header
 
 ### Missing MiniApp DESIGN
 
 - [ ] If parent MiniApp DESIGN not found:
-  - Option 1: Run `/cypilot-generate DESIGN-MINIAPP` first
+  - Option 1: Run `/cf-generate DESIGN-MINIAPP` first
   - Option 2: Continue with assumptions documented
   - Document architectural assumptions made
 
@@ -217,9 +217,9 @@ Issues:
 
 ### Options
 
-- [ ] DESIGN-EPIC complete → `/cypilot-generate DECOMPOSITION-EPIC` — create features manifest
-- [ ] Need architecture decision → `/cypilot-generate ADR` — document key decision
-- [ ] PRD missing/incomplete → `/cypilot-generate PRD-EPIC` — create/update PRD first
+- [ ] DESIGN-EPIC complete → `/cf-generate DECOMPOSITION-EPIC` — create features manifest
+- [ ] Need architecture decision → `/cf-generate ADR` — document key decision
+- [ ] PRD missing/incomplete → `/cf-generate PRD-EPIC` — create/update PRD first
 - [ ] DESIGN needs revision → continue editing DESIGN-EPIC
-- [ ] Ready for Feature → `/cypilot-generate FEATURE-MOBILE` — create feature specification
-- [ ] MiniApp DESIGN missing → `/cypilot-generate DESIGN-MINIAPP` — create MiniApp DESIGN first
+- [ ] Ready for Feature → `/cf-generate FEATURE-MOBILE` — create feature specification
+- [ ] MiniApp DESIGN missing → `/cf-generate DESIGN-MINIAPP` — create MiniApp DESIGN first

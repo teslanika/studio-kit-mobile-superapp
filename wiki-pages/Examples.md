@@ -5,7 +5,7 @@ Real-world examples of using the Mobile SuperApp Kit.
 ## Complete Feature Example
 
 See the full example in the repository:
-- [examples/FEATURE-MOBILE/course-list.md](https://github.com/teslanika/cyber-pilot-kit-mobile-superapp/blob/main/examples/FEATURE-MOBILE/course-list.md)
+- [examples/FEATURE-MOBILE/course-list.md](https://github.com/teslanika/studio-kit-mobile-superapp/blob/main/examples/FEATURE-MOBILE/course-list.md)
 
 ## Quick Examples
 

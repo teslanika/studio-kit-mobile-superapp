@@ -2,7 +2,7 @@
 
 Use this guide when starting a new mobile app from scratch.
 
-All prompts work through the `cypilot` skill — enable it with `cypilot on` and use natural language prompts.
+All prompts work through the Constructor Studio skill — enable it with `cfs on` and use natural language prompts.
 
 ## Goal
 
@@ -10,7 +10,7 @@ Create a validated 4-level architecture baseline before writing mobile code.
 
 ## What You Will Produce
 
-Cypilot artifacts registered in `{cypilot_path}/config/artifacts.toml`:
+Constructor Studio artifacts registered in `{cf-studio-path}/config/artifacts.toml`:
 
 | Level | Artifacts | Default Location |
 |-------|-----------|------------------|
@@ -31,13 +31,13 @@ Cypilot artifacts registered in `{cypilot_path}/config/artifacts.toml`:
 
 | Prompt | What happens |
 |--------|--------------|
-| `cypilot make PRD-PLATFORM` | Creates platform PRD interactively |
-| `cypilot make PRD-PLATFORM for Constructor SuperApp` | Creates PRD with context |
-| `cypilot draft PRD-PLATFORM from README` | Extracts from existing docs |
+| `cfs make PRD-PLATFORM` | Creates platform PRD interactively |
+| `cfs make PRD-PLATFORM for Constructor SuperApp` | Creates PRD with context |
+| `cfs draft PRD-PLATFORM from README` | Extracts from existing docs |
 
 **Provide context:**
 ```
-cypilot make PRD-PLATFORM for Constructor SuperApp
+cfs make PRD-PLATFORM for Constructor SuperApp
 Context:
 - Product: Educational mobile platform
 - Users: students, instructors, admins
@@ -50,9 +50,9 @@ Context:
 
 | Prompt | What happens |
 |--------|--------------|
-| `cypilot validate PRD-PLATFORM` | Full validation |
-| `cypilot validate PRD-PLATFORM semantic` | Semantic only |
-| `cypilot validate PRD-PLATFORM structural` | Structural only |
+| `cfs validate PRD-PLATFORM` | Full validation |
+| `cfs validate PRD-PLATFORM semantic` | Semantic only |
+| `cfs validate PRD-PLATFORM structural` | Structural only |
 
 #### 1.2 DESIGN-PLATFORM
 
@@ -60,12 +60,12 @@ Context:
 
 | Prompt | What happens |
 |--------|--------------|
-| `cypilot make DESIGN-PLATFORM` | Creates platform architecture |
-| `cypilot make DESIGN-PLATFORM from PRD-PLATFORM` | Transforms PRD into architecture |
+| `cfs make DESIGN-PLATFORM` | Creates platform architecture |
+| `cfs make DESIGN-PLATFORM from PRD-PLATFORM` | Transforms PRD into architecture |
 
 **Provide context:**
 ```
-cypilot make DESIGN-PLATFORM
+cfs make DESIGN-PLATFORM
 Context:
 - Architecture: KMP shared + native UI
 - Shared modules: constructor-sdk (domain, data, presentation)
@@ -79,8 +79,8 @@ Context:
 
 | Prompt | What happens |
 |--------|--------------|
-| `cypilot validate DESIGN-PLATFORM` | Full validation |
-| `cypilot validate DESIGN-PLATFORM refs` | Cross-references to PRD |
+| `cfs validate DESIGN-PLATFORM` | Full validation |
+| `cfs validate DESIGN-PLATFORM refs` | Cross-references to PRD |
 
 #### 1.3 DECOMPOSITION-PLATFORM
 
@@ -88,12 +88,12 @@ Context:
 
 | Prompt | What happens |
 |--------|--------------|
-| `cypilot make DECOMPOSITION-PLATFORM` | Creates MiniApp breakdown |
-| `cypilot decompose platform into miniapps` | Alternative phrasing |
+| `cfs make DECOMPOSITION-PLATFORM` | Creates MiniApp breakdown |
+| `cfs decompose platform into miniapps` | Alternative phrasing |
 
 **Provide context:**
 ```
-cypilot make DECOMPOSITION-PLATFORM
+cfs make DECOMPOSITION-PLATFORM
 Context:
 - MiniApps:
   - learn (course catalog, progress, certificates)
@@ -106,8 +106,8 @@ Context:
 
 | Prompt | What happens |
 |--------|--------------|
-| `cypilot validate DECOMPOSITION-PLATFORM` | Full validation |
-| `cypilot validate DECOMPOSITION-PLATFORM refs` | Cross-references |
+| `cfs validate DECOMPOSITION-PLATFORM` | Full validation |
+| `cfs validate DECOMPOSITION-PLATFORM refs` | Cross-references |
 
 ---
 
@@ -121,12 +121,12 @@ For each MiniApp from DECOMPOSITION-PLATFORM:
 
 | Prompt | What happens |
 |--------|--------------|
-| `cypilot make PRD-MINIAPP for learn` | Creates Learn MiniApp PRD |
-| `cypilot make PRD-MINIAPP for assess` | Creates Assess MiniApp PRD |
+| `cfs make PRD-MINIAPP for learn` | Creates Learn MiniApp PRD |
+| `cfs make PRD-MINIAPP for assess` | Creates Assess MiniApp PRD |
 
 **Provide context:**
 ```
-cypilot make PRD-MINIAPP for learn
+cfs make PRD-MINIAPP for learn
 Context:
 - MiniApp: Learn
 - Parent: cpt-platform (references platform FRs)
@@ -139,8 +139,8 @@ Context:
 
 | Prompt | What happens |
 |--------|--------------|
-| `cypilot validate PRD-MINIAPP for learn` | Full validation |
-| `cypilot validate PRD-MINIAPP for learn refs` | References to platform |
+| `cfs validate PRD-MINIAPP for learn` | Full validation |
+| `cfs validate PRD-MINIAPP for learn refs` | References to platform |
 
 #### 2.2 DESIGN-MINIAPP
 
@@ -148,12 +148,12 @@ Context:
 
 | Prompt | What happens |
 |--------|--------------|
-| `cypilot make DESIGN-MINIAPP for learn` | Creates MiniApp architecture |
-| `cypilot make DESIGN-MINIAPP for learn from PRD-MINIAPP` | From MiniApp PRD |
+| `cfs make DESIGN-MINIAPP for learn` | Creates MiniApp architecture |
+| `cfs make DESIGN-MINIAPP for learn from PRD-MINIAPP` | From MiniApp PRD |
 
 **Provide context:**
 ```
-cypilot make DESIGN-MINIAPP for learn
+cfs make DESIGN-MINIAPP for learn
 Context:
 - MiniApp: Learn
 - KMP modules: learn-domain, learn-data, learn-presentation
@@ -166,8 +166,8 @@ Context:
 
 | Prompt | What happens |
 |--------|--------------|
-| `cypilot validate DESIGN-MINIAPP for learn` | Full validation |
-| `cypilot validate DESIGN-MINIAPP for learn refs` | References |
+| `cfs validate DESIGN-MINIAPP for learn` | Full validation |
+| `cfs validate DESIGN-MINIAPP for learn refs` | References |
 
 #### 2.3 DECOMPOSITION-MINIAPP
 
@@ -175,12 +175,12 @@ Context:
 
 | Prompt | What happens |
 |--------|--------------|
-| `cypilot make DECOMPOSITION-MINIAPP for learn` | Creates Epic breakdown |
-| `cypilot decompose miniapp learn into epics` | Alternative phrasing |
+| `cfs make DECOMPOSITION-MINIAPP for learn` | Creates Epic breakdown |
+| `cfs decompose miniapp learn into epics` | Alternative phrasing |
 
 **Provide context:**
 ```
-cypilot make DECOMPOSITION-MINIAPP for learn
+cfs make DECOMPOSITION-MINIAPP for learn
 Context:
 - Epics:
   - course-catalog (browse, search, filter, enroll)
@@ -198,12 +198,12 @@ For each Epic from DECOMPOSITION-MINIAPP:
 
 | Prompt | What happens |
 |--------|--------------|
-| `cypilot make PRD-EPIC for course-catalog` | Creates Epic requirements |
-| `cypilot validate PRD-EPIC for course-catalog` | Validates Epic PRD |
+| `cfs make PRD-EPIC for course-catalog` | Creates Epic requirements |
+| `cfs validate PRD-EPIC for course-catalog` | Validates Epic PRD |
 
 **Provide context:**
 ```
-cypilot make PRD-EPIC for course-catalog
+cfs make PRD-EPIC for course-catalog
 Context:
 - Epic: Course Catalog
 - MiniApp: Learn
@@ -215,12 +215,12 @@ Context:
 
 | Prompt | What happens |
 |--------|--------------|
-| `cypilot make DESIGN-EPIC for course-catalog` | Creates Epic architecture |
-| `cypilot validate DESIGN-EPIC for course-catalog` | Validates Epic design |
+| `cfs make DESIGN-EPIC for course-catalog` | Creates Epic architecture |
+| `cfs validate DESIGN-EPIC for course-catalog` | Validates Epic design |
 
 **Provide context:**
 ```
-cypilot make DESIGN-EPIC for course-catalog
+cfs make DESIGN-EPIC for course-catalog
 Context:
 - Components: CourseListViewModel, CourseDetailViewModel, CourseRepository
 - Data flow: API → Repository → ViewModel → UI
@@ -232,12 +232,12 @@ Context:
 
 | Prompt | What happens |
 |--------|--------------|
-| `cypilot make DECOMPOSITION-EPIC for course-catalog` | Creates Feature breakdown |
-| `cypilot decompose epic course-catalog into features` | Alternative phrasing |
+| `cfs make DECOMPOSITION-EPIC for course-catalog` | Creates Feature breakdown |
+| `cfs decompose epic course-catalog into features` | Alternative phrasing |
 
 **Provide context:**
 ```
-cypilot make DECOMPOSITION-EPIC for course-catalog
+cfs make DECOMPOSITION-EPIC for course-catalog
 Context:
 - Features:
   - course-list (browse, pagination, pull-to-refresh)
@@ -255,12 +255,12 @@ For each Feature from DECOMPOSITION-EPIC:
 
 | Prompt | What happens |
 |--------|--------------|
-| `cypilot make FEATURE-MOBILE for course-list` | Creates feature design |
-| `cypilot validate FEATURE-MOBILE for course-list` | Validates feature |
+| `cfs make FEATURE-MOBILE for course-list` | Creates feature design |
+| `cfs validate FEATURE-MOBILE for course-list` | Validates feature |
 
 **Provide context:**
 ```
-cypilot make FEATURE-MOBILE for course-list
+cfs make FEATURE-MOBILE for course-list
 Context:
 - Feature: Course List
 - Epic: Course Catalog
@@ -277,25 +277,25 @@ Context:
 
 | Prompt | What happens |
 |--------|--------------|
-| `cypilot implement course-list` | Generates KMP + Android + iOS |
-| `cypilot implement course-list step by step` | With confirmation |
-| `cypilot implement course-list tests first` | TDD approach |
+| `cfs implement course-list` | Generates KMP + Android + iOS |
+| `cfs implement course-list step by step` | With confirmation |
+| `cfs implement course-list tests first` | TDD approach |
 
 **Implement specific platform**
 
 | Prompt | What happens |
 |--------|--------------|
-| `cypilot implement course-list kmp` | KMP ViewModel, UseCase, Repository |
-| `cypilot implement course-list android` | Compose UI |
-| `cypilot implement course-list ios` | SwiftUI + KMP wrapper |
+| `cfs implement course-list kmp` | KMP ViewModel, UseCase, Repository |
+| `cfs implement course-list android` | Compose UI |
+| `cfs implement course-list ios` | SwiftUI + KMP wrapper |
 
 **Validate code**
 
 | Prompt | What happens |
 |--------|--------------|
-| `cypilot validate code for course-list` | Validates markers and coverage |
-| `cypilot validate code coverage for course-list` | Coverage report |
-| `cypilot validate code orphans` | Finds orphaned markers |
+| `cfs validate code for course-list` | Validates markers and coverage |
+| `cfs validate code coverage for course-list` | Coverage report |
+| `cfs validate code orphans` | Finds orphaned markers |
 
 ---
 
@@ -314,17 +314,17 @@ Context:
 
 | Step | Generate | Validate |
 |------|----------|----------|
-| 1 | `cypilot make PRD-PLATFORM` | `cypilot validate PRD-PLATFORM` |
-| 2 | `cypilot make DESIGN-PLATFORM` | `cypilot validate DESIGN-PLATFORM` |
-| 3 | `cypilot make DECOMPOSITION-PLATFORM` | `cypilot validate DECOMPOSITION-PLATFORM` |
-| 4 | `cypilot make PRD-MINIAPP for {miniapp}` | `cypilot validate PRD-MINIAPP for {miniapp}` |
-| 5 | `cypilot make DESIGN-MINIAPP for {miniapp}` | `cypilot validate DESIGN-MINIAPP for {miniapp}` |
-| 6 | `cypilot make DECOMPOSITION-MINIAPP for {miniapp}` | `cypilot validate DECOMPOSITION-MINIAPP for {miniapp}` |
-| 7 | `cypilot make PRD-EPIC for {epic}` | `cypilot validate PRD-EPIC for {epic}` |
-| 8 | `cypilot make DESIGN-EPIC for {epic}` | `cypilot validate DESIGN-EPIC for {epic}` |
-| 9 | `cypilot make DECOMPOSITION-EPIC for {epic}` | `cypilot validate DECOMPOSITION-EPIC for {epic}` |
-| 10 | `cypilot make FEATURE-MOBILE for {feature}` | `cypilot validate FEATURE-MOBILE for {feature}` |
-| 11 | `cypilot implement {feature}` | `cypilot validate code for {feature}` |
+| 1 | `cfs make PRD-PLATFORM` | `cfs validate PRD-PLATFORM` |
+| 2 | `cfs make DESIGN-PLATFORM` | `cfs validate DESIGN-PLATFORM` |
+| 3 | `cfs make DECOMPOSITION-PLATFORM` | `cfs validate DECOMPOSITION-PLATFORM` |
+| 4 | `cfs make PRD-MINIAPP for {miniapp}` | `cfs validate PRD-MINIAPP for {miniapp}` |
+| 5 | `cfs make DESIGN-MINIAPP for {miniapp}` | `cfs validate DESIGN-MINIAPP for {miniapp}` |
+| 6 | `cfs make DECOMPOSITION-MINIAPP for {miniapp}` | `cfs validate DECOMPOSITION-MINIAPP for {miniapp}` |
+| 7 | `cfs make PRD-EPIC for {epic}` | `cfs validate PRD-EPIC for {epic}` |
+| 8 | `cfs make DESIGN-EPIC for {epic}` | `cfs validate DESIGN-EPIC for {epic}` |
+| 9 | `cfs make DECOMPOSITION-EPIC for {epic}` | `cfs validate DECOMPOSITION-EPIC for {epic}` |
+| 10 | `cfs make FEATURE-MOBILE for {feature}` | `cfs validate FEATURE-MOBILE for {feature}` |
+| 11 | `cfs implement {feature}` | `cfs validate code for {feature}` |
 
 ### Validation Modes
 

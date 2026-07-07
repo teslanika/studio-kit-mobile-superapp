@@ -211,7 +211,7 @@ This checklist provides code review criteria for mobile SuperApp implementations
 
 **Priority**: MEDIUM
 
-- [ ] Run `cypilot validate` passes
+- [ ] Run `cfs validate` passes
 - [ ] Coverage report reviewed
 - [ ] Missing implementations documented
 

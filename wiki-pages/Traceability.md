@@ -95,25 +95,25 @@ fun loadCachedCourses() {
 
 ```bash
 # Check all traceability
-cypilot validate all refs
+cfs validate all refs
 
 # Check Platform FR coverage
-cypilot validate --check=platform-fr-coverage
+cfs validate --check=platform-fr-coverage
 
 # Check Feature implementation
-cypilot validate --check=feature-impl-coverage
+cfs validate --check=feature-impl-coverage
 
 # Trace specific ID
-cypilot trace cpt-platform-fr-offline-support
+cfs trace cpt-platform-fr-offline-support
 
 # Find orphans (IDs with no downstream refs)
-cypilot find orphans
+cfs find orphans
 ```
 
 ## Traceability Report
 
 ```bash
-cypilot coverage report
+cfs coverage report
 ```
 
 Output:

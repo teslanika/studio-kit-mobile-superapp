@@ -28,7 +28,7 @@
 - [ ] Load `config/kits/mobile-superapp/artifacts/PRD-MINIAPP/checklist.md` for semantic guidance
 - [ ] Read parent Platform PRD for context
 - [ ] Load `config/kits/mobile-superapp/constraints.toml` for kit-level constraints
-- [ ] Load `{cypilot_path}/.core/architecture/specs/traceability.md` for ID formats
+- [ ] Load `{cf-studio-path}/.core/architecture/specs/traceability.md` for ID formats
 
 ---
 
@@ -117,7 +117,7 @@ If PRD-MINIAPP cannot be completed in a single session:
 - [ ] Generate use case IDs: `cpt-{miniapp}-usecase-{slug}`
 - [ ] Link to Platform PRD requirements
 - [ ] Reference platform actor IDs
-- [ ] Verify uniqueness with `cypilot list-ids`
+- [ ] Verify uniqueness with `cfs list-ids`
 
 ### Phase 4: Quality Check
 
@@ -128,7 +128,7 @@ If PRD-MINIAPP cannot be completed in a single session:
 
 ### Phase 5: Table of Contents
 
-- [ ] Run `cypilot toc <path>` to generate/update Table of Contents
+- [ ] Run `cfs toc <path>` to generate/update Table of Contents
 - [ ] Verify TOC is present and complete
 
 ---
@@ -137,7 +137,7 @@ If PRD-MINIAPP cannot be completed in a single session:
 
 ### Phase 1: Structural Validation
 
-- [ ] Run `cypilot validate --artifact <path>` for:
+- [ ] Run `cfs validate --artifact <path>` for:
   - Template structure compliance
   - ID format validation
   - Cross-reference validity
@@ -178,7 +178,7 @@ Issues:
 ### Missing Platform PRD
 
 - [ ] If parent Platform PRD not found:
-  - Option 1: Run `/cypilot-generate PRD-PLATFORM` first (recommended)
+  - Option 1: Run `/cf-generate PRD-PLATFORM` first (recommended)
   - Option 2: Continue without Platform PRD (document assumptions)
   - Document "Platform PRD pending" in MiniApp PRD header
 
@@ -201,8 +201,8 @@ Issues:
 
 ### Options
 
-- [ ] PRD-MINIAPP complete → `/cypilot-generate DESIGN-MINIAPP` — create technical design
-- [ ] Need Platform context → `/cypilot-generate PRD-PLATFORM` — create Platform PRD first
+- [ ] PRD-MINIAPP complete → `/cf-generate DESIGN-MINIAPP` — create technical design
+- [ ] Need Platform context → `/cf-generate PRD-PLATFORM` — create Platform PRD first
 - [ ] PRD needs revision → continue editing PRD-MINIAPP
-- [ ] Ready for Epic → `/cypilot-generate PRD-EPIC` — create Epic-level PRD
-- [ ] Ready for decomposition → `/cypilot-generate DECOMPOSITION-MINIAPP` — break into epics
+- [ ] Ready for Epic → `/cf-generate PRD-EPIC` — create Epic-level PRD
+- [ ] Ready for decomposition → `/cf-generate DECOMPOSITION-MINIAPP` — break into epics

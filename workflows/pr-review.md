@@ -47,7 +47,7 @@ For each new/modified class:
 
 3. **Run validation**
    ```bash
-   cypilot validate --artifact {module-path}
+   cfs validate --artifact {module-path}
    ```
 
 ### Step 3: Architecture Review
@@ -102,7 +102,7 @@ Apply `codebase/checklist.md` items:
 |--------|-------|
 | ✅/❌ | @cpt-impl markers present |
 | ✅/❌ | IMPL.md updated |
-| ✅/❌ | cypilot validate passes |
+| ✅/❌ | cfs validate passes |
 
 ### Architecture Compliance
 | Platform | Status | Notes |

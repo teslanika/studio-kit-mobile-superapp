@@ -29,7 +29,7 @@
 - [ ] Read parent MiniApp PRD for context
 - [ ] Read MiniApp DESIGN for architectural context
 - [ ] Load `config/kits/mobile-superapp/constraints.toml` for kit-level constraints
-- [ ] Load `{cypilot_path}/.core/architecture/specs/traceability.md` for ID formats
+- [ ] Load `{cf-studio-path}/.core/architecture/specs/traceability.md` for ID formats
 
 ---
 
@@ -122,7 +122,7 @@ If PRD-EPIC cannot be completed in a single session:
 - [ ] Generate widget IDs: `cpt-{miniapp}-{epic}-widget-{slug}`
 - [ ] Link to MiniApp PRD requirements
 - [ ] Document indirect Platform trace
-- [ ] Verify uniqueness with `cypilot list-ids`
+- [ ] Verify uniqueness with `cfs list-ids`
 
 ### Phase 4: Quality Check
 
@@ -134,7 +134,7 @@ If PRD-EPIC cannot be completed in a single session:
 
 ### Phase 5: Table of Contents
 
-- [ ] Run `cypilot toc <path>` to generate/update Table of Contents
+- [ ] Run `cfs toc <path>` to generate/update Table of Contents
 - [ ] Verify TOC is present and complete
 
 ---
@@ -143,7 +143,7 @@ If PRD-EPIC cannot be completed in a single session:
 
 ### Phase 1: Structural Validation
 
-- [ ] Run `cypilot validate --artifact <path>` for:
+- [ ] Run `cfs validate --artifact <path>` for:
   - Template structure compliance
   - ID format validation
   - Cross-reference validity
@@ -185,14 +185,14 @@ Issues:
 ### Missing MiniApp PRD
 
 - [ ] If parent MiniApp PRD not found:
-  - Option 1: Run `/cypilot-generate PRD-MINIAPP` first (recommended)
+  - Option 1: Run `/cf-generate PRD-MINIAPP` first (recommended)
   - Option 2: Continue without MiniApp PRD (Epic will lack traceability)
   - Document "MiniApp PRD pending" in Epic PRD header
 
 ### Missing MiniApp DESIGN
 
 - [ ] If MiniApp DESIGN not found:
-  - Option 1: Run `/cypilot-generate DESIGN-MINIAPP` first
+  - Option 1: Run `/cf-generate DESIGN-MINIAPP` first
   - Option 2: Continue with assumptions documented
   - Document architectural assumptions made
 
@@ -215,8 +215,8 @@ Issues:
 
 ### Options
 
-- [ ] PRD-EPIC complete → `/cypilot-generate DESIGN-EPIC` — create Epic technical design
-- [ ] Need MiniApp context → `/cypilot-generate PRD-MINIAPP` — create MiniApp PRD first
+- [ ] PRD-EPIC complete → `/cf-generate DESIGN-EPIC` — create Epic technical design
+- [ ] Need MiniApp context → `/cf-generate PRD-MINIAPP` — create MiniApp PRD first
 - [ ] PRD needs revision → continue editing PRD-EPIC
-- [ ] Ready for features → `/cypilot-generate DECOMPOSITION-EPIC` — decompose into features
-- [ ] Ready for implementation → `/cypilot-generate FEATURE-MOBILE` — create feature spec
+- [ ] Ready for features → `/cf-generate DECOMPOSITION-EPIC` — decompose into features
+- [ ] Ready for implementation → `/cf-generate FEATURE-MOBILE` — create feature spec
