@@ -378,6 +378,14 @@ default_path = "workflows/pr-status.md"
 type = "file"
 user_modifiable = false
 
+[[resources]]
+id = "workflow_create_prd"
+description = "PRD creation workflow with 6-subagent quality pipeline (dual output: stakeholder + kit template)"
+source = "workflows/create-prd.md"
+default_path = "workflows/create-prd.md"
+type = "file"
+user_modifiable = false
+
 # ══════════════════════════════════════════════════════════════════════════════
 # PR REPORT TEMPLATES
 # ══════════════════════════════════════════════════════════════════════════════
@@ -471,6 +479,14 @@ id = "scripts_pr_review_config"
 description = "PR review configuration"
 source = "scripts/pr-review.toml"
 default_path = "scripts/pr-review.toml"
+type = "file"
+user_modifiable = true
+
+[[resources]]
+id = "scripts_check_language"
+description = "Language validation: scans Markdown artifacts for non-English characters"
+source = "scripts/check-language.py"
+default_path = "scripts/check-language.py"
 type = "file"
 user_modifiable = true
 
