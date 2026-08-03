@@ -87,7 +87,7 @@ sealed class CourseListEffect {
 ### KMP ViewModel
 
 ```kotlin
-// @cpt-impl cpt-learn-course-list-viewmodel-kmp
+// @cpt-impl cpt-superapp-learn-course-list-viewmodel-kmp
 class CourseListViewModel(
     private val loadCoursesUseCase: LoadCoursesUseCase
 ) : ViewModel() {
@@ -122,7 +122,7 @@ class CourseListViewModel(
 ### Android Compose
 
 ```kotlin
-// @cpt-impl cpt-learn-course-list-screen-android
+// @cpt-impl cpt-superapp-learn-course-list-screen-android
 @Composable
 fun CourseListScreen(
     viewModel: CourseListViewModel = hiltViewModel(),
@@ -155,7 +155,7 @@ fun CourseListScreen(
 ### iOS SwiftUI
 
 ```swift
-// @cpt-impl cpt-learn-course-list-view-ios
+// @cpt-impl cpt-superapp-learn-course-list-view-ios
 struct CourseListView: View {
     @StateObject private var viewModel = CourseListViewModelWrapper()
     let onNavigateToCourse: (String) -> Void
@@ -223,8 +223,8 @@ CDSL flows map directly to Intents:
 
 | CDSL Flow | Intent |
 |-----------|--------|
-| `flow cpt-learn-flow-course-list-load` | `CourseListIntent.Load` |
-| `flow cpt-learn-flow-course-list-refresh` | `CourseListIntent.Refresh` |
-| `flow cpt-learn-flow-course-list-search` | `CourseListIntent.Search` |
+| `flow cpt-superapp-learn-flow-course-list-load` | `CourseListIntent.Load` |
+| `flow cpt-superapp-learn-flow-course-list-refresh` | `CourseListIntent.Refresh` |
+| `flow cpt-superapp-learn-flow-course-list-search` | `CourseListIntent.Search` |
 
 This ensures design-to-code traceability.

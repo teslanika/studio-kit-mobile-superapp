@@ -1,225 +1,134 @@
 # DESIGN-EPIC Rules
 
-**Artifact**: DESIGN-EPIC  
-**Kit**: mobile-superapp  
+**Artifact**: DESIGN-EPIC
+**Kit**: mobile-superapp
 **Level**: L2 (Epic)
 
-**Dependencies**:
-- `config/kits/mobile-superapp/artifacts/DESIGN-EPIC/template.md` — structural reference
-- `config/kits/mobile-superapp/artifacts/DESIGN-EPIC/checklist.md` — semantic quality criteria
-- `config/kits/mobile-superapp/artifacts/PRD-EPIC/template.md` — parent Epic PRD reference
-- `config/kits/mobile-superapp/artifacts/DESIGN-MINIAPP/template.md` — parent MiniApp DESIGN reference
+```pdsl
+UNIT DesignEpicAuthoring
 
-## Table of Contents
+PURPOSE:
+  Author or revise an Epic-level technical design (screen/flow components, state
+  contracts, data flow, navigation, error and offline behavior) that follows the
+  template, conventions, and authoring boundaries.
 
-1. [Prerequisites](#prerequisites)
-2. [Requirements](#requirements)
-3. [Tasks](#tasks)
-4. [Validation](#validation)
-5. [Error Handling](#error-handling)
-6. [Next Steps](#next-steps)
+WHEN:
+  - REQUIRE authoring or revising a DESIGN-EPIC
 
----
+DO:
+  - LOAD config/kits/mobile-superapp/artifacts/DESIGN-EPIC/template.md for structure
+  - LOAD config/kits/sdlc/artifacts/DESIGN/checklist.md — the base checklist, applied in full
+  - LOAD config/kits/mobile-superapp/artifacts/DESIGN-EPIC/checklist.md for the Epic-layer delta over that base
+  - RUN read parent Epic PRD and extract FRs, state requirements, widgets, error conditions, entry points, and data needs
+  - RUN read MiniApp DESIGN for module structure, domain model, repositories, navigation graph, and state pattern to inherit
+  - RUN read existing ADRs to reuse recorded decisions instead of re-deciding them
+  - LOAD config/kits/mobile-superapp/constraints.toml for kit-level constraints
+  - LOAD {cf-studio-path}/.core/architecture/specs/traceability.md for ID formats
+  - RUN read project config for ID prefix and resolve output path from {cf-studio-path}/config/artifacts.toml
+  - RUN author each required section guided by template prompts (Architecture Overview, Principles & Constraints, Technical Architecture, State Management, Navigation, Platform-Specific Considerations, Error Handling & Offline, Additional Context, Traceability)
+  - SET design anchor = cpt-{hierarchy-prefix}-design-epic; component IDs = cpt-{hierarchy-prefix}-component-{slug}; widget IDs = cpt-{hierarchy-prefix}-widget-{slug} reusing the PRD widget IDs; state ID = cpt-{hierarchy-prefix}-state-screen; use case IDs = cpt-{hierarchy-prefix}-usecase-{slug}; repository IDs = cpt-{hierarchy-prefix}-repo-{slug}; interface IDs = cpt-{hierarchy-prefix}-interface-{slug}; contract IDs = cpt-{hierarchy-prefix}-contract-{slug}; sequence IDs = cpt-{hierarchy-prefix}-seq-{slug}; store IDs = cpt-{hierarchy-prefix}-db-{slug} and cpt-{hierarchy-prefix}-dbtable-{slug}; platform tech IDs = cpt-{hierarchy-prefix}-tech-{slug}; gating IDs = cpt-{hierarchy-prefix}-topology-{slug}
+  - RUN cfs list-ids to verify ID uniqueness
 
-## Prerequisites
-
-### Load Dependencies
-
-- [ ] Load `config/kits/mobile-superapp/artifacts/DESIGN-EPIC/template.md` for structure
-- [ ] Load `config/kits/mobile-superapp/artifacts/DESIGN-EPIC/checklist.md` for semantic guidance
-- [ ] Read parent Epic PRD for requirements
-- [ ] Read parent MiniApp DESIGN for architectural context
-- [ ] Load `config/kits/mobile-superapp/constraints.toml` for kit-level constraints
-- [ ] Load `{cf-studio-path}/.core/architecture/specs/traceability.md` for ID formats
-
----
-
-## Requirements
-
-### Structural
-
-- [ ] DESIGN-EPIC follows `config/kits/mobile-superapp/artifacts/DESIGN-EPIC/template.md` structure
-- [ ] All required sections present and non-empty:
-  - Epic Overview (purpose, requirements coverage, drivers)
-  - Component Architecture (diagram, screens, widgets)
-  - State Management (state, intents, effects)
-  - Data Flow (use cases, repositories, API contracts)
-  - Navigation (entry/exit points, parameters)
-  - Platform-Specific Considerations (Android, iOS, WebView)
-  - Error Handling (error states, offline behavior)
-  - Traceability
-- [ ] All IDs follow `cpt-{miniapp}-{epic}-{kind}-{slug}` convention
-- [ ] References to Epic PRD are valid
-- [ ] References to MiniApp DESIGN are valid
-- [ ] Component diagram present (Mermaid flowchart)
-- [ ] No placeholder content (TODO, TBD, FIXME)
-- [ ] No duplicate IDs within document
-
-### Mobile-Specific
-
-- [ ] Platform implementation table for each component:
-  - KMP module location
-  - Android component location
-  - iOS component location
-- [ ] MVI pattern documented with State, Intent, Effect classes
-- [ ] Use cases have Input/Output types and step documentation
-- [ ] Repository operations specify caching strategy
-- [ ] Navigation includes deep link format
-- [ ] Platform-specific sections for Android (Compose) and iOS (SwiftUI)
-- [ ] WebView integration documented (if applicable)
-
-### Traceability
-
-- [ ] Requirements coverage table maps Epic PRD FRs to design responses
-- [ ] ADR references provided for key decisions
-- [ ] Screen/widget IDs link to Epic PRD components
-- [ ] Use case IDs link to Epic PRD requirements
-- [ ] Links to parent documents (Epic PRD, MiniApp DESIGN)
-
-### Versioning
-
-- [ ] When editing existing DESIGN: increment version in document header
-- [ ] When changing component definition: add `-v{N}` suffix to ID or increment
-
----
-
-## Tasks
-
-### Phase 1: Setup
-
-- [ ] Load `config/kits/mobile-superapp/artifacts/DESIGN-EPIC/template.md` for structure
-- [ ] Load `config/kits/mobile-superapp/artifacts/DESIGN-EPIC/checklist.md` for semantic guidance
-- [ ] Read Epic PRD for requirements
-- [ ] Read MiniApp DESIGN for architectural patterns
-- [ ] Identify which Epic FRs this DESIGN addresses
-
-### Phase 2: Content Creation
-
-Apply checklist semantics during creation:
-
-| Checklist Category | Generation Task |
-|-------------------|-----------------|
-| Epic Overview | Document purpose, requirements coverage, ADRs |
-| Component Architecture | Create component diagram, document screens/widgets |
-| State Management | Define MVI State/Intent/Effect classes |
-| Data Flow | Document use cases, repositories, API contracts |
-| Navigation | Define entry/exit points, deep links, parameters |
-| Platform-Specific | Document Android Compose, iOS SwiftUI specifics |
-| Error Handling | Define error states, offline behavior |
-
-**Partial Completion Handling**:
-
-If DESIGN-EPIC cannot be completed in a single session:
-1. Checkpoint progress with completed sections
-2. Add `status: DRAFT` to document header
-3. Mark incomplete sections with `INCOMPLETE: {reason}`
-4. Document resumption point
-
-### Phase 3: IDs and References
-
-- [ ] Generate component overview ID: `cpt-{miniapp}-epic-{epic}-component-overview`
-- [ ] Generate screen IDs: `cpt-{miniapp}-{epic}-screen-{slug}`
-- [ ] Generate widget IDs: `cpt-{miniapp}-{epic}-widget-{slug}`
-- [ ] Generate state ID: `cpt-{miniapp}-{epic}-state`
-- [ ] Generate use case IDs: `cpt-{miniapp}-{epic}-usecase-{slug}`
-- [ ] Generate repo IDs: `cpt-{miniapp}-{epic}-repo-{slug}`
-- [ ] Generate API IDs: `cpt-{miniapp}-{epic}-api-{slug}`
-- [ ] Generate nav ID: `cpt-{miniapp}-{epic}-nav`
-- [ ] Generate platform IDs: `cpt-{miniapp}-{epic}-android`, `cpt-{miniapp}-{epic}-ios`
-- [ ] Generate offline ID: `cpt-{miniapp}-{epic}-offline`
-- [ ] Link to Epic PRD requirements
-- [ ] Reference MiniApp DESIGN patterns
-- [ ] Verify uniqueness with `cfs list-ids`
-
-### Phase 4: Quality Check
-
-- [ ] Self-review against `config/kits/mobile-superapp/artifacts/DESIGN-EPIC/checklist.md` MUST HAVE items
-- [ ] Ensure no MUST NOT HAVE violations
-- [ ] Verify Epic PRD traceability
-- [ ] Verify MiniApp DESIGN alignment
-- [ ] Verify MVI pattern is consistent
-
-### Phase 5: Table of Contents
-
-- [ ] Run `cfs toc <path>` to generate/update Table of Contents
-- [ ] Verify TOC is present and complete
-
----
-
-## Validation
-
-### Phase 1: Structural Validation
-
-- [ ] Run `cfs validate --artifact <path>` for:
-  - Template structure compliance
-  - ID format validation
-  - Cross-reference validity
-  - No placeholders
-
-### Phase 2: Semantic Validation
-
-- [ ] Read `config/kits/mobile-superapp/artifacts/DESIGN-EPIC/checklist.md` in full
-- [ ] For each MUST HAVE item: check if requirement is met
-- [ ] For each MUST NOT HAVE item: scan document for violations
-
-### Phase 3: Epic-Specific Validation
-
-- [ ] Component diagram accurately represents architecture
-- [ ] All screens have platform implementation table
-- [ ] All widgets have states and props documented
-- [ ] MVI State/Intent/Effect are complete
-- [ ] All use cases have steps documented
-- [ ] Navigation includes deep link handling
-- [ ] Error handling covers all error types
-- [ ] Offline behavior is defined (if applicable)
-
-### Validation Report Format
-
-```
-DESIGN-EPIC Validation Report
-═════════════════════════════
-
-Structural: PASS/FAIL
-Semantic: PASS/FAIL (N issues)
-Epic-Specific: PASS/FAIL (N issues)
-
-Issues:
-- [SEVERITY] CHECKLIST-ID: Description
+RULES:
+  - ALWAYS follow the template structure; all required sections present and non-empty
+  - ALWAYS mark every design element as a checkbox with a priority marker: - [ ] `pN` - **ID**: `cpt-...`
+  - ALWAYS map every PRD state requirement to a modelled state value, and every PRD error condition to a detection and a UI response
+  - ALWAYS reuse the PRD widget IDs for the components that realize them; NEVER mint a second ID for the same widget
+  - ALWAYS document each component with why it exists, its responsibility scope, its responsibility boundaries, its technology and location, and its related components by ID
+  - ALWAYS reference MiniApp entities, repositories, and the navigation graph by MiniApp ID; NEVER redefine them
+  - ALWAYS specify all three platform implementations (shared, Android, iOS) with source locations, or justify the divergence
+  - ALWAYS specify state restoration across configuration change and process death
+  - ALWAYS keep the design decision-level: state contracts, intents, effects, and signatures are in scope, method bodies are not
+  - ALWAYS record a decision that has alternatives as an ADR and reference it, rather than arguing it inline
+  - ALWAYS version on change: increment the header version when editing; add `-v{N}` to an ID whose meaning changed and record an ADR
+  - ALWAYS treat the checklist as the single source of semantic quality criteria
+  - NEVER duplicate semantic criteria here; NEVER leave placeholders (TODO, TBD, FIXME); NEVER create duplicate IDs within the document
 ```
 
----
+```pdsl
+UNIT DesignEpicOmissions
 
-## Error Handling
+PURPOSE:
+  Enforce DESIGN scope boundaries — content that MUST NOT appear and the artifact where it belongs. Report as a violation if found.
 
-### Missing Epic PRD
+RULES:
+  - NEVER include product requirements, user stories, or acceptance criteria (BIZ-DESIGN-NO-001, HIGH) — they belong in PRD-EPIC
+  - NEVER include decision rationale that supersedes an ADR (ARCH-DESIGN-NO-001, HIGH) — decisions with alternatives belong in ADR and are referenced here
+  - NEVER include implementation bodies beyond illustrative signatures, state contracts, and schemas (MAINT-DESIGN-NO-001, HIGH) — method bodies belong in code
+  - NEVER include implementation tasks, estimates, or sequencing (BIZ-DESIGN-NO-002, HIGH) — they belong in DECOMPOSITION-EPIC
+  - NEVER include CDSL flows, step-by-step algorithms, or Definition of Done (BIZ-DESIGN-NO-003, MEDIUM) — they belong in FEATURE-MOBILE
+  - NEVER include test case definitions (TEST-DESIGN-NO-001, MEDIUM) — tests belong in FEATURE/code
+  - NEVER redefine MiniApp module structure, domain entities, repositories, or the navigation graph (EPIC-DESIGN-NO-001, HIGH) — they belong in DESIGN-MINIAPP and are referenced by ID
+  - NEVER redefine platform layers, kernel internals, or the MiniApp container model (EPIC-DESIGN-NO-002, HIGH) — they belong in DESIGN-PLATFORM
+  - NEVER include design-system token values, colors, spacing, or animation curves (EPIC-DESIGN-NO-003, MEDIUM) — visual specification belongs in the design system
+  - NEVER include platform-specific coding conventions (EPIC-DESIGN-NO-004, LOW) — conventions belong in IMPL-IOS / IMPL-ANDROID / IMPL-KMP
+```
 
-- [ ] If parent Epic PRD not found:
-  - Option 1: Run `/cf-generate PRD-EPIC` first (recommended)
-  - Option 2: Continue without PRD (DESIGN will lack traceability)
-  - Document "PRD pending" in DESIGN header
+```pdsl
+UNIT DesignEpicValidate
 
-### Missing MiniApp DESIGN
+PURPOSE:
+  Run deterministic, semantic, and TOC validation on the DESIGN-EPIC.
 
-- [ ] If parent MiniApp DESIGN not found:
-  - Option 1: Run `/cf-generate DESIGN-MINIAPP` first
-  - Option 2: Continue with assumptions documented
-  - Document architectural assumptions made
+DO:
+  - RUN cfs validate --artifact <path> (template structure, ID format, priority markers, no placeholders, no duplicate IDs)
+  - LOAD config/kits/sdlc/artifacts/DESIGN/checklist.md and RUN the full base semantic pass (Review Scope Selection, Evidence Requirements, all expertise domains, MUST NOT HAVE scan)
+  - LOAD config/kits/mobile-superapp/artifacts/DESIGN-EPIC/checklist.md and RUN the Epic-layer delta pass (domain scope table, delta MUST HAVE, delta MUST NOT HAVE, mobile-specific criteria)
+  - RETURN one merged report in the base checklist's report format, citing base and delta checklist IDs
+  - RUN cfs toc <path> then cfs validate-toc <path>
 
-### Escalation
+RULES:
+  - ALWAYS run cfs validate --artifact <path>
+  - ALWAYS verify every PRD state requirement, widget, and error condition is realized in this design
+  - NEVER consider the DESIGN done while validation reports fail/error or cfs validate-toc does not PASS
+  - ALWAYS use the checklist for semantic criteria, applicability handling, and report format — do not restate them here
+```
 
-- [ ] Ask user when uncertain about component boundaries
-- [ ] Ask user when API contracts are unavailable
-- [ ] Ask user when platform-specific behavior needs clarification
+```pdsl
+UNIT DesignEpicErrorHandling
 
----
+PURPOSE:
+  Recover deterministically from missing dependencies, config, and ambiguity.
 
-## Next Steps
+ON_ERROR:
+  missing_template ->
+    STOP — cannot proceed without the DESIGN-EPIC template
+  missing_checklist ->
+    EMIT warning
+    SET skip semantic validation
+  missing_epic_prd ->
+    EMIT "Parent Epic PRD not found. Recommended: run /cf-generate PRD-EPIC first — states, widgets, and error conditions are derived from it. Or continue with documented assumptions and 'PRD pending' in the header."
+    WAIT user.reply
+  missing_miniapp_design ->
+    EMIT "MiniApp DESIGN not found. Recommended: run /cf-generate DESIGN-MINIAPP first — module structure, entities, and repositories are inherited from it. Or continue with the inherited elements documented as assumptions."
+    WAIT user.reply
+  backend_contract_unavailable ->
+    EMIT warning
+    CONTINUE with the data need stated at capability level and the missing contract listed as an open dependency
 
-### Options
+RULES:
+  - ALWAYS escalate to the user when a required repository operation does not exist yet, when a state's behavior is undefined in the PRD, or when a platform divergence needs a product decision
+```
 
-- [ ] DESIGN-EPIC complete → `/cf-generate DECOMPOSITION-EPIC` — create features manifest
-- [ ] Need architecture decision → `/cf-generate ADR` — document key decision
-- [ ] PRD missing/incomplete → `/cf-generate PRD-EPIC` — create/update PRD first
-- [ ] DESIGN needs revision → continue editing DESIGN-EPIC
-- [ ] Ready for Feature → `/cf-generate FEATURE-MOBILE` — create feature specification
-- [ ] MiniApp DESIGN missing → `/cf-generate DESIGN-MINIAPP` — create MiniApp DESIGN first
+```pdsl
+UNIT DesignEpicNextSteps
+
+PURPOSE:
+  Offer next actions after the DESIGN-EPIC is complete.
+
+DO:
+  - EMIT_MENU DesignEpicNextStepsMenu
+
+MENU DesignEpicNextStepsMenu:
+  TITLE: DESIGN-EPIC next steps
+  OPTIONS:
+    1 -> RUN /cf-generate DECOMPOSITION-EPIC (break the Epic into features)
+    2 -> RUN /cf-generate FEATURE-MOBILE (create a feature spec)
+    3 -> RUN /cf-generate ADR (record an Epic-level decision)
+    4 -> CONTINUE DesignEpicAuthoring (revise DESIGN)
+    5 -> RUN /cf-analyze semantic (checklist-only review)
+  INVALID:
+    EMIT "Reply with 1, 2, 3, 4, or 5."
+    WAIT user.reply
+    STOP_TURN
+```

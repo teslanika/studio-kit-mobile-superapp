@@ -9,7 +9,7 @@ Code markers provide traceability from code back to design documents.
 Shows that a file/class implements a design element.
 
 ```kotlin
-// @cpt-impl cpt-learn-course-list-viewmodel-kmp
+// @cpt-impl cpt-superapp-learn-course-list-viewmodel-kmp
 class CourseListViewModel { ... }
 ```
 
@@ -23,7 +23,7 @@ class CourseListViewModel { ... }
 Shows that a function/class implements a specific flow/algo/state.
 
 ```kotlin
-// @cpt-flow:cpt-learn-flow-course-list-load:p1
+// @cpt-flow:cpt-superapp-learn-flow-course-list-load:p1
 fun loadCourses() { ... }
 ```
 
@@ -36,10 +36,10 @@ fun loadCourses() { ... }
 Wrap specific lines that implement a CDSL instruction.
 
 ```kotlin
-// @cpt-begin:cpt-learn-flow-course-list-load:p1:inst-kmp-1
+// @cpt-begin:cpt-superapp-learn-flow-course-list-load:p1:inst-kmp-1
 viewModelScope.launch {
     _state.update { it.copy(isLoading = true) }
-// @cpt-end:cpt-learn-flow-course-list-load:p1:inst-kmp-1
+// @cpt-end:cpt-superapp-learn-flow-course-list-load:p1:inst-kmp-1
 ```
 
 **Use when:**
@@ -54,7 +54,7 @@ viewModelScope.launch {
 Simplified markers, no block markers required.
 
 ```kotlin
-// @cpt-impl cpt-learn-course-list-viewmodel-kmp
+// @cpt-impl cpt-superapp-learn-course-list-viewmodel-kmp
 class CourseListViewModel(
     private val loadCoursesUseCase: LoadCoursesUseCase
 ) : ViewModel() {
@@ -70,20 +70,20 @@ class CourseListViewModel(
 Complete traceability with block markers for each CDSL instruction.
 
 ```kotlin
-// @cpt-flow:cpt-learn-flow-course-list-load:p1
+// @cpt-flow:cpt-superapp-learn-flow-course-list-load:p1
 fun loadCourses() {
-    // @cpt-begin:cpt-learn-flow-course-list-load:p1:inst-kmp-1
+    // @cpt-begin:cpt-superapp-learn-flow-course-list-load:p1:inst-kmp-1
     viewModelScope.launch {
         _state.update { it.copy(isLoading = true) }
-    // @cpt-end:cpt-learn-flow-course-list-load:p1:inst-kmp-1
+    // @cpt-end:cpt-superapp-learn-flow-course-list-load:p1:inst-kmp-1
     
-    // @cpt-begin:cpt-learn-flow-course-list-load:p1:inst-kmp-2
+    // @cpt-begin:cpt-superapp-learn-flow-course-list-load:p1:inst-kmp-2
         val result = loadCoursesUseCase()
-    // @cpt-end:cpt-learn-flow-course-list-load:p1:inst-kmp-2
+    // @cpt-end:cpt-superapp-learn-flow-course-list-load:p1:inst-kmp-2
     
-    // @cpt-begin:cpt-learn-flow-course-list-load:p1:inst-kmp-3
+    // @cpt-begin:cpt-superapp-learn-flow-course-list-load:p1:inst-kmp-3
         _state.update { it.copy(courses = result, isLoading = false) }
-    // @cpt-end:cpt-learn-flow-course-list-load:p1:inst-kmp-3
+    // @cpt-end:cpt-superapp-learn-flow-course-list-load:p1:inst-kmp-3
     }
 }
 ```
@@ -93,24 +93,24 @@ fun loadCourses() {
 ### KMP (Kotlin)
 
 ```kotlin
-// @cpt-impl cpt-kmp-learn-viewmodel-courselist
+// @cpt-impl cpt-superapp-learn-viewmodel-courselist
 class CourseListViewModel { ... }
 
-// @cpt-impl cpt-kmp-learn-usecase-loadcourses
+// @cpt-impl cpt-superapp-learn-usecase-loadcourses
 class LoadCoursesUseCase { ... }
 
-// @cpt-impl cpt-kmp-learn-repository-course
+// @cpt-impl cpt-superapp-learn-repository-course
 class CourseRepositoryImpl { ... }
 ```
 
 ### Android (Compose)
 
 ```kotlin
-// @cpt-impl cpt-android-learn-screen-courselist
+// @cpt-impl cpt-superapp-learn-screen-courselist
 @Composable
 fun CourseListScreen() { ... }
 
-// @cpt-impl cpt-android-learn-component-coursecard
+// @cpt-impl cpt-superapp-learn-component-coursecard
 @Composable
 fun CourseCard() { ... }
 ```
@@ -118,10 +118,10 @@ fun CourseCard() { ... }
 ### iOS (SwiftUI)
 
 ```swift
-// @cpt-impl cpt-ios-learn-view-courselist
+// @cpt-impl cpt-superapp-learn-view-courselist
 struct CourseListView: View { ... }
 
-// @cpt-impl cpt-ios-learn-wrapper-courselist
+// @cpt-impl cpt-superapp-learn-wrapper-courselist
 class CourseListViewModelWrapper { ... }
 ```
 
@@ -141,7 +141,7 @@ Code: @cpt-begin:...:inst-kmp-1 exists
 Code: @cpt-begin:...:inst-kmp-2 exists
 Code: @cpt-begin:...:inst-kmp-3 exists
     ↓
-FEATURE: flow cpt-learn-flow-course-list-load [x]
+FEATURE: flow cpt-superapp-learn-flow-course-list-load [x]
     ↓
 DECOMPOSITION-EPIC: feature course-list [x]
     ↓

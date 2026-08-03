@@ -1,285 +1,176 @@
-# DECOMPOSITION-PLATFORM Checklist
+# DECOMPOSITION-PLATFORM Checklist — Layer Delta
 
-**Artifact**: DECOMPOSITION-PLATFORM  
-**Kit**: mobile-superapp  
-**Level**: L0 (Platform)
+**Artifact**: DECOMPOSITION-PLATFORM
+**Kit**: mobile-superapp
+**Level**: L0 (Platform / Host App)
+**Base Checklist**: `{cf-studio-path}/config/kits/sdlc/artifacts/DECOMPOSITION/checklist.md` (sdlc DECOMPOSITION Expert Checklist)
 
-This checklist provides semantic quality criteria for Platform-level Decomposition documents in mobile SuperApp projects.
+This checklist is a **delta over the sdlc DECOMPOSITION Expert Checklist**, not a replacement. Every criterion in the base checklist applies to a DECOMPOSITION-PLATFORM document; this file states how each expertise domain is scoped at the platform layer and adds the criteria that exist only at this layer.
 
 ---
 
 ## Table of Contents
 
-1. [MUST HAVE Requirements](#must-have-requirements)
-2. [SHOULD HAVE Requirements](#should-have-requirements)
-3. [MUST NOT HAVE (Violations)](#must-not-have-violations)
-4. [Mobile-Specific Criteria](#mobile-specific-criteria)
-5. [Reporting](#reporting)
+1. [How To Use This Checklist](#how-to-use-this-checklist)
+2. [Expertise Domain Scope At This Layer](#expertise-domain-scope-at-this-layer)
+3. [Layer Delta: MUST HAVE](#layer-delta-must-have)
+4. [Layer Delta: MUST NOT HAVE](#layer-delta-must-not-have)
+5. [Layer Delta: Mobile-Specific Criteria](#layer-delta-mobile-specific-criteria)
+6. [Reporting](#reporting)
 
 ---
 
-## MUST HAVE Requirements
+## How To Use This Checklist
 
-### DECOMP-PLATFORM-001: Overview Section
+1. **LOAD the base checklist first** and apply it in full: Referenced Standards, Prerequisites, Applicability Context, Severity Dictionary, Checkpointing, all MUST HAVE domains (COV, EXC, ATTR, LEV, CFG, TRC, DEP, CHK, DOC, FMT), and all MUST NOT HAVE items.
+2. **Apply the domain scope table** below. The decomposition entity at this layer is a **MiniApp**, not a feature — read every base criterion that says "feature" as applying to a MiniApp entry.
+3. **Apply the delta criteria** in this file after the base pass.
+4. **Report once.** Use the base checklist's Reporting section for a single merged report citing base IDs (`COV-001`) and delta IDs (`DECOMP-PLATFORM-001`) in the same `Checklist Item` field.
 
-**Priority**: CRITICAL
-
-The DECOMPOSITION MUST include:
-
-- [ ] Clear purpose statement
-- [ ] Link to Platform PRD
-- [ ] Link to Platform DESIGN
-- [ ] Overall implementation status marker
-
-**Why it matters**: Overview establishes context for decomposition.
-
-### DECOMP-PLATFORM-002: MiniApp Entries Structure
-
-**Priority**: CRITICAL
-
-Each MiniApp entry MUST include:
-
-- [ ] MiniApp ID following `cpt-{platform}-miniapp-{miniapp}` pattern
-- [ ] Link to MiniApp folder
-- [ ] Priority (HIGH, MEDIUM, LOW)
-- [ ] Purpose description (few sentences)
-- [ ] Target users (actor references)
-- [ ] Dependencies (Kernel, other MiniApps)
-- [ ] Scope (in-scope list)
-- [ ] Out-of-scope (explicit exclusions)
-
-**Why it matters**: Complete entries enable independent MiniApp development.
-
-### DECOMP-PLATFORM-003: Requirements Coverage
-
-**Priority**: CRITICAL
-
-Each MiniApp entry MUST document:
-
-- [ ] Requirements covered list with IDs
-- [ ] `cpt-{platform}-fr-{slug}` references for each FR
-- [ ] Requirement summary for each
-- [ ] Priority marker for each requirement
-- [ ] Checkbox for implementation status
-
-**Why it matters**: Coverage ensures all Platform FRs are allocated to MiniApps.
-
-### DECOMP-PLATFORM-004: Platform Components
-
-**Priority**: HIGH
-
-Each MiniApp entry MUST list:
-
-- [ ] Platform components from DESIGN used by this MiniApp
-- [ ] `cpt-{platform}-component-{slug}` references
-- [ ] Priority marker for each component
-- [ ] Checkbox for implementation status
-
-**Why it matters**: Components trace DESIGN elements to MiniApps.
-
-### DECOMP-PLATFORM-005: Integration Points
-
-**Priority**: HIGH
-
-Each MiniApp entry MUST document:
-
-- [ ] External integration references
-- [ ] `cpt-{platform}-integration-{slug}` IDs
-- [ ] Integration description
-
-**Why it matters**: Integrations define external dependencies.
-
-### DECOMP-PLATFORM-006: Shared Kernel Components
-
-**Priority**: CRITICAL
-
-The DECOMPOSITION MUST include:
-
-- [ ] Kernel components table
-- [ ] Component ID, name, and MiniApps using each
-- [ ] Auth, Storage, Network, Notifications kernel modules
-
-**Why it matters**: Kernel components are shared dependencies.
-
-### DECOMP-PLATFORM-007: MiniApp Dependencies
-
-**Priority**: HIGH
-
-The DECOMPOSITION MUST include:
-
-- [ ] Dependency diagram (text or visual)
-- [ ] Dependency rationale for each relationship
-- [ ] Kernel as root dependency
-- [ ] Inter-MiniApp communication patterns (deep links, events)
-
-**Why it matters**: Dependencies determine implementation order.
-
-### DECOMP-PLATFORM-008: Release Roadmap
-
-**Priority**: HIGH
-
-The DECOMPOSITION MUST include:
-
-- [ ] Release roadmap table (quarter, MiniApps, milestone)
-- [ ] Chronological ordering
-- [ ] Milestone descriptions
-
-**Why it matters**: Roadmap enables release planning.
+Severity values are the base checklist's: CRITICAL, HIGH, MEDIUM, LOW.
 
 ---
 
-## SHOULD HAVE Requirements
+## Expertise Domain Scope At This Layer
 
-### DECOMP-PLATFORM-009: Target Release Per MiniApp
+| Domain | Scope at L0 (Platform) | Notes |
+|--------|------------------------|-------|
+| COV | Full | Every platform design component, kernel contract, integration, sequence, and data store must be assigned to a MiniApp or to the shared kernel |
+| EXC | Full | MiniApp scopes must be mutually exclusive; shared capability belongs to the kernel |
+| ATTR | Full | Each MiniApp entry needs ID, type, purpose, scope, and subordinates (its epics, named or planned) |
+| LEV | Full | Decomposition stops at the MiniApp; epics are the next level down |
+| CFG | Full | Each MiniApp is a configuration item — independently versioned and releasable |
+| TRC | Full | Forward to MiniApp PRD/DESIGN, backward to Platform PRD/DESIGN |
+| DEP | Full | MiniApp dependency graph must be a DAG; kernel-only dependencies are the baseline |
+| CHK | Full | `status-overall` cascades from all `miniapp` entries |
+| DOC | Full | Explicit non-applicability is mandatory at every layer |
+| FMT | Full | Entry format, required fields, and checkbox syntax as in the base |
 
-**Priority**: MEDIUM
-
-Each MiniApp entry SHOULD include:
-
-- [ ] Target release (Q{X} 202{Y})
-- [ ] Alignment with roadmap table
-
-### DECOMP-PLATFORM-010: Full Coverage Validation
-
-**Priority**: MEDIUM
-
-The DECOMPOSITION SHOULD verify:
-
-- [ ] All Platform FRs appear in at least one MiniApp
-- [ ] No Platform FRs are orphaned
-- [ ] Coverage can be traced to DESIGN components
-
-### DECOMP-PLATFORM-011: MiniApp Isolation
-
-**Priority**: MEDIUM
-
-The DECOMPOSITION SHOULD document:
-
-- [ ] MiniApps are loosely coupled
-- [ ] Communication only via deep links and events
-- [ ] No direct MiniApp-to-MiniApp calls
+No domain is deferred at this layer: the platform decomposition is the only artifact that assigns platform-level design elements to owners.
 
 ---
 
-## MUST NOT HAVE (Violations)
+## Layer Delta: MUST HAVE
 
-### DECOMP-PLATFORM-NO-001: No Epic Details
+### DECOMP-PLATFORM-001: MiniApp Boundary Justification
+**Severity**: CRITICAL
 
-**Priority**: HIGH
+- [ ] Each MiniApp boundary is justified by user role, domain cohesion, or release independence — not by team structure
+- [ ] Two MiniApps that always ship together and share the same users are challenged as a single MiniApp
+- [ ] Each MiniApp can be developed, released, and activated independently, or the coupling is documented
 
-The DECOMPOSITION MUST NOT contain:
+### DECOMP-PLATFORM-002: Kernel vs MiniApp Allocation
+**Severity**: CRITICAL
 
-- [ ] Epic-level breakdowns (belongs in DECOMPOSITION-MINIAPP)
-- [ ] Screen definitions (belongs in MiniApp)
-- [ ] Feature lists (belongs in MiniApp)
+- [ ] Every capability used by more than one MiniApp is allocated to the kernel, not duplicated per MiniApp
+- [ ] The Shared Kernel Coverage table lists each kernel component and the MiniApps that consume it
+- [ ] Each entry lists the kernel contracts it consumes by `cpt-{prefix}-contract-{slug}`
+- [ ] No MiniApp is listed as owning a kernel component
 
-**Why it matters**: Platform DECOMPOSITION only covers MiniApps.
+### DECOMP-PLATFORM-003: Deep Link Namespace Uniqueness
+**Severity**: HIGH
 
-### DECOMP-PLATFORM-NO-002: No Implementation Details
+- [ ] Each MiniApp declares a deep link namespace `{scheme}://{miniapp}/*`
+- [ ] Namespaces are unique across all MiniApps and match the platform routing design
+- [ ] The scheme matches the one registered in DESIGN-PLATFORM
 
-**Priority**: HIGH
+### DECOMP-PLATFORM-004: Target Users Per MiniApp
+**Severity**: HIGH
 
-The DECOMPOSITION MUST NOT contain:
+- [ ] Each MiniApp names its target users by `cpt-{prefix}-actor-{slug}` from the Platform PRD
+- [ ] Every platform actor is served by at least one MiniApp, or the gap is documented
+- [ ] No actor is invented here
 
-- [ ] Code locations (belongs in DESIGN/IMPL)
-- [ ] Module structures (belongs in DESIGN)
-- [ ] Technical specifications (belongs in DESIGN)
+### DECOMP-PLATFORM-005: Design Element Assignment Completeness
+**Severity**: CRITICAL
 
-**Why it matters**: Decomposition is organizational, not technical.
+- [ ] Every DESIGN-PLATFORM component, integration, sequence, and data store appears in the Coverage Matrix with an owner
+- [ ] Platform principles and constraints are assigned to the MiniApps that must honour them
+- [ ] Unassigned elements are listed with a reason (kernel-internal, deferred, out of scope)
 
-### DECOMP-PLATFORM-NO-003: No Missing Traceability
+### DECOMP-PLATFORM-006: Release Roadmap Consistency
+**Severity**: MEDIUM
 
-**Priority**: CRITICAL
+- [ ] Each MiniApp has a target release and the roadmap table agrees with the per-entry values
+- [ ] Roadmap ordering does not violate the dependency graph
+- [ ] The MVP release is identified and is self-sufficient (its MiniApps depend only on the kernel and on each other)
 
-The DECOMPOSITION MUST NOT have:
+### DECOMP-PLATFORM-007: Traceability Links
+**Severity**: HIGH
 
-- [ ] MiniApps without requirement coverage
-- [ ] Requirements without MiniApp allocation
-- [ ] Components without MiniApp assignment
-
-**Why it matters**: Full traceability is the purpose of decomposition.
-
-### DECOMP-PLATFORM-NO-004: No Inconsistent Priorities
-
-**Priority**: MEDIUM
-
-The DECOMPOSITION MUST NOT have:
-
-- [ ] Priority mismatches between MiniApp level and requirements
-- [ ] P1 requirements in LOW priority MiniApps without justification
-
-**Why it matters**: Priorities should align across hierarchy.
+- [ ] Links to Platform PRD and Platform DESIGN are present
+- [ ] Each entry links to its MiniApp folder path
+- [ ] Coverage Matrix rows are consistent with the entry bodies
 
 ---
 
-## Mobile-Specific Criteria
+## Layer Delta: MUST NOT HAVE
 
-### MOBILE-DECOMP-001: Kernel Dependencies
+These are additional to the base checklist's MUST NOT HAVE items, all of which apply here unchanged.
 
-**Priority**: CRITICAL
+### DECOMP-PLATFORM-NO-001: No Epic-Level Decomposition
+**Severity**: HIGH
 
-All MiniApps MUST depend on:
+**What to check**:
+- [ ] No screens, flows, or capabilities enumerated inside a MiniApp entry beyond a scope statement
+- [ ] No navigation graphs or screen inventories
 
-- [ ] Auth Kernel (`cpt-{platform}-component-auth-kernel`)
-- [ ] Storage Kernel (`cpt-{platform}-component-storage-kernel`)
-- [ ] Network Kernel (`cpt-{platform}-component-network-kernel`)
+**Where it belongs**: `DECOMPOSITION-MINIAPP`
 
-### MOBILE-DECOMP-002: Platform-Specific Notes
+### DECOMP-PLATFORM-NO-002: No Platform Design Restatement
+**Severity**: MEDIUM
 
-**Priority**: MEDIUM
+**What to check**:
+- [ ] No redefined platform layers, kernel internals, or container model
+- [ ] No re-derived NFR thresholds beyond a reference
 
-Where applicable, MiniApp entries SHOULD note:
+**Where it belongs**: `DESIGN-PLATFORM` — reference by ID
 
-- [ ] iOS-specific considerations
-- [ ] Android-specific considerations
-- [ ] Platform parity requirements
+### DECOMP-PLATFORM-NO-003: No Team Or Estimate Planning
+**Severity**: MEDIUM
 
-### MOBILE-DECOMP-003: Notification Integration
+**What to check**:
+- [ ] No story points, sprint assignments, or team names
+- [ ] No developer-level task breakdown
 
-**Priority**: MEDIUM
+**Where it belongs**: the project plan / issue tracker
 
-MiniApps using notifications MUST reference:
+---
 
-- [ ] Notifications Kernel dependency
-- [ ] Push notification integration point
+## Layer Delta: Mobile-Specific Criteria
 
-### MOBILE-DECOMP-004: Offline-First MiniApps
+### MOBILE-DECOMP-PLATFORM-001: Store Release Unit Awareness
+**Severity**: MEDIUM
 
-**Priority**: MEDIUM
+- [ ] The roadmap states whether each MiniApp ships inside the host app binary or is remotely activated
+- [ ] MiniApps that require a store submission are distinguished from those gated by a feature flag
 
-MiniApps with offline requirements SHOULD note:
+### MOBILE-DECOMP-PLATFORM-002: Platform Parity Of The Decomposition
+**Severity**: MEDIUM
 
-- [ ] Offline capability in scope
-- [ ] Storage Kernel usage for offline data
+- [ ] Any MiniApp planned for only one of Android/iOS is flagged with the reason and the parity plan
+- [ ] The roadmap does not silently assume simultaneous delivery on both platforms
+
+### MOBILE-DECOMP-PLATFORM-003: Offline And Notification Ownership
+**Severity**: MEDIUM
+
+- [ ] MiniApps that require offline capability or push notifications are identified
+- [ ] The supporting kernel contracts are listed among their consumed contracts
+
+### MOBILE-DECOMP-PLATFORM-004: Binary Footprint Consideration
+**Severity**: LOW
+
+- [ ] MiniApps that materially affect app size or startup time are flagged
+- [ ] Any resulting modularization or on-demand delivery need is stated as a dependency on DESIGN-PLATFORM
 
 ---
 
 ## Reporting
 
-### Report Format
+Use the **base checklist's Reporting section** — `{cf-studio-path}/config/kits/sdlc/artifacts/DECOMPOSITION/checklist.md` — without modification: the Validation Summary, Reporting Readiness Checklist, Full/Compact report formats, and Reporting Commitment.
 
-For each issue found, report:
+Additional reporting requirements for this layer:
 
-```markdown
-## Issue: {CHECKLIST-ID}
-
-**Severity**: CRITICAL | HIGH | MEDIUM | LOW
-
-**Why Applicable**: {Why this requirement applies}
-
-**Issue**: {What is wrong}
-
-**Evidence**: {Quote from document or "Not found"}
-
-**Impact**: {Why this matters}
-
-**Proposal**: {How to fix}
-```
-
-### Reporting Commitment
-
-- [ ] I reported all issues I found
-- [ ] I used the exact report format
-- [ ] I included evidence for each issue
-- [ ] I proposed concrete fixes
-- [ ] I did not hide or omit known problems
+- [ ] Report base findings and delta findings in one merged report, ordered by severity
+- [ ] State the base checklist version/source used, so a reviewer can reproduce the pass
+- [ ] State the coverage result explicitly: number of platform design elements, number assigned, number documented as excluded

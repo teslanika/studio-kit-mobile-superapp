@@ -6,19 +6,19 @@ The Mobile SuperApp Kit provides 13 artifact types organized across 4 hierarchy 
 
 | Level | Artifact | Purpose | ID Pattern |
 |-------|----------|---------|------------|
-| **L0: Platform** | `PRD-PLATFORM` | Platform-wide requirements | `cpt-platform-fr-{slug}` |
-| | `DESIGN-PLATFORM` | Platform architecture | `cpt-platform-component-{slug}` |
-| | `DECOMPOSITION-PLATFORM` | MiniApp breakdown | `cpt-platform-miniapp-{slug}` |
-| **L1: MiniApp** | `PRD-MINIAPP` | MiniApp requirements | `cpt-{miniapp}-fr-{slug}` |
-| | `DESIGN-MINIAPP` | MiniApp architecture | `cpt-{miniapp}-component-{slug}` |
-| | `DECOMPOSITION-MINIAPP` | Epic breakdown | `cpt-{miniapp}-epic-{slug}` |
-| **L2: Epic** | `PRD-EPIC` | User stories | `cpt-{miniapp}-{epic}-story-{slug}` |
-| | `DESIGN-EPIC` | Epic architecture | `cpt-{miniapp}-{epic}-component-{slug}` |
-| | `DECOMPOSITION-EPIC` | Feature breakdown | `cpt-{miniapp}-{epic}-feature-{slug}` |
-| **L3: Feature** | `FEATURE-MOBILE` | MVI feature design | `cpt-{miniapp}-flow-{feature}-{slug}` |
-| | `IMPL-KMP` | KMP implementation | `@cpt-impl cpt-kmp-...` |
-| | `IMPL-ANDROID` | Android implementation | `@cpt-impl cpt-android-...` |
-| | `IMPL-IOS` | iOS implementation | `@cpt-impl cpt-ios-...` |
+| **L0: Platform** | `PRD-PLATFORM` | Platform-wide requirements | `cpt-superapp-fr-{slug}` |
+| | `DESIGN-PLATFORM` | Platform architecture | `cpt-superapp-component-{slug}` |
+| | `DECOMPOSITION-PLATFORM` | MiniApp breakdown | `cpt-superapp-miniapp-{slug}` |
+| **L1: MiniApp** | `PRD-MINIAPP` | MiniApp requirements | `cpt-{hierarchy-prefix}-fr-{slug}` |
+| | `DESIGN-MINIAPP` | MiniApp architecture | `cpt-{hierarchy-prefix}-component-{slug}` |
+| | `DECOMPOSITION-MINIAPP` | Epic breakdown | `cpt-{hierarchy-prefix}-epic-{slug}` |
+| **L2: Epic** | `PRD-EPIC` | Epic requirements | `cpt-{hierarchy-prefix}-fr-{slug}` |
+| | `DESIGN-EPIC` | Epic architecture | `cpt-{hierarchy-prefix}-component-{slug}` |
+| | `DECOMPOSITION-EPIC` | Feature breakdown | `cpt-{hierarchy-prefix}-feature-{slug}` |
+| **L3: Feature** | `FEATURE-MOBILE` | MVI feature design | `cpt-{hierarchy-prefix}-flow-{feature}-{slug}` |
+| | `IMPL-KMP` | Shared code reference map | `@cpt-algo:cpt-{hierarchy-prefix}-algo-{feature}-viewmodel:p1` |
+| | `IMPL-ANDROID` | Android code reference map | `@cpt-algo:cpt-{hierarchy-prefix}-algo-{feature}-android:p1` |
+| | `IMPL-IOS` | iOS code reference map | `@cpt-algo:cpt-{hierarchy-prefix}-algo-{feature}-ios:p1` |
 
 ## Artifact Structure
 
@@ -47,9 +47,9 @@ Platform-wide product requirements document.
 - Constraints
 
 **Example IDs:**
-- `cpt-platform-actor-student`
-- `cpt-platform-fr-offline-support`
-- `cpt-platform-nfr-launch-time`
+- `cpt-superapp-actor-student`
+- `cpt-superapp-fr-offline-support`
+- `cpt-superapp-nfr-launch-time`
 
 ### PRD-MINIAPP
 
@@ -61,8 +61,8 @@ MiniApp-level requirements that refine platform requirements.
 - References to Platform FRs
 
 **Example IDs:**
-- `cpt-learn-fr-browse-courses`
-- `cpt-learn-fr-offline-courses`
+- `cpt-superapp-learn-fr-browse-courses`
+- `cpt-superapp-learn-fr-offline-courses`
 
 ### PRD-EPIC
 
@@ -74,8 +74,8 @@ Epic-level user stories and acceptance criteria.
 - References to MiniApp FRs
 
 **Example IDs:**
-- `cpt-learn-course-catalog-story-view-courses`
-- `cpt-learn-course-catalog-ac-pagination`
+- `cpt-superapp-learn-course-catalog-story-view-courses`
+- `cpt-superapp-learn-course-catalog-ac-pagination`
 
 ---
 
@@ -92,8 +92,8 @@ Platform architecture defining shared infrastructure.
 - API contracts
 
 **Example IDs:**
-- `cpt-platform-component-auth-service`
-- `cpt-platform-module-constructor-sdk`
+- `cpt-superapp-component-auth-service`
+- `cpt-superapp-module-constructor-sdk`
 
 ### DESIGN-MINIAPP
 
@@ -106,8 +106,8 @@ MiniApp architecture within platform constraints.
 - Data models
 
 **Example IDs:**
-- `cpt-learn-component-course-repository`
-- `cpt-learn-viewmodel-course-list`
+- `cpt-superapp-learn-component-course-repository`
+- `cpt-superapp-learn-viewmodel-course-list`
 
 ### DESIGN-EPIC
 
@@ -119,8 +119,8 @@ Epic-level component design.
 - State machines
 
 **Example IDs:**
-- `cpt-learn-course-catalog-component-list-screen`
-- `cpt-learn-course-catalog-seq-load-courses`
+- `cpt-superapp-learn-course-catalog-component-list-screen`
+- `cpt-superapp-learn-course-catalog-seq-load-courses`
 
 ---
 

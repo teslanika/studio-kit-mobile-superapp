@@ -1,382 +1,219 @@
-# FEATURE-MOBILE Checklist
+# FEATURE-MOBILE Checklist — Layer Delta
 
-**Artifact**: FEATURE-MOBILE  
-**Kit**: mobile-superapp  
+**Artifact**: FEATURE-MOBILE
+**Kit**: mobile-superapp
 **Level**: L3 (Feature)
+**Base Checklist**: `{cf-studio-path}/config/kits/sdlc/artifacts/FEATURE/checklist.md` (sdlc FEATURE Expert Checklist)
 
-This checklist provides semantic quality criteria for Feature specification documents in mobile SuperApp projects.
+This checklist is a **delta over the sdlc FEATURE Expert Checklist**, not a replacement. Every criterion in the base checklist applies to a FEATURE-MOBILE document; this file states how each expertise domain is scoped at the feature layer and adds the criteria that exist only at this layer.
 
 ---
 
 ## Table of Contents
 
-1. [MUST HAVE Requirements](#must-have-requirements)
-2. [SHOULD HAVE Requirements](#should-have-requirements)
-3. [MUST NOT HAVE (Violations)](#must-not-have-violations)
-4. [Mobile-Specific Criteria](#mobile-specific-criteria)
-5. [Reporting](#reporting)
+1. [How To Use This Checklist](#how-to-use-this-checklist)
+2. [Expertise Domain Scope At This Layer](#expertise-domain-scope-at-this-layer)
+3. [Layer Delta: MUST HAVE](#layer-delta-must-have)
+4. [Layer Delta: MUST NOT HAVE](#layer-delta-must-not-have)
+5. [Layer Delta: Mobile-Specific Criteria](#layer-delta-mobile-specific-criteria)
+6. [Reporting](#reporting)
 
 ---
 
-## MUST HAVE Requirements
+## How To Use This Checklist
 
-### FEATURE-001: Feature Context
+1. **LOAD the base checklist first** and apply it in full: Referenced Standards, Review Scope Selection, Domain Prioritization by Feature Type, Prerequisites, Applicability Context, Severity Dictionary, all MUST HAVE domains (ARCH, SEM, PERF, SEC, REL, DATA, INT, OPS, MAINT, TEST, COMPL, UX, BIZ, DOC), and all MUST NOT HAVE items.
+2. **Apply the domain scope table** below. Where a domain is marked *Inherited*, this feature satisfies it by referencing the epic, MiniApp, or platform element by ID and documenting deviations only.
+3. **Apply the delta criteria** in this file after the base pass.
+4. **Report once.** Use the base checklist's Reporting section for a single merged report citing base IDs (`ARCH-FDESIGN-003`) and delta IDs (`FEATURE-MOBILE-001`) in the same `Checklist Item` field.
 
-**Priority**: CRITICAL
-
-The FEATURE MUST include context section:
-
-- [ ] Feature ID following `cpt-{miniapp}-feature-{slug}` pattern
-- [ ] Implementation status marker
-- [ ] Overview (1-2 sentences)
-- [ ] Purpose (why this feature exists)
-- [ ] Actors table with role in feature
-- [ ] References (Epic PRD, Epic DESIGN, DECOMPOSITION, Dependencies)
-
-**Why it matters**: Context establishes feature scope and traceability.
-
-### FEATURE-002: Actor Flows (CDSL)
-
-**Priority**: CRITICAL
-
-The FEATURE MUST include Actor Flows:
-
-- [ ] Primary flow with ID `cpt-{miniapp}-flow-{feature-slug}-{slug}`
-- [ ] Actor reference
-- [ ] Success scenarios listed
-- [ ] Error scenarios listed
-- [ ] Numbered steps with checkboxes
-
-**Why it matters**: Actor flows define user-facing interactions.
-
-### FEATURE-003: CDSL Step Format
-
-**Priority**: CRITICAL
-
-Each CDSL step MUST follow format:
-
-- [ ] Checkbox `[ ]`
-- [ ] Priority marker (`p1`, `p2`, `p3`)
-- [ ] Step description
-- [ ] Instruction ID `inst-{step-id}`
-
-**Why it matters**: Consistent format enables automation and tracking.
-
-### FEATURE-004: Control Flow Keywords
-
-**Priority**: HIGH
-
-CDSL steps MUST use control flow keywords:
-
-- [ ] **IF** / **ELSE** for conditionals
-- [ ] **TRY** / **CATCH** for error handling
-- [ ] **RETURN** for completion points
-- [ ] **WHEN** for event handling
-- [ ] Nested steps with indentation
-
-**Why it matters**: Keywords enable flow analysis and code generation.
-
-### FEATURE-005: API and DB Markers
-
-**Priority**: HIGH
-
-Steps involving data MUST include:
-
-- [ ] **API**: `{METHOD} /api/v1/mobile/{path}` for API calls
-- [ ] **DB**: `{OPERATION}` {table} ({key columns}) for database operations
-- [ ] Request/response summary for API calls
-
-**Why it matters**: Markers identify integration points.
-
-### FEATURE-006: Platform Implementation Sections
-
-**Priority**: CRITICAL
-
-The FEATURE MUST include platform sections:
-
-- [ ] Section 3.1: KMP Shared Logic
-- [ ] Section 3.2: Android UI
-- [ ] Section 3.3: iOS UI
-- [ ] Each section with ID `cpt-{miniapp}-algo-{feature-slug}-{platform}`
-
-**Why it matters**: Platform sections guide implementation.
-
-### FEATURE-007: KMP Implementation (CDSL)
-
-**Priority**: CRITICAL
-
-KMP section MUST include:
-
-- [ ] Algorithm ID `cpt-{miniapp}-algo-{feature-slug}-kmp`
-- [ ] Location (`constructor-sdk/feature/{miniapp}/`)
-- [ ] ViewModel steps (receive intent, call use case, update state, emit effects)
-- [ ] Use Case steps (validate, call repo, transform, return)
-- [ ] Repository steps (cache check, fetch, store, return)
-
-**Why it matters**: KMP contains shared business logic.
-
-### FEATURE-008: Android Implementation (CDSL)
-
-**Priority**: CRITICAL
-
-Android section MUST include:
-
-- [ ] Algorithm ID `cpt-{miniapp}-algo-{feature-slug}-android`
-- [ ] Location (`android-app/feature/{miniapp}/ui/`)
-- [ ] Compose Screen steps (collect state, render, handle actions, handle effects)
-
-**Why it matters**: Android UI implementation guidance.
-
-### FEATURE-009: iOS Implementation (CDSL)
-
-**Priority**: CRITICAL
-
-iOS section MUST include:
-
-- [ ] Algorithm ID `cpt-{miniapp}-algo-{feature-slug}-ios`
-- [ ] Location (`ios-app/Features/{MiniApp}/Views/`)
-- [ ] SwiftUI View steps (observe state, render body, handle actions, handle effects)
-
-**Why it matters**: iOS UI implementation guidance.
-
-### FEATURE-010: State Machine (CDSL)
-
-**Priority**: CRITICAL
-
-The FEATURE MUST include state machine:
-
-- [ ] State ID `cpt-{miniapp}-state-{feature-slug}`
-- [ ] States list (Loading, Content, Error, Empty)
-- [ ] Initial State
-- [ ] Transitions with FROM/TO/WHEN format
-- [ ] Instruction IDs for each transition
-
-**Why it matters**: State machines define valid state changes.
-
-### FEATURE-011: Definitions of Done
-
-**Priority**: CRITICAL
-
-The FEATURE MUST include DoD:
-
-- [ ] DoD ID following `cpt-{miniapp}-dod-{feature-slug}-{slug}` pattern
-- [ ] Clear requirement ("The system MUST...")
-- [ ] Implements (which flows)
-- [ ] Touches (KMP, Android, iOS, API modules)
-- [ ] Verification checklist (unit tests, UI tests, integration tests)
-
-**Why it matters**: DoD defines completion criteria.
-
-### FEATURE-012: Acceptance Criteria
-
-**Priority**: HIGH
-
-The FEATURE MUST include acceptance criteria:
-
-- [ ] Functional criteria (testable)
-- [ ] Platform-specific criteria (Android, iOS)
-- [ ] Performance criteria (measurable thresholds)
-- [ ] Offline criteria (if applicable)
-
-**Why it matters**: Acceptance criteria enable validation.
-
-### FEATURE-013: Traceability
-
-**Priority**: HIGH
-
-The FEATURE MUST include traceability links:
-
-- [ ] Link to Epic PRD
-- [ ] Link to Epic DESIGN
-- [ ] Link to DECOMPOSITION
-- [ ] Links to Implementation files (KMP, Android, iOS)
-
-**Why it matters**: Traceability enables navigation and validation.
+Severity values are the base checklist's: CRITICAL, HIGH, MEDIUM, LOW.
 
 ---
 
-## SHOULD HAVE Requirements
+## Expertise Domain Scope At This Layer
 
-### FEATURE-014: Alternative Flows
+| Domain | Scope at L3 (Feature) | Notes |
+|--------|-----------------------|-------|
+| ARCH | Narrowed | Flow, process, and state completeness inside this feature; system architecture is inherited |
+| SEM | Full | Every in-scope PRD requirement, state, widget, and error condition must be realized by a flow, process, or transition |
+| PERF | Narrowed | Feature-level budgets traced to an NFR; system capacity planning is inherited |
+| SEC | Full | Input validation, authorization checks, and sensitive-data handling in these flows are owned here |
+| REL | Full | Error handling, retry, offline fallback, and recovery for these flows are owned here |
+| DATA | Full | Access patterns, validation, transformation, and lifecycle of the data this feature touches |
+| INT | Full | API calls, DB operations, cache use, and bridge calls made by these processes |
+| OPS | Narrowed | Observability hooks and feature-flag behavior for this feature only |
+| MAINT | Narrowed | Process decomposition and reuse; module organization is inherited |
+| TEST | Full | Testability, coverage guidance, and acceptance criteria are owned here |
+| COMPL | Inherited | Reference the inherited obligation; add only what this feature's data or consent introduces |
+| UX | Full | Flow usability and accessibility realization are owned here |
+| BIZ | Inherited | Requirements and value are referenced from PRD-EPIC, never restated |
+| DOC | Full | Explicit non-applicability is mandatory at every layer |
 
-**Priority**: MEDIUM
-
-The FEATURE SHOULD include:
-
-- [ ] Alternative flows for edge cases
-- [ ] Trigger for each alternative flow
-- [ ] Steps following CDSL format
-
-### FEATURE-015: WebView Integration
-
-**Priority**: MEDIUM
-
-If feature uses WebView:
-
-- [ ] WebView algorithm ID `cpt-{miniapp}-algo-{feature-slug}-webview`
-- [ ] WebView URL pattern
-- [ ] Native → WebView steps
-- [ ] WebView → Native steps
-
-### FEATURE-016: Multiple DoDs
-
-**Priority**: MEDIUM
-
-Complex features SHOULD have:
-
-- [ ] Multiple DoD sections for different aspects
-- [ ] Priority markers for each DoD
+*Inherited* domains name their source: COMPL → `PRD-PLATFORM` / `DESIGN-PLATFORM`; BIZ → `PRD-EPIC`.
 
 ---
 
-## MUST NOT HAVE (Violations)
+## Layer Delta: MUST HAVE
 
-### FEATURE-NO-001: No Architecture Decisions
+### FEATURE-MOBILE-001: Parent Scope Consistency
+**Severity**: CRITICAL
 
-**Priority**: HIGH
+- [ ] The parent feature entry in the Epic DECOMPOSITION is linked and its ID matches
+- [ ] Nothing here exceeds the scope that entry assigned; out-of-scope items are respected
+- [ ] The declared dependencies match the DECOMPOSITION dependency graph
 
-The FEATURE MUST NOT contain:
+### FEATURE-MOBILE-002: Process Target Allocation
+**Severity**: CRITICAL
 
-- [ ] Architecture decisions (belongs in DESIGN)
-- [ ] Component definitions (belongs in DESIGN)
-- [ ] Module structures (belongs in DESIGN)
+- [ ] Every process is allocated to exactly one target: KMP shared, Android, iOS, or the WebView bridge
+- [ ] Business logic lives in a KMP shared process; platform processes only reduce UI and integrate with the OS
+- [ ] Each process names its source location, matching the DECOMPOSITION platform implementation table
+- [ ] No logic is specified twice, once per platform
 
-**Why it matters**: FEATURE implements DESIGN, doesn't define it.
+### FEATURE-MOBILE-003: Flow And Process Linkage
+**Severity**: CRITICAL
 
-### FEATURE-NO-002: No Missing Instruction IDs
+- [ ] Every actor flow names its actor, entry point, success scenarios, and error scenarios
+- [ ] Every flow step that leaves the UI names the process, API call, or DB operation it invokes
+- [ ] Every process is called by at least one flow or another process; orphan processes are removed or justified
+- [ ] Referenced API endpoints exist in the MiniApp DESIGN contracts
 
-**Priority**: CRITICAL
+### FEATURE-MOBILE-004: State Machine Completeness
+**Severity**: HIGH
 
-The FEATURE MUST NOT have:
+- [ ] Every state named in the Epic DESIGN screen state model has at least one transition here
+- [ ] Every transition names its source state, target state, and condition
+- [ ] Every state is reachable and no state is a dead end without an exit or a documented terminal reason
+- [ ] Restoration after configuration change and process death is specified
 
-- [ ] Steps without `inst-{id}` markers
-- [ ] Transitions without instruction IDs
-- [ ] Flows without IDs
+### FEATURE-MOBILE-005: Definitions Of Done Quality
+**Severity**: HIGH
 
-**Why it matters**: IDs enable traceability to code markers.
+- [ ] Each DoD is a single MUST statement, testable as written
+- [ ] Each DoD lists Implements (flow/process IDs), Constraints, Touches (KMP / Android / iOS / API / DB / entities), and Verification
+- [ ] Every flow and process is implemented by at least one DoD
+- [ ] No DoD references an ID that does not exist in this document or its parents
 
-### FEATURE-NO-003: No Incomplete Platform Coverage
+### FEATURE-MOBILE-006: Acceptance Criteria Coverage
+**Severity**: HIGH
 
-**Priority**: CRITICAL
+- [ ] Functional criteria cover the happy path and each error scenario
+- [ ] Platform-specific criteria exist for Android and iOS, or their absence is justified
+- [ ] Performance criteria carry a measurable threshold traced to an NFR
+- [ ] Accessibility criteria are present
+- [ ] Offline criteria are present or explicitly marked not applicable with a reason
 
-The FEATURE MUST NOT have:
+### FEATURE-MOBILE-007: ID Reuse And Code Traceability
+**Severity**: HIGH
 
-- [ ] KMP section without steps
-- [ ] Android section missing
-- [ ] iOS section missing
+- [ ] Widget, component, use case, and repository references reuse the IDs from PRD-EPIC and DESIGN-EPIC
+- [ ] Only flow, process, state, dod, and featstatus IDs are newly defined here
+- [ ] Each CDSL instruction carries an `inst-{slug}` marker, unique within its process
+- [ ] `featstatus` is unchecked while any nested tracked ID is unchecked
 
-**Why it matters**: All platforms must be implemented.
+### FEATURE-MOBILE-008: Traceability Links
+**Severity**: MEDIUM
 
-### FEATURE-NO-004: No Production Code
-
-**Priority**: HIGH
-
-The FEATURE MUST NOT contain:
-
-- [ ] Complete class implementations
-- [ ] Full method bodies
-- [ ] Actual production code
-
-**Why it matters**: Implementation belongs in code files.
-
-### FEATURE-NO-005: No Vague DoD
-
-**Priority**: HIGH
-
-The FEATURE MUST NOT have:
-
-- [ ] DoD without "MUST" statement
-- [ ] DoD without verification checklist
-- [ ] DoD without module references
-
-**Why it matters**: Vague DoD cannot be validated.
+- [ ] Links to Epic PRD, Epic DESIGN, and Epic DECOMPOSITION are present
+- [ ] Implementation links for KMP, Android, and iOS are present
+- [ ] The requirement coverage table maps each in-scope requirement to a realizing element and a verifying criterion
 
 ---
 
-## Mobile-Specific Criteria
+## Layer Delta: MUST NOT HAVE
 
-### MOBILE-FEATURE-001: MVI Pattern in KMP
+These are additional to the base checklist's MUST NOT HAVE items, all of which apply here unchanged.
 
-**Priority**: CRITICAL
+### FEATURE-MOBILE-NO-001: No Platform Coding Conventions
+**Severity**: LOW
 
-KMP ViewModel steps MUST follow MVI:
+**What to check**:
+- [ ] No naming, formatting, or style rules
+- [ ] No dependency-injection wiring instructions
 
-- [ ] Receive Intent from UI
-- [ ] Process through Use Case
-- [ ] Update State
-- [ ] Emit Effects for side effects
+**Where it belongs**: `IMPL-IOS` / `IMPL-ANDROID` / `IMPL-KMP`
 
-### MOBILE-FEATURE-002: Compose Pattern in Android
+### FEATURE-MOBILE-NO-002: No Design-System Values
+**Severity**: MEDIUM
 
-**Priority**: CRITICAL
+**What to check**:
+- [ ] No colors, spacing, typography, or animation curve values
+- [ ] No pixel measurements
 
-Android steps MUST follow Compose pattern:
+**Where it belongs**: the design system
 
-- [ ] Collect state with `collectAsStateWithLifecycle`
-- [ ] Render UI based on state
-- [ ] Send intents on user action
-- [ ] Handle effects (navigation, snackbar, dialog)
+### FEATURE-MOBILE-NO-003: No Parent Design Duplication
+**Severity**: HIGH
 
-### MOBILE-FEATURE-003: SwiftUI Pattern in iOS
+**What to check**:
+- [ ] No redefined domain entities, repository interfaces, or state contracts
+- [ ] No restated navigation graph or module structure
 
-**Priority**: CRITICAL
+**Where it belongs**: `DESIGN-EPIC` / `DESIGN-MINIAPP` — reference by ID
 
-iOS steps MUST follow SwiftUI pattern:
+---
 
-- [ ] Observe state from ViewModel
-- [ ] Render body based on state
-- [ ] Call ViewModel methods on action
-- [ ] Handle effects (navigation, alert, sheet)
+## Layer Delta: Mobile-Specific Criteria
 
-### MOBILE-FEATURE-004: Cache-First Strategy
+### MOBILE-FEATURE-001: Cross-Platform Behavioral Parity
+**Severity**: HIGH
 
-**Priority**: HIGH
+- [ ] The Android and iOS processes produce the same user-visible outcome for the same intent
+- [ ] Any deliberate divergence is stated with its reason and reflected in the acceptance criteria
+- [ ] Nothing platform-specific is left implicit ("as native as possible" is not a specification)
 
-Repository steps SHOULD implement:
+### MOBILE-FEATURE-002: Offline And Cache Behavior
+**Severity**: HIGH
 
-- [ ] Check local cache first
-- [ ] Return cached if valid
-- [ ] Fetch from API if cache invalid
-- [ ] Store in cache after fetch
+- [ ] The repository process specifies cache read, staleness, write-through, and offline fallback
+- [ ] Queued writes name the queue and the conflict-resolution rule
+- [ ] The Offline state transition and its user-visible surface are specified
 
-### MOBILE-FEATURE-005: Error Mapping
+### MOBILE-FEATURE-003: Lifecycle And Interruption Handling
+**Severity**: HIGH
 
-**Priority**: HIGH
+- [ ] Backgrounding, foregrounding, and process death during the flow are handled
+- [ ] Android configuration change and iOS scene-phase transitions are both addressed
+- [ ] In-flight requests on interruption are cancelled, retried, or resumed by an explicit rule
 
-Use Case steps MUST include:
+### MOBILE-FEATURE-004: Accessibility In The Flow
+**Severity**: HIGH
 
-- [ ] TRY/CATCH for API calls
-- [ ] Error mapping to domain errors
-- [ ] Result<T> return type
+- [ ] Screen-reader announcements for state changes (loading, error, success) are specified
+- [ ] Focus movement across the flow is specified
+- [ ] Font-scaling behavior for the affected screens is specified
+
+### MOBILE-FEATURE-005: WebView Bridge Discipline
+**Severity**: MEDIUM
+
+- [ ] If a WebView is involved, every bridge method used is named and its parameters validated
+- [ ] Session propagation and its security properties are specified
+- [ ] Page-load failure has a native error surface with recovery
+
+### MOBILE-FEATURE-006: Performance Of This Flow
+**Severity**: MEDIUM
+
+- [ ] Paging, prefetch, and image-loading behavior are specified where the flow is data-heavy
+- [ ] The performance criterion states the device class or network condition it applies to
+- [ ] Main-thread work in the platform processes is bounded
+
+### MOBILE-FEATURE-007: Notification And Deep Link Entry
+**Severity**: MEDIUM
+
+- [ ] Flows reachable from a deep link or notification specify the cold-start path
+- [ ] Authentication requirements on such entry are specified
+- [ ] Invalid or expired link parameters have a defined behavior
 
 ---
 
 ## Reporting
 
-### Report Format
+Use the **base checklist's Reporting section** — `{cf-studio-path}/config/kits/sdlc/artifacts/FEATURE/checklist.md` — without modification: the Validation Summary, Reporting Readiness Checklist, Full/Compact report formats, and Reporting Commitment.
 
-For each issue found, report:
+Additional reporting requirements for this layer:
 
-```markdown
-## Issue: {CHECKLIST-ID}
-
-**Severity**: CRITICAL | HIGH | MEDIUM | LOW
-
-**Why Applicable**: {Why this requirement applies}
-
-**Issue**: {What is wrong}
-
-**Evidence**: {Quote from document or "Not found"}
-
-**Impact**: {Why this matters}
-
-**Proposal**: {How to fix}
-```
-
-### Reporting Commitment
-
-- [ ] I reported all issues I found
-- [ ] I used the exact report format
-- [ ] I included evidence for each issue
-- [ ] I proposed concrete fixes
-- [ ] I did not hide or omit known problems
+- [ ] Report base findings and delta findings in one merged report, ordered by severity
+- [ ] State the base checklist version/source used, so a reviewer can reproduce the pass
+- [ ] For every domain marked Narrowed or Inherited in the scope table, confirm the feature references the parent element or names the artifact that carries the content
+- [ ] State the parity result explicitly: which processes are shared, which are per-platform, and which divergences are deliberate

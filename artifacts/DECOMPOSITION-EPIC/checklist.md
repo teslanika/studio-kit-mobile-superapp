@@ -1,324 +1,193 @@
-# DECOMPOSITION-EPIC Checklist
+# DECOMPOSITION-EPIC Checklist — Layer Delta
 
-**Artifact**: DECOMPOSITION-EPIC  
-**Kit**: mobile-superapp  
+**Artifact**: DECOMPOSITION-EPIC
+**Kit**: mobile-superapp
 **Level**: L2 (Epic)
+**Base Checklist**: `{cf-studio-path}/config/kits/sdlc/artifacts/DECOMPOSITION/checklist.md` (sdlc DECOMPOSITION Expert Checklist)
 
-This checklist provides semantic quality criteria for Epic-level Decomposition documents in mobile SuperApp projects.
+This checklist is a **delta over the sdlc DECOMPOSITION Expert Checklist**, not a replacement. Every criterion in the base checklist applies to a DECOMPOSITION-EPIC document; this file states how each expertise domain is scoped at the epic layer and adds the criteria that exist only at this layer.
 
 ---
 
 ## Table of Contents
 
-1. [MUST HAVE Requirements](#must-have-requirements)
-2. [SHOULD HAVE Requirements](#should-have-requirements)
-3. [MUST NOT HAVE (Violations)](#must-not-have-violations)
-4. [Mobile-Specific Criteria](#mobile-specific-criteria)
-5. [Reporting](#reporting)
+1. [How To Use This Checklist](#how-to-use-this-checklist)
+2. [Expertise Domain Scope At This Layer](#expertise-domain-scope-at-this-layer)
+3. [Layer Delta: MUST HAVE](#layer-delta-must-have)
+4. [Layer Delta: MUST NOT HAVE](#layer-delta-must-not-have)
+5. [Layer Delta: Mobile-Specific Criteria](#layer-delta-mobile-specific-criteria)
+6. [Reporting](#reporting)
 
 ---
 
-## MUST HAVE Requirements
+## How To Use This Checklist
 
-### DECOMP-EPIC-001: Overview Section
+1. **LOAD the base checklist first** and apply it in full: Referenced Standards, Prerequisites, Applicability Context, Severity Dictionary, Checkpointing, all MUST HAVE domains (COV, EXC, ATTR, LEV, CFG, TRC, DEP, CHK, DOC, FMT), and all MUST NOT HAVE items.
+2. **Apply the domain scope table** below. This is the layer where the base checklist's "feature" vocabulary applies literally.
+3. **Apply the delta criteria** in this file after the base pass.
+4. **Report once.** Use the base checklist's Reporting section for a single merged report citing base IDs (`COV-001`) and delta IDs (`DECOMP-EPIC-001`) in the same `Checklist Item` field.
 
-**Priority**: CRITICAL
-
-The DECOMPOSITION MUST include:
-
-- [ ] Clear purpose statement
-- [ ] Link to Epic PRD
-- [ ] Link to Epic DESIGN
-- [ ] Link to MiniApp DECOMPOSITION
-- [ ] Overall implementation status marker with ID `cpt-{miniapp}-{epic}-status-overall`
-
-**Why it matters**: Overview establishes context for Feature decomposition.
-
-### DECOMP-EPIC-002: Feature Entries Structure
-
-**Priority**: CRITICAL
-
-Each Feature entry MUST include:
-
-- [ ] Feature ID following `cpt-{miniapp}-feature-{feature}` pattern
-- [ ] Link to Feature folder
-- [ ] Priority (HIGH, MEDIUM, LOW)
-- [ ] Purpose description
-- [ ] Depends On (other Features or "None")
-- [ ] Scope (in-scope list)
-- [ ] Out of scope (explicit exclusions)
-
-**Why it matters**: Complete entries enable independent Feature development.
-
-### DECOMP-EPIC-003: Requirements Coverage
-
-**Priority**: CRITICAL
-
-Each Feature entry MUST document:
-
-- [ ] Requirements covered list
-- [ ] `cpt-{miniapp}-epic-{epic}-fr-{slug}` references
-- [ ] Priority marker for each requirement
-- [ ] Checkbox for implementation status
-
-**Why it matters**: Coverage ensures all Epic FRs are allocated to Features.
-
-### DECOMP-EPIC-004: Design Components
-
-**Priority**: HIGH
-
-Each Feature entry MUST list:
-
-- [ ] Design components from Epic DESIGN
-- [ ] `cpt-{miniapp}-{epic}-component-{slug}` references
-- [ ] Screen/widget references
-- [ ] Use case references
-- [ ] Priority marker for each
-
-**Why it matters**: Components trace DESIGN elements to Features.
-
-### DECOMP-EPIC-005: Screen/Widget References
-
-**Priority**: HIGH
-
-Each Feature entry MUST include:
-
-- [ ] Screen reference `cpt-{miniapp}-{epic}-screen-{slug}`
-- [ ] Widget references `cpt-{miniapp}-{epic}-widget-{slug}`
-- [ ] Checkboxes for implementation status
-
-**Why it matters**: Screen/widget mapping guides UI implementation.
-
-### DECOMP-EPIC-006: Use Case References
-
-**Priority**: HIGH
-
-Each Feature entry SHOULD include:
-
-- [ ] Use case reference `cpt-{miniapp}-{epic}-usecase-{slug}`
-- [ ] Checkbox for implementation status
-
-**Why it matters**: Use cases map to Feature business logic.
-
-### DECOMP-EPIC-007: Platform Implementation
-
-**Priority**: CRITICAL
-
-Each Feature entry MUST include:
-
-- [ ] Platform implementation table
-- [ ] KMP module and location
-- [ ] Android component and location
-- [ ] iOS component and location
-
-**Why it matters**: Platform locations guide code implementation.
-
-### DECOMP-EPIC-008: API Endpoints
-
-**Priority**: HIGH
-
-Each Feature entry SHOULD include:
-
-- [ ] API endpoints used
-- [ ] HTTP methods (GET, POST, etc.)
-- [ ] Endpoint paths
-
-**Why it matters**: API mapping enables backend coordination.
-
-### DECOMP-EPIC-009: Feature Dependencies
-
-**Priority**: HIGH
-
-The DECOMPOSITION MUST include:
-
-- [ ] Dependency diagram (text or visual)
-- [ ] Dependency rationale for each relationship
-- [ ] Foundation Features identified
-
-**Why it matters**: Dependencies determine implementation order.
-
-### DECOMP-EPIC-010: Coverage Matrices
-
-**Priority**: CRITICAL
-
-The DECOMPOSITION MUST include:
-
-- [ ] Requirements → Features matrix (requirement, feature, priority, status)
-- [ ] Design Components → Features matrix
-- [ ] Platform Implementation matrix (Feature, KMP, Android, iOS)
-
-**Why it matters**: Matrices enable coverage validation.
-
-### DECOMP-EPIC-011: Implementation Order
-
-**Priority**: HIGH
-
-The DECOMPOSITION MUST include:
-
-- [ ] Implementation order table (phase, Features, rationale)
-- [ ] Foundation Features first
-- [ ] Dependent Features ordered properly
-- [ ] Parallel Features identified
-
-**Why it matters**: Order enables sprint planning.
-
-### DECOMP-EPIC-012: Acceptance Criteria Summary
-
-**Priority**: HIGH
-
-The DECOMPOSITION MUST include:
-
-- [ ] Acceptance criteria table (Feature, key criteria)
-- [ ] 1-2 key criteria per Feature
-
-**Why it matters**: Summary enables quick validation scope understanding.
+Severity values are the base checklist's: CRITICAL, HIGH, MEDIUM, LOW.
 
 ---
 
-## SHOULD HAVE Requirements
+## Expertise Domain Scope At This Layer
 
-### DECOMP-EPIC-013: State Management References
+| Domain | Scope at L2 (Epic) | Notes |
+|--------|--------------------|-------|
+| COV | Full | Every epic design component, widget, use case, sequence, and cache must be assigned to a feature |
+| EXC | Full | Feature scopes must be mutually exclusive at widget and use-case granularity |
+| ATTR | Full | Each feature entry needs ID, purpose, scope, dependencies, and its platform implementation targets |
+| LEV | Full | Decomposition stops at the feature; FEATURE-MOBILE specifies the inside of a feature |
+| CFG | Narrowed | A feature is a change-control unit inside the epic, not a release unit |
+| TRC | Full | Forward to FEATURE-MOBILE and code, backward to epic PRD/DESIGN and up to the MiniApp DECOMPOSITION entry |
+| DEP | Full | Feature dependency graph must be a DAG; the foundation feature has no dependencies |
+| CHK | Full | `status-overall` cascades from all `feature` entries |
+| DOC | Full | Explicit non-applicability is mandatory at every layer |
+| FMT | Full | Entry format, required fields, and checkbox syntax as in the base |
 
-**Priority**: MEDIUM
-
-Features with state SHOULD include:
-
-- [ ] State reference `cpt-{miniapp}-{epic}-state`
-- [ ] State management component reference
-
-### DECOMP-EPIC-014: API Contract References
-
-**Priority**: MEDIUM
-
-Features using APIs SHOULD reference:
-
-- [ ] API ID from DESIGN
-- [ ] Contract location
+*Narrowed* domains inherit the platform disposition: CFG release-unit criteria are satisfied at L0 by `DECOMPOSITION-PLATFORM`.
 
 ---
 
-## MUST NOT HAVE (Violations)
+## Layer Delta: MUST HAVE
 
-### DECOMP-EPIC-NO-001: No CDSL Flows
+### DECOMP-EPIC-001: Parent Scope Consistency
+**Severity**: CRITICAL
 
-**Priority**: HIGH
+- [ ] The parent MiniApp DECOMPOSITION entry for this epic is linked
+- [ ] No feature here extends beyond the scope the MiniApp decomposition assigned to this epic
+- [ ] Anything that exceeds that scope is raised as a change to the parent, not silently added
 
-The DECOMPOSITION MUST NOT contain:
+### DECOMP-EPIC-002: Design Element Assignment Completeness
+**Severity**: CRITICAL
 
-- [ ] Actor flow definitions (belongs in FEATURE)
-- [ ] Algorithm steps (belongs in FEATURE)
-- [ ] State machine definitions (belongs in FEATURE)
+- [ ] Every DESIGN-EPIC component, widget, use case, sequence, and cache appears in the Coverage Matrix with an owning feature
+- [ ] Epic principles and constraints are assigned to the features that must honour them
+- [ ] Unassigned elements are listed with a reason (screen-shell, deferred, out of scope)
 
-**Why it matters**: CDSL belongs in FEATURE documents.
+### DECOMP-EPIC-003: Requirement And State Coverage
+**Severity**: CRITICAL
 
-### DECOMP-EPIC-NO-002: No Implementation Code
+- [ ] Every epic PRD FR is covered by at least one feature
+- [ ] Every PRD state requirement (loading, empty, error, offline) is covered by a feature, not left implicit
+- [ ] Every PRD widget ID appears under a feature's Design Components, reusing the same ID
 
-**Priority**: HIGH
+### DECOMP-EPIC-004: ID Reuse, Not Re-Minting
+**Severity**: HIGH
 
-The DECOMPOSITION MUST NOT contain:
+- [ ] Component, widget, and use case references reuse the IDs minted in PRD-EPIC and DESIGN-EPIC
+- [ ] No element is given a second ID in this document
+- [ ] Only `feature` and `status` IDs are newly defined here
 
-- [ ] Code snippets (belongs in DESIGN/IMPL)
-- [ ] Class definitions (belongs in DESIGN)
-- [ ] Method signatures (belongs in DESIGN)
+### DECOMP-EPIC-005: Feature Independence
+**Severity**: HIGH
 
-**Why it matters**: Decomposition is organizational, not technical.
+- [ ] Each feature can be implemented and verified on its own once its dependencies are met
+- [ ] No feature requires a later feature to be demonstrable
+- [ ] Features that cannot stand alone are merged or their dependency is made explicit
 
-### DECOMP-EPIC-NO-003: No Missing Traceability
+### DECOMP-EPIC-006: Platform Implementation Map
+**Severity**: HIGH
 
-**Priority**: CRITICAL
+- [ ] Each feature names its shared, Android, and iOS targets with source locations, or justifies the divergence
+- [ ] The Platform Implementation Matrix agrees with the per-entry tables
+- [ ] Shared logic is not duplicated across the Android and iOS rows
 
-The DECOMPOSITION MUST NOT have:
+### DECOMP-EPIC-007: Implementation Order
+**Severity**: MEDIUM
 
-- [ ] Features without requirement coverage
-- [ ] Requirements without Feature allocation
-- [ ] Components without Feature assignment
-- [ ] Platform implementations missing
+- [ ] Implementation Order agrees with the dependency graph
+- [ ] Phase 1 contains at least one feature with no dependencies
+- [ ] Features that can run in parallel are identified as such
 
-**Why it matters**: Full traceability is the purpose of decomposition.
+### DECOMP-EPIC-008: Traceability Links
+**Severity**: HIGH
 
-### DECOMP-EPIC-NO-004: No DoD Definitions
-
-**Priority**: HIGH
-
-The DECOMPOSITION MUST NOT contain:
-
-- [ ] Definition of Done sections (belongs in FEATURE)
-- [ ] Verification steps (belongs in FEATURE)
-- [ ] Test requirements (belongs in FEATURE)
-
-**Why it matters**: DoD belongs in FEATURE documents.
+- [ ] Links to epic PRD, epic DESIGN, and the MiniApp DECOMPOSITION are present
+- [ ] Each entry links to its feature folder path
+- [ ] Coverage Matrix rows are consistent with the entry bodies
+- [ ] The Acceptance Criteria Summary references criteria that exist in the epic PRD
 
 ---
 
-## Mobile-Specific Criteria
+## Layer Delta: MUST NOT HAVE
 
-### MOBILE-DECOMP-001: Tri-Platform Implementation
+These are additional to the base checklist's MUST NOT HAVE items, all of which apply here unchanged.
 
-**Priority**: CRITICAL
+### DECOMP-EPIC-NO-001: No Feature Internals
+**Severity**: HIGH
 
-Platform Implementation matrix MUST show:
+**What to check**:
+- [ ] No CDSL flows, step-by-step business logic, or algorithms
+- [ ] No Definition of Done, test cases, or QA scripts per feature
 
-- [ ] KMP column with module names
-- [ ] Android column with component names
-- [ ] iOS column with component names
-- [ ] Checkbox status for each cell
+**Where it belongs**: `FEATURE-MOBILE`
 
-### MOBILE-DECOMP-002: Code Location Pattern
+### DECOMP-EPIC-NO-002: No Epic Design Restatement
+**Severity**: MEDIUM
 
-**Priority**: HIGH
+**What to check**:
+- [ ] No restated state contracts, intents, or effects
+- [ ] No re-derived navigation parameters or error tables
 
-Platform locations MUST follow patterns:
+**Where it belongs**: `DESIGN-EPIC` — reference by ID
 
-- [ ] KMP: `constructor-sdk/feature/{miniapp}/`
-- [ ] Android: `android-app/feature/{miniapp}/ui/`
-- [ ] iOS: `ios-app/Features/{MiniApp}/Views/`
+### DECOMP-EPIC-NO-003: No Requirements Definition
+**Severity**: HIGH
 
-### MOBILE-DECOMP-003: Shared vs Platform-Specific
+**What to check**:
+- [ ] No new FRs, state requirements, or acceptance criteria authored here
+- [ ] Requirement priorities are not re-litigated
 
-**Priority**: MEDIUM
+**Where it belongs**: `PRD-EPIC`
 
-Features SHOULD note:
+### DECOMP-EPIC-NO-004: No Visual Or Token Detail
+**Severity**: LOW
 
-- [ ] Which components are shared (KMP)
-- [ ] Which components are platform-specific
+**What to check**:
+- [ ] No colors, spacing, typography, or animation values
+- [ ] No pixel measurements
 
-### MOBILE-DECOMP-004: WebView Features
+**Where it belongs**: the design system
 
-**Priority**: MEDIUM
+---
 
-Features using WebView SHOULD note:
+## Layer Delta: Mobile-Specific Criteria
 
-- [ ] WebView integration type
-- [ ] JS bridge requirements
+### MOBILE-DECOMP-EPIC-001: Per-Platform Delivery Sequencing
+**Severity**: MEDIUM
+
+- [ ] The order states whether shared logic lands before, with, or after each platform UI
+- [ ] Any deliberate Android-first or iOS-first sequencing is stated with the reason
+
+### MOBILE-DECOMP-EPIC-002: Offline And Cache Features
+**Severity**: MEDIUM
+
+- [ ] Features that introduce local caching or offline behavior are identified and list their data stores
+- [ ] Cache invalidation ownership is assigned to a feature, not left unassigned
+
+### MOBILE-DECOMP-EPIC-003: Accessibility As Feature Scope
+**Severity**: HIGH
+
+- [ ] Accessibility realization is inside feature scope, not deferred to a separate cleanup feature
+- [ ] Any accessibility work that genuinely needs its own feature is justified
+
+### MOBILE-DECOMP-EPIC-004: Feature Gating Assignment
+**Severity**: LOW
+
+- [ ] Features behind a flag name the flag and its default
+- [ ] The gated-off behavior is assigned to a feature's scope
 
 ---
 
 ## Reporting
 
-### Report Format
+Use the **base checklist's Reporting section** — `{cf-studio-path}/config/kits/sdlc/artifacts/DECOMPOSITION/checklist.md` — without modification: the Validation Summary, Reporting Readiness Checklist, Full/Compact report formats, and Reporting Commitment.
 
-For each issue found, report:
+Additional reporting requirements for this layer:
 
-```markdown
-## Issue: {CHECKLIST-ID}
-
-**Severity**: CRITICAL | HIGH | MEDIUM | LOW
-
-**Why Applicable**: {Why this requirement applies}
-
-**Issue**: {What is wrong}
-
-**Evidence**: {Quote from document or "Not found"}
-
-**Impact**: {Why this matters}
-
-**Proposal**: {How to fix}
-```
-
-### Reporting Commitment
-
-- [ ] I reported all issues I found
-- [ ] I used the exact report format
-- [ ] I included evidence for each issue
-- [ ] I proposed concrete fixes
-- [ ] I did not hide or omit known problems
+- [ ] Report base findings and delta findings in one merged report, ordered by severity
+- [ ] State the base checklist version/source used, so a reviewer can reproduce the pass
+- [ ] State the coverage result explicitly: number of epic design elements, number assigned, number documented as excluded
+- [ ] Confirm the parent MiniApp DECOMPOSITION scope was checked, and report any feature that exceeds it

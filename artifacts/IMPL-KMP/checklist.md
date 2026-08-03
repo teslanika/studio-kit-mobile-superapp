@@ -1,282 +1,206 @@
-# IMPL-KMP Checklist
+# IMPL-KMP Checklist — Layer Delta
 
-**Artifact**: IMPL-KMP  
-**Kit**: mobile-superapp  
-**Level**: Implementation (KMP)
+**Artifact**: IMPL-KMP
+**Kit**: mobile-superapp
+**Target**: KMP shared (`constructor-sdk/feature/{miniapp}/`)
+**Base Checklist**: `{cf-studio-path}/config/kits/mobile-superapp/codebase/checklist.md`
 
-This checklist provides semantic quality criteria for KMP (Kotlin Multiplatform) Implementation Reference documents in mobile SuperApp projects.
+This checklist is a **delta over the mobile SuperApp code checklist**, not a replacement. The base itself layers over `{cf-studio-path}/.core/requirements/code-checklist.md` (generic code quality) and `{cf-studio-path}/config/kits/sdlc/codebase/checklist.md` (semantic alignment, SEM-CODE-001..007), so loading the base loads the whole chain.
+
+This file adds the criteria that apply to the **implementation-reference document** itself and narrows the base's code criteria to the shared target.
 
 ---
 
 ## Table of Contents
 
-1. [MUST HAVE Requirements](#must-have-requirements)
-2. [SHOULD HAVE Requirements](#should-have-requirements)
-3. [MUST NOT HAVE (Violations)](#must-not-have-violations)
-4. [Mobile-Specific Criteria](#mobile-specific-criteria)
-5. [Reporting](#reporting)
+1. [How To Use This Checklist](#how-to-use-this-checklist)
+2. [Code Criteria Scope At This Target](#code-criteria-scope-at-this-target)
+3. [Layer Delta: MUST HAVE](#layer-delta-must-have)
+4. [Layer Delta: MUST NOT HAVE](#layer-delta-must-not-have)
+5. [Layer Delta: KMP-Specific Criteria](#layer-delta-kmp-specific-criteria)
+6. [Reporting](#reporting)
 
 ---
 
-## MUST HAVE Requirements
+## How To Use This Checklist
 
-### IMPL-KMP-001: Overview Section
+1. **LOAD the base checklist first** — `config/kits/mobile-superapp/codebase/checklist.md` — and apply it in full, including the generic and semantic bases it loads.
+2. **Apply the scope table** below: which base delta sections are in force for shared code, and which belong to the platform IMPL artifacts.
+3. **Apply the delta criteria** in this file to the IMPL-KMP document.
+4. **Report once**, in the base report format, citing generic, SEM-CODE, base-delta (`KMP-001`), and this file's IDs (`IMPL-KMP-001`) in the same finding field.
 
-**Priority**: CRITICAL
-
-The IMPL MUST include overview:
-
-- [ ] Module path (`constructor-sdk/feature/{module}/`)
-- [ ] Clear statement linking implementation to product documentation
-
-**Why it matters**: Overview establishes module context.
-
-### IMPL-KMP-002: References Table
-
-**Priority**: CRITICAL
-
-The IMPL MUST include references:
-
-- [ ] Feature reference with path and ID
-- [ ] Epic DESIGN reference with path and ID
-- [ ] MiniApp DESIGN reference with path and ID
-
-**Why it matters**: References enable navigation to specifications.
-
-### IMPL-KMP-003: Scope Definition
-
-**Priority**: HIGH
-
-The IMPL MUST define scope:
-
-- [ ] What FEATURE sections this module implements (e.g., Section 3.1)
-- [ ] What DESIGN components this module implements
-
-**Why it matters**: Scope prevents ambiguity about module responsibility.
-
-### IMPL-KMP-004: Traceability Table
-
-**Priority**: CRITICAL
-
-The IMPL MUST include traceability table:
-
-- [ ] Design Component ID column
-- [ ] Code File column (relative path)
-- [ ] Implementation ID column (`@cpt-impl cpt-kmp-{module}-{type}-{slug}`)
-- [ ] All design components mapped
-
-**Why it matters**: Traceability enables validation of code markers.
-
-### IMPL-KMP-005: Directory Structure
-
-**Priority**: HIGH
-
-The IMPL MUST include directory structure:
-
-- [ ] Tree diagram of module structure
-- [ ] IMPL.md location marked
-- [ ] `src/commonMain/kotlin/` path
-- [ ] domain/ folder (model/, usecase/)
-- [ ] data/ folder (repository/, remote/, local/)
-- [ ] presentation/ folder (ViewModel, State, Intent, Effect)
-- [ ] build.gradle.kts location
-
-**Why it matters**: Structure guides code organization.
-
-### IMPL-KMP-006: Code Markers Format
-
-**Priority**: CRITICAL
-
-The IMPL MUST document code marker format:
-
-- [ ] Example showing `@cpt-impl` marker
-- [ ] Format: `// @cpt-impl cpt-kmp-{module}-{type}-{slug}`
-- [ ] Placement guidance (before class/function)
-
-**Why it matters**: Markers enable automated traceability validation.
-
-### IMPL-KMP-007: Validation Command
-
-**Priority**: HIGH
-
-The IMPL MUST include validation:
-
-- [ ] Validation command (`cfs validate --artifact {path}`)
-- [ ] What validation checks (design components have markers)
-- [ ] What validation verifies (markers reference valid IDs)
-- [ ] Coverage threshold mention
-
-**Why it matters**: Validation ensures traceability completeness.
+Severity values are the base checklists': CRITICAL, HIGH, MEDIUM, LOW.
 
 ---
 
-## SHOULD HAVE Requirements
+## Code Criteria Scope At This Target
 
-### IMPL-KMP-008: Implementation Notes
-
-**Priority**: MEDIUM
-
-The IMPL SHOULD include:
-
-- [ ] Platform-specific decisions
-- [ ] Deviations from design
-- [ ] Implementation constraints
-
-### IMPL-KMP-009: Component Type Markers
-
-**Priority**: MEDIUM
-
-Traceability table SHOULD cover all types:
-
-- [ ] `usecase` type markers
-- [ ] `state` type markers
-- [ ] `vm` (ViewModel) type markers
-- [ ] `repo` (Repository) type markers
-- [ ] `entity` type markers
-
-### IMPL-KMP-010: Code Examples
-
-**Priority**: LOW
-
-The IMPL SHOULD include:
-
-- [ ] UseCase code example with marker
-- [ ] Proper marker placement demonstrated
+| Base delta section | Scope for IMPL-KMP |
+|--------------------|--------------------|
+| Delta: KMP Shared Code (`KMP-001..006`) | Full — this is the owning target |
+| Delta: Android Code (`ANDROID-*`) | Out of scope — see `IMPL-ANDROID` |
+| Delta: iOS Code (`IOS-*`) | Out of scope — see `IMPL-IOS` |
+| Delta: WebView Bridge Code (`WEBVIEW-*`) | Out of scope unless a shared process owns bridge payload construction |
+| Delta: Mobile Performance (`MOBILE-PERF-*`) | Full for network and memory; UI thread criteria apply at the platform targets |
+| Delta: Mobile Security (`MOBILE-SEC-*`) | Full — token handling, storage, and input validation in shared code |
+| Semantic Alignment (`SEM-CODE-001..007`) | Full, restricted to processes whose Target is KMP shared |
 
 ---
 
-## MUST NOT HAVE (Violations)
+## Layer Delta: MUST HAVE
+
+### IMPL-KMP-001: Overview And Module Identity
+**Severity**: MEDIUM
+
+- [ ] The module path is stated and matches the DECOMPOSITION platform implementation table
+- [ ] The document states that it is a reference map, not a design or coding guide
+- [ ] Version and status are present
+
+### IMPL-KMP-002: References Resolve
+**Severity**: CRITICAL
+
+- [ ] FEATURE-MOBILE, Epic DESIGN, MiniApp DESIGN, and Platform DESIGN rows are present
+- [ ] Every path resolves and every ID exists (`cfs list-ids`)
+- [ ] IDs use the `cpt-{hierarchy-prefix}-{kind}-{slug}` scheme
+
+### IMPL-KMP-003: Scope Declares Target Ownership
+**Severity**: HIGH
+
+- [ ] Scope lists what this module implements in terms of shared-target processes and shared components
+- [ ] Out-of-scope names `IMPL-ANDROID`, `IMPL-IOS`, and the kernel contracts consumed
+- [ ] No Android- or iOS-target process appears in scope
+
+### IMPL-KMP-004: Traceability Table Completeness
+**Severity**: CRITICAL
+
+- [ ] Every process whose Target is KMP shared has at least one row
+- [ ] Every row's design ID exists and every code file path exists
+- [ ] Every row's marker is present in that code file, in the format from the traceability spec
+- [ ] No code file in the module implements a design element without a row
+
+### IMPL-KMP-005: Directory Structure Accuracy
+**Severity**: MEDIUM
+
+- [ ] The tree matches the module on disk, including the `commonMain` / `androidMain` / `iosMain` / `commonTest` split
+- [ ] Planned-but-absent directories are marked as planned
+
+### IMPL-KMP-006: Marker Format Correctness
+**Severity**: HIGH
+
+- [ ] FULL mode examples use `@cpt-{kind}:{cpt-id}:p{N}` scope markers and paired `@cpt-begin` / `@cpt-end` block markers
+- [ ] DOCS-ONLY mode is stated to use `@cpt-impl {cpt-id}`
+- [ ] The mode this module operates in is stated
+
+### IMPL-KMP-007: Dependencies And Kernel Contracts
+**Severity**: HIGH
+
+- [ ] Every kernel service the module consumes is listed with its purpose
+- [ ] No kernel capability is reimplemented inside the feature module
+- [ ] No dependency on `android-app/` or `ios-app/` appears
+
+### IMPL-KMP-008: Validation Commands Present
+**Severity**: MEDIUM
+
+- [ ] `cfs validate --artifact` for this module path is stated
+- [ ] The build and test commands for `:constructor-sdk` are stated
+- [ ] Lint commands are stated
+
+### IMPL-KMP-009: Implementation Notes Substance
+**Severity**: MEDIUM
+
+- [ ] Every deviation from the design is stated with its reason
+- [ ] Every `expect`/`actual` boundary is named with why it is platform-specific
+- [ ] The section is not left as a placeholder
+
+---
+
+## Layer Delta: MUST NOT HAVE
 
 ### IMPL-KMP-NO-001: No Full Implementation Code
+**Severity**: HIGH
 
-**Priority**: HIGH
+- [ ] No complete class or function bodies beyond short marker illustrations
 
-The IMPL MUST NOT contain:
+**Where it belongs**: the source files
 
-- [ ] Complete class implementations
-- [ ] Full method bodies
-- [ ] Production code beyond examples
+### IMPL-KMP-NO-002: No Unresolvable References
+**Severity**: CRITICAL
 
-**Why it matters**: Implementation belongs in code files, not IMPL.md.
+- [ ] No design ID that `cfs list-ids` cannot find
+- [ ] No file path that does not exist
 
-### IMPL-KMP-NO-002: No Missing Design References
+**Where it belongs**: fix the reference, or add the design element first
 
-**Priority**: CRITICAL
+### IMPL-KMP-NO-003: No Architecture Definitions
+**Severity**: HIGH
 
-The IMPL MUST NOT have:
+- [ ] No module boundary, layering, or API contract definitions
 
-- [ ] Traceability entries without design component IDs
-- [ ] Implementation IDs without corresponding design IDs
-- [ ] Orphaned code markers
+**Where it belongs**: `DESIGN-MINIAPP` / `DESIGN-PLATFORM`
 
-**Why it matters**: Every implementation must trace to design.
+### IMPL-KMP-NO-004: No Platform-Target Content
+**Severity**: MEDIUM
 
-### IMPL-KMP-NO-003: No Incorrect Paths
+- [ ] No Compose or SwiftUI content, no per-platform UI mapping
 
-**Priority**: HIGH
+**Where it belongs**: `IMPL-ANDROID` / `IMPL-IOS`
 
-The IMPL MUST NOT have:
+### IMPL-KMP-NO-005: No Coding Conventions
+**Severity**: LOW
 
-- [ ] Code file paths that don't match actual structure
-- [ ] Module paths inconsistent with directory structure
-- [ ] Broken relative links
+- [ ] No naming, formatting, or DI wiring instructions
 
-**Why it matters**: Paths must be accurate for navigation and validation.
-
-### IMPL-KMP-NO-004: No Architecture Definitions
-
-**Priority**: MEDIUM
-
-The IMPL MUST NOT contain:
-
-- [ ] Architecture decisions (belongs in DESIGN)
-- [ ] Component interfaces (belongs in DESIGN)
-- [ ] State definitions (belongs in DESIGN)
-
-**Why it matters**: IMPL references architecture, doesn't define it.
+**Where it belongs**: the project `AGENTS.md`
 
 ---
 
-## Mobile-Specific Criteria
+## Layer Delta: KMP-Specific Criteria
 
-### MOBILE-IMPL-KMP-001: KMP Module Structure
+### MOBILE-IMPL-KMP-001: Module Structure Conformance
+**Severity**: HIGH
 
-**Priority**: CRITICAL
+- [ ] `domain/`, `data/`, and `presentation/` are separated as designed
+- [ ] `domain/` has no dependency on `data/` implementations
+- [ ] Test sources exist under `commonTest/`
 
-Directory structure MUST follow KMP conventions:
+### MOBILE-IMPL-KMP-002: Use Case Mapping
+**Severity**: HIGH
 
-- [ ] `src/commonMain/kotlin/` for shared code
-- [ ] Package path: `com/constructor/sdk/feature/{module}/`
-- [ ] domain/, data/, presentation/ separation
+- [ ] Every use case in the Epic DESIGN has exactly one shared implementation row
+- [ ] No use case is implemented twice, once per platform
 
-### MOBILE-IMPL-KMP-002: Use Case Pattern
+### MOBILE-IMPL-KMP-003: ViewModel And State Mapping
+**Severity**: HIGH
 
-**Priority**: HIGH
+- [ ] The ViewModel, State, Intent, and Effect files are mapped to the design component and state IDs
+- [ ] The state file implements the state machine from FEATURE-MOBILE section 4
 
-UseCase markers MUST follow pattern:
+### MOBILE-IMPL-KMP-004: Repository And Cache Mapping
+**Severity**: HIGH
 
-- [ ] `@cpt-impl cpt-kmp-{module}-usecase-{slug}`
-- [ ] UseCase suffix on class names
-- [ ] Result<T> return type
+- [ ] Every repository operation in the Epic DESIGN has a row
+- [ ] Cache, staleness, and offline-fallback behavior is mapped to the repository process, not to platform code
 
-### MOBILE-IMPL-KMP-003: ViewModel Pattern
+### MOBILE-IMPL-KMP-005: Entity Mapping
+**Severity**: MEDIUM
 
-**Priority**: HIGH
+- [ ] Every domain entity this feature touches has a row referencing the MiniApp DESIGN entity ID
+- [ ] No entity is redefined here
 
-ViewModel markers MUST follow pattern:
+### MOBILE-IMPL-KMP-006: Platform Actual Coverage
+**Severity**: MEDIUM
 
-- [ ] `@cpt-impl cpt-kmp-{module}-vm-{slug}`
-- [ ] ViewModel suffix on class names
-- [ ] State, Intent, Effect references
-
-### MOBILE-IMPL-KMP-004: Repository Pattern
-
-**Priority**: HIGH
-
-Repository markers MUST follow pattern:
-
-- [ ] `@cpt-impl cpt-kmp-{module}-repo-{slug}`
-- [ ] RepositoryImpl suffix on implementation
-- [ ] Interface in domain, impl in data
-
-### MOBILE-IMPL-KMP-005: Entity Pattern
-
-**Priority**: HIGH
-
-Entity markers MUST follow pattern:
-
-- [ ] `@cpt-impl cpt-kmp-{module}-entity-{slug}`
-- [ ] Located in domain/model/
-- [ ] Data class structure
+- [ ] Every `expect` declaration has an `actual` for both Android and iOS, or the missing target is documented as planned
+- [ ] No `if (platform)` branching substitutes for an `expect`/`actual` boundary
 
 ---
 
 ## Reporting
 
-### Report Format
+Use the **base checklist's Reporting section** — `config/kits/mobile-superapp/codebase/checklist.md` — without modification.
 
-For each issue found, report:
+Additional reporting requirements for this artifact:
 
-```markdown
-## Issue: {CHECKLIST-ID}
-
-**Severity**: CRITICAL | HIGH | MEDIUM | LOW
-
-**Why Applicable**: {Why this requirement applies}
-
-**Issue**: {What is wrong}
-
-**Evidence**: {Quote from document or "Not found"}
-
-**Impact**: {Why this matters}
-
-**Proposal**: {How to fix}
-```
-
-### Reporting Commitment
-
-- [ ] I reported all issues I found
-- [ ] I used the exact report format
-- [ ] I included evidence for each issue
-- [ ] I proposed concrete fixes
-- [ ] I did not hide or omit known problems
+- [ ] Report base findings and delta findings in one merged report, ordered by severity
+- [ ] State the traceability mode and the shared-target marker coverage percentage
+- [ ] List unmapped shared-target processes and unmapped code files explicitly as coverage gaps

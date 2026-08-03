@@ -1,240 +1,134 @@
 # DECOMPOSITION-MINIAPP Rules
 
-**Artifact**: DECOMPOSITION-MINIAPP  
-**Kit**: mobile-superapp  
+**Artifact**: DECOMPOSITION-MINIAPP
+**Kit**: mobile-superapp
 **Level**: L1 (MiniApp)
 
-**Dependencies**:
-- `config/kits/mobile-superapp/artifacts/DECOMPOSITION-MINIAPP/template.md` — structural reference
-- `config/kits/mobile-superapp/artifacts/DECOMPOSITION-MINIAPP/checklist.md` — semantic quality criteria
-- `config/kits/mobile-superapp/artifacts/DESIGN-MINIAPP/template.md` — parent MiniApp DESIGN reference
-- `config/kits/mobile-superapp/artifacts/PRD-MINIAPP/template.md` — MiniApp PRD reference
+```pdsl
+UNIT DecompositionMiniappAuthoring
 
-## Table of Contents
+PURPOSE:
+  Author or revise a MiniApp-level decomposition that breaks the MiniApp DESIGN
+  into epics (screens, capabilities, flows) with full coverage.
 
-1. [Prerequisites](#prerequisites)
-2. [Requirements](#requirements)
-3. [Tasks](#tasks)
-4. [Validation](#validation)
-5. [Error Handling](#error-handling)
-6. [Next Steps](#next-steps)
+WHEN:
+  - REQUIRE authoring or revising a DECOMPOSITION-MINIAPP
 
----
+DO:
+  - LOAD config/kits/mobile-superapp/artifacts/DECOMPOSITION-MINIAPP/template.md for structure
+  - LOAD config/kits/sdlc/artifacts/DECOMPOSITION/checklist.md — the base checklist, applied in full
+  - LOAD config/kits/mobile-superapp/artifacts/DECOMPOSITION-MINIAPP/checklist.md for the MiniApp-layer delta over that base
+  - RUN read MiniApp PRD and extract FRs, NFRs, actors, and user journeys to cover
+  - RUN read MiniApp DESIGN and extract components, domain entities, repositories, navigation graph, sequences, and data stores to assign
+  - RUN read the parent Platform DECOMPOSITION to confirm this MiniApp's scope and dependencies
+  - LOAD config/kits/mobile-superapp/constraints.toml for kit-level constraints
+  - LOAD {cf-studio-path}/.core/architecture/specs/traceability.md for ID formats
+  - RUN read project config for ID prefix and resolve output path from {cf-studio-path}/config/artifacts.toml
+  - RUN classify each entry as Screen, Capability, or Flow and group design elements by cohesion
+  - RUN author each entry with Category, Purpose, Actors, Depends On, Scope, Out of scope, Requirements Covered, Design Principles Covered, Design Constraints Covered, Domain Model Entities, Design Components, API, Sequences, Data, Entry Points, Platform Coverage, Target Release
+  - RUN author Entry Dependencies as an acyclic graph with a rationale per edge
+  - RUN author the Coverage Matrix and Implementation Order
+  - RUN cfs list-ids to verify ID uniqueness
 
-## Prerequisites
-
-### Load Dependencies
-
-- [ ] Load `config/kits/mobile-superapp/artifacts/DECOMPOSITION-MINIAPP/template.md` for structure
-- [ ] Load `config/kits/mobile-superapp/artifacts/DECOMPOSITION-MINIAPP/checklist.md` for semantic guidance
-- [ ] Read MiniApp PRD for requirements context
-- [ ] Read MiniApp DESIGN for architectural context
-- [ ] Read Platform DECOMPOSITION for MiniApp boundaries
-- [ ] Load `config/kits/mobile-superapp/constraints.toml` for kit-level constraints
-- [ ] Load `{cf-studio-path}/.core/architecture/specs/traceability.md` for ID formats
-
----
-
-## Requirements
-
-### Structural
-
-- [ ] DECOMPOSITION-MINIAPP follows `config/kits/mobile-superapp/artifacts/DECOMPOSITION-MINIAPP/template.md` structure
-- [ ] All required sections present and non-empty:
-  - Overview (parent documents reference)
-  - Epic Entries (organized by category: Screens, Capabilities, Flows)
-  - Epic Dependencies
-  - Coverage Matrix (Requirements, Design Components)
-  - Implementation Order
-- [ ] All IDs follow `cpt-{miniapp}-epic-{slug}` convention
-- [ ] Each Epic entry has complete metadata:
-  - Category, Purpose, Actors
-  - Depends On, Scope (in/out)
-  - Requirements Covered, Design Components
-  - KMP Modules (if applicable), Target Release
-- [ ] No placeholder content (TODO, TBD, FIXME)
-- [ ] No duplicate IDs within document
-
-### Mobile-Specific
-
-- [ ] Epics are categorized:
-  - **Screens**: Individual screens/views
-  - **Capabilities**: Cross-cutting features (offline, notifications)
-  - **Flows**: Multi-screen user journeys
-- [ ] Each Epic specifies KMP module dependencies
-- [ ] Screen Epics specify entry points (navigation, deep link)
-- [ ] Capability Epics specify Kernel integration
-- [ ] Flow Epics list screens involved
-
-### Traceability
-
-- [ ] Every Epic traces to MiniApp FRs it covers
-- [ ] Design components from MiniApp DESIGN are allocated to Epics
-- [ ] Requirements coverage matrix shows FR → Epic mapping
-- [ ] Design component coverage matrix shows component → Epic mapping
-- [ ] Links to parent documents (MiniApp PRD, MiniApp DESIGN, Platform DECOMPOSITION)
-
-### Versioning
-
-- [ ] When editing existing DECOMPOSITION: increment version in document header
-- [ ] When adding/removing Epic: document rationale
-
----
-
-## Tasks
-
-### Phase 1: Setup
-
-- [ ] Load `config/kits/mobile-superapp/artifacts/DECOMPOSITION-MINIAPP/template.md` for structure
-- [ ] Load `config/kits/mobile-superapp/artifacts/DECOMPOSITION-MINIAPP/checklist.md` for semantic guidance
-- [ ] Read MiniApp PRD for requirements
-- [ ] Read MiniApp DESIGN for components
-- [ ] Identify natural Epic boundaries from screens, capabilities, and flows
-
-### Phase 2: Content Creation
-
-Apply checklist semantics during creation:
-
-| Checklist Category | Generation Task |
-|-------------------|-----------------|
-| Overview | Link to parent PRD, DESIGN, Platform DECOMPOSITION |
-| Screens | Create Epic entry for each screen |
-| Capabilities | Create Epic entry for cross-cutting capabilities |
-| Flows | Create Epic entry for multi-screen journeys |
-| Dependencies | Create dependency diagram with rationale |
-| Coverage Matrix | Map FRs and components to Epics |
-| Implementation Order | Plan phased implementation |
-
-**Epic Entry Checklist**:
-
-For each Epic, document:
-- [ ] Category (Screen / Capability / Flow)
-- [ ] Purpose (few sentences)
-- [ ] Actors (actor IDs)
-- [ ] Depends On (other Epics or "None")
-- [ ] Scope (in-scope and out-of-scope items)
-- [ ] Requirements Covered (MiniApp FRs with priority)
-- [ ] Design Components (IDs from MiniApp DESIGN)
-- [ ] KMP Modules (if applicable)
-- [ ] Target Release (quarter)
-
-**Partial Completion Handling**:
-
-If DECOMPOSITION-MINIAPP cannot be completed in a single session:
-1. Checkpoint progress with completed Epic entries
-2. Add `status: DRAFT` to document header
-3. Mark incomplete Epics with `INCOMPLETE: {reason}`
-4. Document resumption point
-
-### Phase 3: IDs and References
-
-- [ ] Generate overall status ID: `cpt-{miniapp}-status-overall`
-- [ ] Generate Epic IDs: `cpt-{miniapp}-epic-{slug}`
-- [ ] Link to MiniApp FR IDs
-- [ ] Link to MiniApp component IDs
-- [ ] Verify uniqueness with `cfs list-ids`
-
-### Phase 4: Quality Check
-
-- [ ] Self-review against `config/kits/mobile-superapp/artifacts/DECOMPOSITION-MINIAPP/checklist.md` MUST HAVE items
-- [ ] Ensure no MUST NOT HAVE violations
-- [ ] Verify all MiniApp FRs are covered by at least one Epic
-- [ ] Verify all DESIGN components are allocated
-- [ ] Verify Epic boundaries don't overlap significantly
-- [ ] Verify dependency graph supports parallel development where possible
-
-### Phase 5: Table of Contents
-
-- [ ] Run `cfs toc <path>` to generate/update Table of Contents
-- [ ] Verify TOC is present and complete
-
----
-
-## Validation
-
-### Phase 1: Structural Validation
-
-- [ ] Run `cfs validate --artifact <path>` for:
-  - Template structure compliance
-  - ID format validation
-  - Cross-reference validity
-  - No placeholders
-
-### Phase 2: Semantic Validation
-
-- [ ] Read `config/kits/mobile-superapp/artifacts/DECOMPOSITION-MINIAPP/checklist.md` in full
-- [ ] For each MUST HAVE item: check if requirement is met
-- [ ] For each MUST NOT HAVE item: scan document for violations
-
-### Phase 3: Decomposition-Specific Validation
-
-- [ ] All MiniApp FRs have Epic coverage
-- [ ] All DESIGN components are allocated to Epics
-- [ ] Epic categories are appropriate (Screen vs Capability vs Flow)
-- [ ] Dependencies are justified and minimal
-- [ ] Implementation order respects dependencies
-- [ ] Parallel development opportunities identified
-
-### Validation Report Format
-
-```
-DECOMPOSITION-MINIAPP Validation Report
-══════════════════════════════════════
-
-Structural: PASS/FAIL
-Semantic: PASS/FAIL (N issues)
-Decomposition-Specific: PASS/FAIL (N issues)
-
-Coverage:
-- MiniApp FRs covered: N/M (X%)
-- DESIGN components allocated: N/M (X%)
-
-Issues:
-- [SEVERITY] CHECKLIST-ID: Description
+RULES:
+  - ALWAYS follow the template structure; all required sections present and non-empty
+  - ALWAYS give each entry a unique ID cpt-{hierarchy-prefix}-epic-{slug}, a priority marker p1-p9, and a checkbox
+  - ALWAYS define checkbox IDs per constraints: kind `status` (cpt-{hierarchy-prefix}-status-overall, checked when ALL entries checked) and kind `epic` (checked when that epic's PRD/DESIGN/DECOMPOSITION set is complete)
+  - ALWAYS treat cpt-... occurrences outside an **ID** definition line as references (kinds: fr, nfr, principle, constraint, component, actor, seq, db, dbtable)
+  - ALWAYS classify every entry as exactly one of Screen, Capability, or Flow
+  - ALWAYS achieve 100% coverage: every MiniApp design component, entity, sequence, and data store is assigned to at least one epic, and every MiniApp FR/NFR is covered transitively
+  - ALWAYS reference platform actors as cpt-superapp-actor-{slug}; NEVER redefine actors here
+  - ALWAYS state Entry Points for each epic (navigation, deep link, or notification) consistent with the MiniApp navigation graph
+  - ALWAYS state Platform Coverage (shared / Android / iOS) for each entry
+  - ALWAYS make dependencies explicit and acyclic; a foundation epic is an entry point with no epic dependencies
+  - ALWAYS apply ID versioning per the traceability spec; IDs stay stable through implementation
+  - ALWAYS treat the checklist as the single source of semantic quality criteria
+  - NEVER duplicate semantic criteria here; NEVER leave placeholders (TODO, TBD, FIXME); NEVER create duplicate IDs within the document
 ```
 
----
+```pdsl
+UNIT DecompositionMiniappOmissions
 
-## Error Handling
+PURPOSE:
+  Enforce DECOMPOSITION scope boundaries — content that MUST NOT appear and the artifact where it belongs. Report as a violation if found.
 
-### Missing MiniApp DESIGN
+RULES:
+  - NEVER include implementation details — code, algorithms, state machines, API request/response schemas (DECOMP-NO-001, CRITICAL) — they belong in FEATURE-MOBILE
+  - NEVER define requirements — FRs, NFRs, use cases, actors (DECOMP-NO-002, HIGH) — they belong in PRD-MINIAPP
+  - NEVER include architecture decisions or technology rationale (DECOMP-NO-003, HIGH) — they belong in ADR and DESIGN-MINIAPP
+  - NEVER leave silent omissions — an uncovered design element or a deliberate overlap must be stated with reasoning (DOC-001, CRITICAL)
+  - NEVER decompose an epic into features (MINIAPP-DECOMP-NO-001, HIGH) — that belongs in DECOMPOSITION-EPIC
+  - NEVER restate MiniApp module structure, domain entities, or the navigation graph (MINIAPP-DECOMP-NO-002, MEDIUM) — reference DESIGN-MINIAPP elements by ID
+  - NEVER include screen layout, widget composition, or visual specification (MINIAPP-DECOMP-NO-003, MEDIUM) — they belong in PRD-EPIC and DESIGN-EPIC
+```
 
-- [ ] If MiniApp DESIGN not found:
-  - Option 1: Run `/cf-generate DESIGN-MINIAPP` first (recommended)
-  - Option 2: Continue without DESIGN (component allocation will be incomplete)
-  - Document "DESIGN pending" in DECOMPOSITION header
+```pdsl
+UNIT DecompositionMiniappValidate
 
-### Missing MiniApp PRD
+PURPOSE:
+  Run deterministic, semantic, and TOC validation on the DECOMPOSITION-MINIAPP.
 
-- [ ] If MiniApp PRD not found:
-  - Option 1: Run `/cf-generate PRD-MINIAPP` first
-  - Option 2: Continue without PRD (requirements coverage will be incomplete)
-  - Document requirements assumptions made
+DO:
+  - RUN cfs validate --artifact <path> (template structure, ID format, priority markers, valid status, no placeholders, no duplicate IDs)
+  - LOAD config/kits/sdlc/artifacts/DECOMPOSITION/checklist.md and RUN the full base semantic pass (COV, EXC, ATTR, LEV, CFG, TRC, DEP, CHK, DOC, FMT, MUST NOT HAVE scan)
+  - LOAD config/kits/mobile-superapp/artifacts/DECOMPOSITION-MINIAPP/checklist.md and RUN the MiniApp-layer delta pass (domain scope table, delta MUST HAVE, delta MUST NOT HAVE, mobile-specific criteria)
+  - RETURN one merged report in the base checklist's report format, citing base and delta checklist IDs
+  - RUN cfs toc <path> then cfs validate-toc <path>
 
-### Epic Boundary Uncertainty
+RULES:
+  - ALWAYS run cfs validate --artifact <path>
+  - ALWAYS verify every MiniApp design component and navigation destination is assigned, and every MiniApp FR/NFR is covered
+  - ALWAYS maintain cascade rules — an `epic` ID is not checked until that epic's document set is complete; `status-overall` is not checked until ALL entries are checked
+  - NEVER consider the DECOMPOSITION done while validation reports fail/error or cfs validate-toc does not PASS
+  - ALWAYS use the checklist for semantic criteria, applicability handling, and report format — do not restate them here
+```
 
-- [ ] If uncertain about Epic boundaries:
-  - Ask user for guidance
-  - Consider screen boundaries (one screen = one Epic)
-  - Consider user flow boundaries (complete journey = one Flow Epic)
-  - Consider capability scope (single capability = one Capability Epic)
-  - Document decision rationale
+```pdsl
+UNIT DecompositionMiniappErrorHandling
 
-### Escalation
+PURPOSE:
+  Recover deterministically from missing dependencies, config, and ambiguity.
 
-- [ ] Ask user when Epic scope is unclear
-- [ ] Ask user when dependencies are complex
-- [ ] Ask user when implementation priorities conflict
+ON_ERROR:
+  missing_template ->
+    STOP — cannot proceed without the DECOMPOSITION-MINIAPP template
+  missing_checklist ->
+    EMIT warning
+    SET skip semantic validation
+  missing_miniapp_design ->
+    EMIT "MiniApp DESIGN not found. Recommended: run /cf-generate DESIGN-MINIAPP first — components and the navigation graph are assigned from it. Or continue with the design elements documented as assumptions."
+    WAIT user.reply
+  missing_platform_decomposition ->
+    EMIT warning
+    CONTINUE with this MiniApp's scope taken from its own PRD and the gap listed as an open dependency
+  coverage_gap ->
+    RUN assign the design element to an epic or document the exclusion with reasoning
+  scope_overlap ->
+    RUN assign to a single epic, or document the sharing with reasoning
 
----
+RULES:
+  - ALWAYS escalate to the user when epic granularity is unclear, when a capability spans several screens, or when release ordering needs a product decision
+```
 
-## Next Steps
+```pdsl
+UNIT DecompositionMiniappNextSteps
 
-### Options
+PURPOSE:
+  Offer next actions after the DECOMPOSITION-MINIAPP is complete.
 
-- [ ] DECOMPOSITION-MINIAPP complete → `/cf-generate PRD-EPIC` — create Epic PRD
-- [ ] DECOMPOSITION-MINIAPP complete → `/cf-generate DESIGN-EPIC` — create Epic DESIGN
-- [ ] DESIGN missing → `/cf-generate DESIGN-MINIAPP` — create MiniApp DESIGN first
-- [ ] PRD missing → `/cf-generate PRD-MINIAPP` — create MiniApp PRD first
-- [ ] DECOMPOSITION needs revision → continue editing DECOMPOSITION-MINIAPP
-- [ ] Ready for Epic work → create Epic folder structure
+DO:
+  - EMIT_MENU DecompositionMiniappNextStepsMenu
+
+MENU DecompositionMiniappNextStepsMenu:
+  TITLE: DECOMPOSITION-MINIAPP next steps
+  OPTIONS:
+    1 -> RUN /cf-generate PRD-EPIC (start the first epic)
+    2 -> RUN /cf-generate DESIGN-EPIC (design an epic)
+    3 -> RUN update epic status in this decomposition
+    4 -> CONTINUE DecompositionMiniappAuthoring (add or revise an entry)
+    5 -> RUN /cf-analyze semantic (checklist-only review)
+  INVALID:
+    EMIT "Reply with 1, 2, 3, 4, or 5."
+    WAIT user.reply
+    STOP_TURN
+```

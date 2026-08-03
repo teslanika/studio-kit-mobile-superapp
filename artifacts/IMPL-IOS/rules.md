@@ -1,287 +1,136 @@
 # IMPL-IOS Rules
 
-**Artifact**: IMPL-IOS  
-**Kit**: mobile-superapp  
-**Level**: Implementation (iOS UI)
+**Artifact**: IMPL-IOS
+**Kit**: mobile-superapp
+**Target**: iOS (`ios-app/Features/{Module}/`)
 
-**Dependencies**:
-- `config/kits/mobile-superapp/artifacts/IMPL-IOS/template.md` — structural reference
-- `config/kits/mobile-superapp/artifacts/IMPL-IOS/checklist.md` — semantic quality criteria
-- `config/kits/mobile-superapp/artifacts/FEATURE-MOBILE/template.md` — parent FEATURE reference
-- `config/kits/mobile-superapp/artifacts/DESIGN-EPIC/template.md` — Epic DESIGN reference
-- `config/kits/mobile-superapp/artifacts/IMPL-KMP/template.md` — KMP shared logic reference
+```pdsl
+UNIT ImplIosAuthoring
 
-## Table of Contents
+PURPOSE:
+  Author or revise the implementation reference that maps the iOS module to the
+  FEATURE-MOBILE processes, screens, widgets, and navigation it realizes.
 
-1. [Prerequisites](#prerequisites)
-2. [Requirements](#requirements)
-3. [Tasks](#tasks)
-4. [Validation](#validation)
-5. [Error Handling](#error-handling)
-6. [Next Steps](#next-steps)
+WHEN:
+  - REQUIRE authoring or revising an IMPL-IOS
 
----
+DO:
+  - LOAD config/kits/mobile-superapp/artifacts/IMPL-IOS/template.md for structure
+  - LOAD config/kits/mobile-superapp/codebase/checklist.md — the base checklist for code at this layer, applied in full
+  - LOAD config/kits/mobile-superapp/artifacts/IMPL-IOS/checklist.md for the iOS-target delta over that base
+  - RUN read the FEATURE-MOBILE documents this module implements; collect every process whose Target is iOS
+  - RUN read the Epic DESIGN for screens, widgets, navigation, universal links, and state contracts
+  - RUN read the IMPL-KMP reference for the shared surface this module bridges to
+  - LOAD {cf-studio-path}/.core/architecture/specs/traceability.md for marker syntax
+  - RUN scan the module tree for existing @cpt markers so the traceability table reflects actual code
+  - RUN author each required section (Overview, References, Scope, Implementation Notes, Traceability Table, Directory Structure, Code Markers, KMP Integration, Dependencies, Validation)
+  - RUN cfs list-ids to confirm every referenced design ID exists
 
-## Prerequisites
-
-### Load Dependencies
-
-- [ ] Load `config/kits/mobile-superapp/artifacts/IMPL-IOS/template.md` for structure
-- [ ] Load `config/kits/mobile-superapp/artifacts/IMPL-IOS/checklist.md` for semantic guidance
-- [ ] Read parent FEATURE-MOBILE for CDSL specifications
-- [ ] Read Epic DESIGN for component definitions
-- [ ] Read IMPL-KMP for shared logic reference
-- [ ] Load `config/kits/mobile-superapp/constraints.toml` for kit-level constraints
-- [ ] Load `{cf-studio-path}/.core/architecture/specs/traceability.md` for ID formats
-
----
-
-## Requirements
-
-### Structural
-
-- [ ] IMPL-IOS follows `config/kits/mobile-superapp/artifacts/IMPL-IOS/template.md` structure
-- [ ] All required sections present and non-empty:
-  - Overview (module path)
-  - References (Feature, Epic DESIGN, MiniApp DESIGN)
-  - Scope (what iOS module implements)
-  - Implementation Notes
-  - Traceability Table
-  - Directory Structure
-  - Code Markers
-  - KMP Integration
-  - Dependencies
-  - Validation
-- [ ] Module path is correct: `ios-app/Features/{Module}/`
-- [ ] All references have valid paths and IDs
-- [ ] No placeholder content (TODO, TBD, FIXME)
-
-### Code Traceability
-
-- [ ] Traceability Table maps:
-  - Design Component ID → Code File → Implementation ID
-- [ ] Implementation IDs follow format: `@cpt-impl cpt-ios-{module}-{kind}-{slug}`
-- [ ] All FEATURE CDSL steps (Section 3.3) have corresponding code markers
-- [ ] All Epic DESIGN iOS components (views, widgets) have markers
-- [ ] Code markers are in `@cpt-impl` comment format (Swift)
-
-### Mobile-Specific (iOS)
-
-- [ ] Directory structure follows iOS conventions:
-  - `ios-app/Features/{Module}/`
-  - `Views/` — SwiftUI views
-  - `Views/Components/` — Reusable UI components
-  - `Navigation/` — Navigation coordinators
-  - `ViewModels/` — KMP ViewModel wrappers (if needed)
-  - `Resources/` — Localizable.strings, Assets
-- [ ] SwiftUI components documented:
-  - `{Feature}View.swift` — Main SwiftUI view
-  - Widget components in `Components/`
-  - Coordinator in `Navigation/`
-- [ ] KMP Integration section documents:
-  - ViewModel wrapper pattern
-  - State observation from KMP
-  - Intent sending to KMP
-- [ ] Dependencies section includes:
-  - ConstructorSDK framework reference
-  - Common UI module reference
-  - Common Navigation module reference
-- [ ] Swift code markers are valid comment syntax
-
-### Versioning
-
-- [ ] When editing existing IMPL: update traceability table
-- [ ] When adding new components: add to traceability table
-- [ ] When code moves: update file paths in table
-
----
-
-## Tasks
-
-### Phase 1: Setup
-
-- [ ] Load `config/kits/mobile-superapp/artifacts/IMPL-IOS/template.md` for structure
-- [ ] Load `config/kits/mobile-superapp/artifacts/IMPL-IOS/checklist.md` for semantic guidance
-- [ ] Read FEATURE-MOBILE Section 3.3 (iOS UI)
-- [ ] Read Epic DESIGN for iOS component definitions
-- [ ] Read IMPL-KMP for shared ViewModel reference
-- [ ] Identify all iOS components to implement
-
-### Phase 2: Content Creation
-
-Apply checklist semantics during creation:
-
-| Checklist Category | Generation Task |
-|-------------------|-----------------|
-| Overview | Document module path |
-| References | Link to FEATURE, Epic DESIGN, MiniApp DESIGN |
-| Scope | Describe what this iOS module implements |
-| Implementation Notes | Document SwiftUI patterns, coordinators |
-| Traceability Table | Map design IDs → code files → impl IDs |
-| Directory Structure | Document module file organization |
-| Code Markers | Show `@cpt-impl` marker examples |
-| KMP Integration | Document ViewModel wrapper pattern |
-| Dependencies | List ConstructorSDK and common module dependencies |
-
-**Traceability Table Format**:
-
-| Design Component ID | Code File | Implementation ID |
-|---------------------|-----------|-------------------|
-| `cpt-{miniapp}-{epic}-screen-{slug}` | `Views/{Feature}/{Feature}View.swift` | `@cpt-impl cpt-ios-{module}-view-{slug}` |
-| `cpt-{miniapp}-{epic}-widget-{slug}` | `Views/{Feature}/Components/{Widget}.swift` | `@cpt-impl cpt-ios-{module}-widget-{slug}` |
-| `cpt-{miniapp}-{epic}-nav` | `Navigation/{Feature}Coordinator.swift` | `@cpt-impl cpt-ios-{module}-nav-{slug}` |
-
-**KMP Integration Pattern**:
-
-```swift
-// Wrapper to bridge KMP ViewModel to SwiftUI
-class {Feature}ViewModelWrapper: ObservableObject {
-    private let kmpViewModel: {Feature}ViewModel
-    
-    @Published var state: {Feature}State
-    
-    init() {
-        self.kmpViewModel = {Feature}ViewModel()
-        // Observe KMP state flow
-    }
-    
-    func send(_ intent: {Feature}Intent) {
-        kmpViewModel.processIntent(intent)
-    }
-}
+RULES:
+  - ALWAYS follow the template structure; all required sections present and non-empty
+  - ALWAYS reference design IDs that already exist; NEVER mint a design ID here
+  - ALWAYS list only processes whose declared Target is iOS
+  - ALWAYS document the KMP bridge: which shared ViewModel is consumed and how state and errors cross the boundary
+  - ALWAYS give every traceability row a code file path that exists in the repository
+  - ALWAYS state deviations from the design in Implementation Notes, with their reason
+  - ALWAYS document declared universal links and custom schemes alongside the navigation row
+  - ALWAYS name the Android counterpart when iOS behavior deliberately differs
+  - NEVER define architecture, module boundaries, or API contracts here — reference DESIGN-MINIAPP / DESIGN-PLATFORM
+  - NEVER include full implementation code; short illustrative marker snippets only
+  - NEVER document business logic here — it belongs to IMPL-KMP
+  - NEVER restate SwiftUI style rules or design-system token values
+  - ALWAYS treat the checklist as the single source of semantic quality criteria
 ```
 
-**Partial Completion Handling**:
+```pdsl
+UNIT ImplIosOmissions
 
-If IMPL-IOS cannot be completed in a single session:
-1. Checkpoint progress with documented components
-2. Mark incomplete mappings with `PENDING: {reason}`
-3. Document resumption point
+PURPOSE:
+  Enforce IMPL-IOS scope boundaries — content that MUST NOT appear and where it belongs.
 
-### Phase 3: IDs and References
-
-- [ ] Link to FEATURE ID: `cpt-{miniapp}-feature-{slug}`
-- [ ] Link to Epic DESIGN ID: `cpt-{miniapp}-epic-{epic}`
-- [ ] Link to MiniApp DESIGN ID: `cpt-{miniapp}-design`
-- [ ] Generate implementation IDs:
-  - Views: `@cpt-impl cpt-ios-{module}-view-{slug}`
-  - Widgets: `@cpt-impl cpt-ios-{module}-widget-{slug}`
-  - Navigation: `@cpt-impl cpt-ios-{module}-nav-{slug}`
-  - UI logic: `@cpt-impl cpt-ios-{module}-ui-{slug}`
-- [ ] Verify implementation IDs match FEATURE CDSL `inst-ios-` markers
-
-### Phase 4: Quality Check
-
-- [ ] Self-review against `config/kits/mobile-superapp/artifacts/IMPL-IOS/checklist.md` MUST HAVE items
-- [ ] Ensure no MUST NOT HAVE violations
-- [ ] Verify all FEATURE Section 3.3 steps have impl markers
-- [ ] Verify all Epic DESIGN iOS components are mapped
-- [ ] Verify directory structure matches actual code
-- [ ] Verify KMP integration pattern is documented
-- [ ] Verify ConstructorSDK dependency is correctly referenced
-
-### Phase 5: Validation Commands
-
-- [ ] Document `cfs validate` command for this module
-- [ ] Verify validation checks are appropriate
-
----
-
-## Validation
-
-### Phase 1: Structural Validation
-
-- [ ] Run `cfs validate --artifact ios-app/Features/{Module}/` for:
-  - Template structure compliance
-  - ID format validation
-  - Cross-reference validity
-
-### Phase 2: Code Marker Validation
-
-- [ ] All design components have `@cpt-impl` markers in code
-- [ ] All code markers reference valid design IDs
-- [ ] No orphan markers (markers without design IDs)
-- [ ] No missing markers (design IDs without code markers)
-
-### Phase 3: Coverage Validation
-
-- [ ] All FEATURE CDSL steps (Section 3.3) are implemented
-- [ ] All Epic DESIGN iOS components have implementations
-- [ ] Coverage meets minimum threshold (e.g., 100% for P1 items)
-
-### Phase 4: iOS-Specific Validation
-
-- [ ] SwiftUI views use `@StateObject` for ViewModel wrappers
-- [ ] State observation uses proper Combine patterns
-- [ ] Navigation uses coordinator pattern or SwiftUI navigation
-- [ ] KMP ViewModel wrapper correctly bridges state and intents
-- [ ] Scene phase handling is implemented where needed
-
-### Validation Report Format
-
-```
-IMPL-IOS Validation Report
-══════════════════════════
-
-Module: ios-app/Features/{Module}/
-
-Structural: PASS/FAIL
-Code Markers: PASS/FAIL (N markers found)
-Coverage: X/Y components (Z%)
-
-Issues:
-- [SEVERITY] Description
+RULES:
+  - NEVER include full implementation code (IMPL-IOS-NO-001, HIGH) — code belongs in the source files
+  - NEVER reference a design ID that does not exist (IMPL-IOS-NO-002, CRITICAL)
+  - NEVER use file paths that do not exist in the repository (IMPL-IOS-NO-003, HIGH)
+  - NEVER define architecture or module boundaries (IMPL-IOS-NO-004, HIGH) — they belong in DESIGN-MINIAPP / DESIGN-PLATFORM
+  - NEVER document business logic or shared processes (IMPL-IOS-NO-005, HIGH) — they belong in IMPL-KMP
+  - NEVER reimplement a shared ViewModel in Swift (IMPL-IOS-NO-006, CRITICAL) — bridge it
+  - NEVER include design-system token values, colors, spacing, or typography (IMPL-IOS-NO-007, MEDIUM)
+  - NEVER include secrets, tokens, or credentials (SEC-IMPL-NO-001, CRITICAL)
 ```
 
----
+```pdsl
+UNIT ImplIosValidate
 
-## Error Handling
+PURPOSE:
+  Run deterministic, semantic, and coverage validation on the IMPL-IOS.
 
-### Missing FEATURE-MOBILE
+DO:
+  - RUN cfs validate --artifact <path> (template compliance, reference resolution, no placeholders)
+  - LOAD config/kits/mobile-superapp/codebase/checklist.md and RUN the full base pass — it loads {cf-studio-path}/.core/requirements/code-checklist.md and config/kits/sdlc/codebase/checklist.md as its own bases
+  - LOAD config/kits/mobile-superapp/artifacts/IMPL-IOS/checklist.md and RUN the iOS-target delta pass
+  - RETURN one merged report in the base report format, citing base and delta checklist IDs
+  - RUN cfs spec-coverage — percentage of iOS-target CDSL instructions carrying code markers, plus missing/orphaned markers
+  - RUN xcodebuild build and xcodebuild test for the app scheme -> REQUIRE success
+  - RUN swiftlint -> REQUIRE pass
+  - RUN cfs toc <path> then cfs validate-toc <path>
 
-- [ ] If parent FEATURE-MOBILE not found:
-  - Option 1: Run `/cf-generate FEATURE-MOBILE` first (recommended)
-  - Option 2: Continue without FEATURE (traceability will be incomplete)
-  - Document "FEATURE pending" in IMPL header
+RULES:
+  - ALWAYS verify every traceability row resolves: design ID exists, code file exists, marker present in that file
+  - ALWAYS verify every Epic DESIGN screen and widget assigned to iOS has a row
+  - ALWAYS verify the iOS row set matches the Android row set element for element, except where a divergence is documented
+  - ALWAYS report unmapped iOS-target processes as coverage gaps
+  - NEVER consider the IMPL-IOS done while validation reports fail/error or cfs validate-toc does not PASS
+  - NEVER restate semantic criteria here
+```
 
-### Missing IMPL-KMP
+```pdsl
+UNIT ImplIosErrorHandling
 
-- [ ] If IMPL-KMP not found:
-  - Option 1: Run `/cf-generate IMPL-KMP` first (recommended)
-  - Option 2: Continue without KMP reference
-  - Document KMP dependency assumptions
+PURPOSE:
+  Recover deterministically from missing dependencies and mismatches.
 
-### KMP Integration Issues
+ON_ERROR:
+  missing_feature_spec ->
+    EMIT "FEATURE-MOBILE not found. Recommended: run /cf-generate FEATURE-MOBILE first — the iOS-target process list comes from it. Or continue documenting only what the code shows, marking coverage as unverified."
+    WAIT user.reply
+  missing_epic_design ->
+    EMIT "Epic DESIGN not found. Recommended: run /cf-generate DESIGN-EPIC first — screens, widgets, and navigation are referenced from it. Or continue with the referenced elements documented as assumptions."
+    WAIT user.reply
+  missing_impl_kmp ->
+    EMIT warning
+    CONTINUE with the bridged shared surface documented from the code
+  parity_gap ->
+    EMIT "An element mapped in IMPL-ANDROID has no iOS counterpart and no documented divergence. Add the row or document the divergence."
+    WAIT user.reply
+  marker_mismatch ->
+    EMIT "A traceability row names a marker absent from the code file, or a marker in code has no row. List both directions and ask which side to correct."
+    WAIT user.reply
 
-- [ ] If KMP ViewModel not accessible in Swift:
-  - Check ConstructorSDK framework export
-  - Verify KMP module is properly configured for iOS
-  - Document integration constraints
+RULES:
+  - ALWAYS escalate when the iOS code implements logic that the design allocated to shared code
+  - NEVER invent a design ID to make a marker resolve
+```
 
-### Code Marker Mismatches
+```pdsl
+UNIT ImplIosNextSteps
 
-- [ ] If code markers don't match design IDs:
-  - Review FEATURE CDSL `inst-ios-` markers
-  - Update code markers to match
-  - Or update IMPL traceability table to reflect actual code
+PURPOSE:
+  Offer next actions after the IMPL-IOS is complete.
 
-### Escalation
+DO:
+  - EMIT_MENU ImplIosNextStepsMenu
 
-- [ ] Ask user when SwiftUI patterns deviate from FEATURE spec
-- [ ] Ask user when code organization differs from template
-- [ ] Ask user when iOS-specific constraints arise
-- [ ] Ask user when KMP integration has limitations
-
----
-
-## Next Steps
-
-### Options
-
-- [ ] IMPL-IOS complete → Implement actual Swift/SwiftUI code with `@cpt-impl` markers
-- [ ] IMPL-IOS complete → All platforms implemented → run full validation
-- [ ] IMPL-KMP missing → `/cf-generate IMPL-KMP` — create KMP reference first
-- [ ] IMPL-ANDROID missing → `/cf-generate IMPL-ANDROID` — create Android reference
-- [ ] FEATURE missing → `/cf-generate FEATURE-MOBILE` — create FEATURE first
-- [ ] IMPL needs revision → continue editing IMPL-IOS
-- [ ] Ready for code review → validate markers with `cfs validate`
+MENU ImplIosNextStepsMenu:
+  TITLE: IMPL-IOS next steps
+  OPTIONS:
+    1 -> RUN /cf-analyze CODE (review the iOS implementation against FEATURE-MOBILE)
+    2 -> RUN /cf-generate IMPL-ANDROID (map the Android module for parity)
+    3 -> RUN /cf-generate IMPL-KMP (map the shared module)
+    4 -> CONTINUE ImplIosAuthoring (revise this reference)
+    5 -> RUN update feature status in DECOMPOSITION-EPIC
+  INVALID:
+    EMIT "Reply with 1, 2, 3, 4, or 5."
+    WAIT user.reply
+    STOP_TURN
+```

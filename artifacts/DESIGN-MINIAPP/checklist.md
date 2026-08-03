@@ -1,288 +1,240 @@
-# DESIGN-MINIAPP Checklist
+# DESIGN-MINIAPP Checklist — Layer Delta
 
-**Artifact**: DESIGN-MINIAPP  
-**Kit**: mobile-superapp  
+**Artifact**: DESIGN-MINIAPP
+**Kit**: mobile-superapp
 **Level**: L1 (MiniApp)
+**Base Checklist**: `{cf-studio-path}/config/kits/sdlc/artifacts/DESIGN/checklist.md` (sdlc DESIGN Expert Checklist)
 
-This checklist provides semantic quality criteria for MiniApp-level technical design documents in mobile SuperApp projects.
+This checklist is a **delta over the sdlc DESIGN Expert Checklist**, not a replacement. Every criterion in the base checklist applies to a DESIGN-MINIAPP document; this file states how each expertise domain is scoped at the MiniApp layer and adds the criteria that exist only at this layer.
 
 ---
 
 ## Table of Contents
 
-1. [MUST HAVE Requirements](#must-have-requirements)
-2. [SHOULD HAVE Requirements](#should-have-requirements)
-3. [MUST NOT HAVE (Violations)](#must-not-have-violations)
-4. [Mobile-Specific Criteria](#mobile-specific-criteria)
-5. [Reporting](#reporting)
+1. [How To Use This Checklist](#how-to-use-this-checklist)
+2. [Expertise Domain Scope At This Layer](#expertise-domain-scope-at-this-layer)
+3. [Layer Delta: MUST HAVE](#layer-delta-must-have)
+4. [Layer Delta: MUST NOT HAVE](#layer-delta-must-not-have)
+5. [Layer Delta: Mobile-Specific Criteria](#layer-delta-mobile-specific-criteria)
+6. [Reporting](#reporting)
 
 ---
 
-## MUST HAVE Requirements
+## How To Use This Checklist
 
-### ARCH-MINIAPP-001: MiniApp Overview Completeness
+1. **LOAD the base checklist first** and apply it in full: Referenced Standards, Review Scope Selection, Prerequisites, Evidence Requirements (STRICT mode), Applicability Context, Severity Dictionary, all MUST HAVE domains (ARCH, SEM, PERF, SEC, REL, DATA, INT, OPS, MAINT, TEST, COMPL, UX, BIZ, DOC), and all MUST NOT HAVE items.
+2. **Apply the domain scope table** below. Where a domain is marked *Inherited*, the MiniApp design satisfies it by referencing the platform design element by ID and documenting deviations only — restating it is a violation of `DESIGN-MINIAPP-NO-001`, and omitting it without a reference is a violation of base `DOC-DESIGN-001`.
+3. **Apply the delta criteria** in this file after the base pass.
+4. **Report once.** Use the base checklist's Reporting section for a single merged report containing findings from both the base and this delta, citing base IDs (`ARCH-DESIGN-002`) and delta IDs (`DESIGN-MINIAPP-001`) in the same `Checklist Item` field.
 
-**Priority**: CRITICAL
-
-The MiniApp DESIGN MUST include:
-
-- [ ] Clear purpose statement (1-2 paragraphs)
-- [ ] Link to parent Platform DESIGN
-- [ ] Capabilities table mapping MiniApp PRD FRs to design responses
-- [ ] NFR allocation table with design responses
-- [ ] ADR references for key decisions
-
-**Why it matters**: Without clear purpose and traceability, the MiniApp's role in the SuperApp ecosystem is unclear.
-
-### ARCH-MINIAPP-002: Module Structure Definition
-
-**Priority**: CRITICAL
-
-The DESIGN MUST define module structure for all platforms:
-
-- [ ] KMP shared logic modules (domain, data, presentation)
-- [ ] Android UI modules with Compose structure
-- [ ] iOS UI modules with SwiftUI structure
-- [ ] Module dependencies clearly documented
-- [ ] Code locations specified for each module
-
-**Why it matters**: Mobile SuperApps require consistent module organization across platforms for maintainability.
-
-### ARCH-MINIAPP-003: Navigation Architecture
-
-**Priority**: HIGH
-
-The DESIGN MUST include:
-
-- [ ] Navigation graph (visual or Mermaid diagram)
-- [ ] Screen inventory table (route, description, implementation type)
-- [ ] Deep link schema with parameters
-- [ ] Deep link handling flow description
-
-**Why it matters**: Navigation is critical for mobile UX and MiniApp integration.
-
-### ARCH-MINIAPP-004: State Management Pattern
-
-**Priority**: CRITICAL
-
-The DESIGN MUST document MVI pattern:
-
-- [ ] State class structure (immutable data class)
-- [ ] Intent sealed class (user actions)
-- [ ] Effect sealed class (side effects)
-- [ ] ViewModel flow diagram
-- [ ] State persistence strategy (persisted vs transient)
-
-**Why it matters**: Consistent state management is essential for predictable app behavior.
-
-### ARCH-MINIAPP-005: Domain Model
-
-**Priority**: HIGH
-
-The DESIGN MUST define:
-
-- [ ] Core entities table with descriptions and locations
-- [ ] Entity relationships (diagram preferred)
-- [ ] Repository interfaces with key methods
-- [ ] Entity IDs following `cpt-{miniapp}-entity-{slug}` pattern
-
-**Why it matters**: Domain model is the foundation of business logic.
-
-### ARCH-MINIAPP-006: Kernel Integration
-
-**Priority**: CRITICAL
-
-The DESIGN MUST specify:
-
-- [ ] Required kernel services table (Auth, Storage, Network, Notifications)
-- [ ] Criticality of each service
-- [ ] MiniApp contract interface implementation (code snippet)
-- [ ] Lifecycle methods (initialize, start, handleDeepLink, onBackground, onForeground, dispose)
-
-**Why it matters**: MiniApps must integrate properly with the host app's shared services.
-
-### ARCH-MINIAPP-007: Traceability Section
-
-**Priority**: HIGH
-
-The DESIGN MUST include traceability links:
-
-- [ ] MiniApp PRD reference
-- [ ] Platform DESIGN reference
-- [ ] ADRs folder reference
-- [ ] DECOMPOSITION reference
-- [ ] Epics folder references (screens/, capabilities/, flows/)
-
-**Why it matters**: Traceability enables validation and change impact analysis.
+Severity values are the base checklist's: CRITICAL, HIGH, MEDIUM, LOW.
 
 ---
 
-## SHOULD HAVE Requirements
+## Expertise Domain Scope At This Layer
 
-### ARCH-MINIAPP-008: API Layer Documentation
+| Domain | Scope at L1 (MiniApp) | Notes |
+|--------|-----------------------|-------|
+| ARCH | Full | Module structure, component model, navigation, and internal dependency direction are owned here |
+| SEM | Full | Every MiniApp PRD requirement and public interface must map to a design element |
+| PERF | Narrowed | MiniApp-specific budgets (screen load, list rendering, payload size); platform budgets are inherited |
+| SEC | Narrowed | Data sensitivity of this MiniApp's storage and its authorization checks; auth mechanics are inherited |
+| REL | Narrowed | This MiniApp's offline behavior, retry, and cache policy within the platform's offline architecture |
+| DATA | Full | MiniApp domain model, repositories, and local stores are owned here |
+| INT | Full | Backend endpoints and real-time channels this MiniApp consumes are owned here |
+| OPS | Inherited | Build, release, and observability are platform-owned; note only MiniApp-specific flags or rollout gating |
+| MAINT | Full | Module boundaries, module dependency rules, and public-surface versioning are owned here |
+| TEST | Narrowed | Verification approach per NFR and per contract; test cases are deferred to FEATURE/code |
+| COMPL | Inherited | Reference the platform obligation; list only what this MiniApp's data or content adds |
+| UX | Narrowed | Navigation graph and native/WebView allocation per screen; screen design is deferred |
+| BIZ | Inherited | Business goals are referenced from the PRD, never restated |
+| DOC | Full | Explicit non-applicability is mandatory at every layer |
 
-**Priority**: MEDIUM
-
-The DESIGN SHOULD include:
-
-- [ ] BFF endpoints table (method, endpoint, description, request, response)
-- [ ] WebSocket connections (if applicable)
-- [ ] Authentication requirements
-
-### ARCH-MINIAPP-009: Screen Implementation Types
-
-**Priority**: MEDIUM
-
-For each screen in navigation inventory:
-
-- [ ] Implementation type specified (Native / WebView / Hybrid)
-- [ ] Rationale for WebView choices documented
-
-### ARCH-MINIAPP-010: Module Dependencies
-
-**Priority**: MEDIUM
-
-The DESIGN SHOULD document:
-
-- [ ] Android module dependencies (KMP shared, common/ui, common/navigation)
-- [ ] iOS module dependencies (ConstructorSDK, Common/UI, Common/Navigation)
-- [ ] External library dependencies
+*Deferred* domains name their target artifact: TEST → `FEATURE-MOBILE`, UX screen design → `DESIGN-EPIC`.
 
 ---
 
-## MUST NOT HAVE (Violations)
+## Layer Delta: MUST HAVE
 
-### ARCH-MINIAPP-NO-001: No Implementation Code
+### DESIGN-MINIAPP-001: Platform Design Inheritance
+**Severity**: CRITICAL
 
-**Priority**: HIGH
+- [ ] The parent platform design is linked, and inherited layers, kernel contracts, and the MiniApp lifecycle are referenced by platform ID
+- [ ] Inherited platform NFRs are listed, with deviations documented and justified
+- [ ] No inherited element is redefined or contradicted
+- [ ] Every referenced platform ID exists in the platform design (verified, not assumed)
 
-The DESIGN MUST NOT contain:
+### DESIGN-MINIAPP-002: Module Structure Across Targets
+**Severity**: CRITICAL
 
-- [ ] Complete class implementations (beyond interface definitions)
-- [ ] Full method bodies
-- [ ] Production code snippets beyond illustrative examples
+- [ ] Shared, Android, and iOS modules are all defined with source locations
+- [ ] The module table states responsibility and technology per module
+- [ ] Module dependencies are listed with the interface used
+- [ ] The structure is consistent with the platform layer model
 
-**Why it matters**: Implementation belongs in code, not documentation.
+### DESIGN-MINIAPP-003: Component Contract Per Module
+**Severity**: CRITICAL
 
-### ARCH-MINIAPP-NO-002: No Feature-Level Details
+- [ ] Each module and cross-cutting component is documented with the base component contract (why it exists, responsibility scope, responsibility boundaries, technology and location, related components by ID)
+- [ ] Responsibility boundaries state what is delegated to the kernel and what is delegated to epics
+- [ ] No two components claim the same responsibility
 
-**Priority**: MEDIUM
+### DESIGN-MINIAPP-004: Domain Model And Repositories
+**Severity**: CRITICAL
 
-The DESIGN MUST NOT contain:
+- [ ] Core entities are listed with IDs and locations
+- [ ] Entity relationships are shown
+- [ ] Repository interfaces are given as signatures with their result/error type
+- [ ] The domain layer has no outward dependency on data or presentation
 
-- [ ] Detailed UI flows (belongs in DESIGN-EPIC)
-- [ ] Widget specifications (belongs in DESIGN-EPIC)
-- [ ] Acceptance criteria (belongs in FEATURE)
+### DESIGN-MINIAPP-005: Navigation And Deep Links
+**Severity**: HIGH
 
-**Why it matters**: DESIGN-MINIAPP is architectural, not feature-specific.
+- [ ] A navigation graph shows entry point and internal routes
+- [ ] The screen inventory names the owning epic and the implementation type (native / WebView) per screen
+- [ ] Deep links are listed with parameters and auth expectation
+- [ ] Unknown, unauthorized, and cold-start link handling is specified
 
-### ARCH-MINIAPP-NO-003: No Product Requirements
+### DESIGN-MINIAPP-006: State Management Contracts
+**Severity**: HIGH
 
-**Priority**: HIGH
+- [ ] The state, intent, and effect contracts are given as type signatures
+- [ ] The unidirectional flow is stated, consistent with the platform principle
+- [ ] Persisted vs transient state is separated, with the store named
+- [ ] Restore behavior after process death is stated
 
-The DESIGN MUST NOT contain:
+### DESIGN-MINIAPP-007: Kernel Integration
+**Severity**: CRITICAL
 
-- [ ] Business requirements (belongs in PRD)
-- [ ] User stories (belongs in PRD)
-- [ ] Acceptance criteria (belongs in PRD/FEATURE)
+- [ ] Every kernel service this MiniApp consumes is listed with the kernel contract ID, usage, and criticality
+- [ ] The host contract implementation covers every lifecycle callback
+- [ ] Behavior when a consumed kernel service is unavailable is stated
+- [ ] No kernel internal is reached around the published contract
 
-**Why it matters**: Separation of concerns between PRD and DESIGN.
+### DESIGN-MINIAPP-008: API Contracts And External Dependencies
+**Severity**: HIGH
 
-### ARCH-MINIAPP-NO-004: No Platform DESIGN Duplication
+- [ ] Backend endpoints are listed with method, path, request, and response shape
+- [ ] Real-time channels, where used, list their events
+- [ ] Each external dependency states protocol, contract ID, and failure mode
+- [ ] Every interface declared in the PRD's Public MiniApp Interfaces section has a realizing contract with stability
 
-**Priority**: MEDIUM
+### DESIGN-MINIAPP-009: Local Stores And Schemas
+**Severity**: HIGH
 
-The DESIGN MUST NOT:
+- [ ] Each local store is declared with technology and an ID
+- [ ] Tables list columns, types, primary key, and constraints
+- [ ] Migration, retention, and encryption are stated where the data warrants it
+- [ ] Cached data has a staleness policy consistent with the platform offline architecture
 
-- [ ] Redefine Platform-level patterns
-- [ ] Duplicate kernel service specifications
-- [ ] Redefine actors (reference Platform actors)
+### DESIGN-MINIAPP-010: Dependency Rules Stated
+**Severity**: HIGH
 
-**Why it matters**: Avoid inconsistency with Platform DESIGN.
+- [ ] Rules forbid dependency on another MiniApp and require kernel contracts only
+- [ ] Platform UI modules depend on the shared module and never the reverse
+- [ ] Cross-MiniApp navigation goes through the platform router
+- [ ] No circular dependency between this MiniApp's modules
+
+### DESIGN-MINIAPP-011: Traceability And Requirement Coverage
+**Severity**: HIGH
+
+- [ ] Links to the MiniApp PRD, platform DESIGN, ADR folder, DECOMPOSITION, and epic folders are present
+- [ ] The requirement coverage table maps PRD FRs, NFRs, and interfaces to design elements by ID
+- [ ] Every referenced PRD ID exists in the PRD (verified, not assumed)
 
 ---
 
-## Mobile-Specific Criteria
+## Layer Delta: MUST NOT HAVE
 
-### MOBILE-MINIAPP-001: KMP Module Organization
+These are additional to the base checklist's MUST NOT HAVE items, all of which apply here unchanged.
 
-**Priority**: HIGH
+### DESIGN-MINIAPP-NO-001: No Platform Design Duplication
+**Severity**: HIGH
 
-KMP modules MUST follow structure:
+**What to check**:
+- [ ] No redefined platform layers, kernel internals, or MiniApp container model
+- [ ] No restated platform-wide dependency rules or NFR thresholds beyond a reference
+- [ ] No re-derivation of the native/WebView strategy or KMP scope
 
-- [ ] `domain/` — domain entities and rules
-- [ ] `data/` — repository implementations, API clients, local sources
-- [ ] `presentation/` — ViewModels, State, Intent, Effect
+**Where it belongs**: `DESIGN-PLATFORM` — reference by ID and document deviations only
 
-### MOBILE-MINIAPP-002: Android Module Organization
+### DESIGN-MINIAPP-NO-002: No Screen-Level Design
+**Severity**: HIGH
 
-**Priority**: HIGH
+**What to check**:
+- [ ] No screen composition, widget hierarchy, or per-screen component inventory
+- [ ] No per-screen state, intents, or effects
+- [ ] No screen-level error state catalogue
 
-Android modules MUST follow structure:
+**Where it belongs**: `DESIGN-EPIC`
 
-- [ ] `ui/` — Compose screens and components
-- [ ] `navigation/` — Navigation graph
-- [ ] Hilt DI modules documented
+### DESIGN-MINIAPP-NO-003: No Implementation Bodies
+**Severity**: HIGH
 
-### MOBILE-MINIAPP-003: iOS Module Organization
+**What to check**:
+- [ ] Code blocks are interface signatures, state contracts, or schemas only
+- [ ] No method bodies, algorithms, or copy-pasted production code
+- [ ] No DI wiring code beyond naming the mechanism
 
-**Priority**: HIGH
+**Where it belongs**: code, `IMPL-KMP` / `IMPL-ANDROID` / `IMPL-IOS` (conventions)
 
-iOS modules MUST follow structure:
+### DESIGN-MINIAPP-NO-004: No Product Requirements
+**Severity**: HIGH
 
-- [ ] `Views/` — SwiftUI views
-- [ ] `Navigation/` — Coordinators
-- [ ] KMP integration pattern documented
+**What to check**:
+- [ ] No business requirements, user stories, or acceptance criteria
+- [ ] No requirement priorities re-litigated here
 
-### MOBILE-MINIAPP-004: MVI Implementation Consistency
+**Where it belongs**: `PRD-MINIAPP`
 
-**Priority**: CRITICAL
+---
 
-State management MUST be consistent:
+## Layer Delta: Mobile-Specific Criteria
 
-- [ ] State is immutable data class
-- [ ] Intents are sealed class
-- [ ] Effects are sealed class
-- [ ] ViewModel processes Intent → State + Effects
+### MOBILE-DESIGN-MINIAPP-001: Cross-Platform Parity
+**Severity**: HIGH
 
-### MOBILE-MINIAPP-005: Deep Link Schema
+- [ ] Android and iOS module responsibilities are symmetric, or divergence is justified
+- [ ] Shared logic is placed in the shared module rather than duplicated per platform
+- [ ] Platform-specific behavior is named explicitly, not left implicit
 
-**Priority**: HIGH
+### MOBILE-DESIGN-MINIAPP-002: Offline And Cache Design
+**Severity**: HIGH
 
-Deep links MUST follow pattern:
+- [ ] Which operations work offline is specified, consistent with the PRD offline policy
+- [ ] Cache scope, invalidation, and staleness signalling are specified
+- [ ] Write operations attempted offline are specified as queued, blocked, or degraded
+- [ ] Conflict resolution on sync is specified where writes can queue
 
-- [ ] Format: `constructor://{miniapp}/{path}?{params}`
-- [ ] Parameters documented
-- [ ] Handling flow described
+### MOBILE-DESIGN-MINIAPP-003: WebView Allocation
+**Severity**: MEDIUM
+
+- [ ] Screens implemented as WebView are identified with a reason
+- [ ] The data and session passed into the WebView is specified
+- [ ] Native/WebView navigation hand-back is specified
+
+### MOBILE-DESIGN-MINIAPP-004: Notifications And Background Work
+**Severity**: MEDIUM
+
+- [ ] Notification categories this MiniApp publishes or consumes are named with their routing target
+- [ ] Background work (sync, prefetch, upload) is specified with its trigger and OS constraints
+- [ ] Behavior when background execution is denied by the OS is specified
+
+### MOBILE-DESIGN-MINIAPP-005: Resource Footprint
+**Severity**: MEDIUM
+
+- [ ] Eager vs lazy initialization at MiniApp start is specified
+- [ ] Memory-heavy resources (media, large lists) have a bounded strategy
+- [ ] Disposal behavior on `dispose()` releases every resource this MiniApp acquired
 
 ---
 
 ## Reporting
 
-### Report Format
+Use the **base checklist's Reporting section** — `{cf-studio-path}/config/kits/sdlc/artifacts/DESIGN/checklist.md` — without modification: the Validation Summary, Reporting Readiness Checklist, Full/Compact report formats, Evidence Requirements, and Reporting Commitment.
 
-For each issue found, report:
+Additional reporting requirements for this layer:
 
-```markdown
-## Issue: {CHECKLIST-ID}
-
-**Severity**: CRITICAL | HIGH | MEDIUM | LOW
-
-**Why Applicable**: {Why this requirement applies to this MiniApp}
-
-**Issue**: {What is wrong}
-
-**Evidence**: {Quote from document or "Not found"}
-
-**Impact**: {Why this matters}
-
-**Proposal**: {How to fix}
-```
-
-### Reporting Commitment
-
-- [ ] I reported all issues I found
-- [ ] I used the exact report format
-- [ ] I included evidence for each issue
-- [ ] I proposed concrete fixes
-- [ ] I did not hide or omit known problems
+- [ ] Report base findings and delta findings in one merged report, ordered by severity
+- [ ] State the base checklist version/source used, so a reviewer can reproduce the pass
+- [ ] For every domain marked Narrowed, Deferred, or Inherited in the scope table, confirm the design references the platform element or names the artifact that carries the deferred content

@@ -16,15 +16,15 @@ Developer: "Which screens? What data? How fresh?"
 **Cascading FR traceability** requires explicit links at each level:
 
 ```
-Platform FR: cpt-platform-fr-offline-support
+Platform FR: cpt-superapp-fr-offline-support
     ↓ "refined by"
-MiniApp FR: cpt-learn-fr-offline-courses
+MiniApp FR: cpt-superapp-learn-fr-offline-courses
     ↓ "detailed by"
-Epic Story: cpt-learn-course-catalog-story-cache-courses
+Epic Story: cpt-superapp-learn-course-catalog-story-cache-courses
     ↓ "specified by"
-Feature Flow: cpt-learn-flow-course-list-load-cached
+Feature Flow: cpt-superapp-learn-flow-course-list-load-cached
     ↓ "implemented by"
-Code: @cpt-flow:cpt-learn-flow-course-list-load-cached:p1
+Code: @cpt-flow:cpt-superapp-learn-flow-course-list-load-cached:p1
 ```
 
 ## Benefits
@@ -48,8 +48,8 @@ Reference Platform FRs:
 ### Platform Requirements
 | Platform FR | MiniApp FR |
 |-------------|-----------|
-| `cpt-platform-fr-offline-support` | `cpt-learn-fr-offline-courses` |
-| `cpt-platform-fr-push-notifications` | `cpt-learn-fr-course-reminders` |
+| `cpt-superapp-fr-offline-support` | `cpt-superapp-learn-fr-offline-courses` |
+| `cpt-superapp-fr-push-notifications` | `cpt-superapp-learn-fr-course-reminders` |
 ```
 
 ### In PRD-EPIC
@@ -62,7 +62,7 @@ Reference MiniApp FRs:
 ### MiniApp Requirements
 | MiniApp FR | Epic Story |
 |-----------|------------|
-| `cpt-learn-fr-offline-courses` | `cpt-learn-course-catalog-story-cache-courses` |
+| `cpt-superapp-learn-fr-offline-courses` | `cpt-superapp-learn-course-catalog-story-cache-courses` |
 ```
 
 ### In FEATURE-MOBILE
@@ -75,9 +75,9 @@ Reference Epic and higher levels:
 ### Cascading Requirements
 | Level | ID | Description |
 |-------|-----|-------------|
-| Platform FR | `cpt-platform-fr-offline-support` | App works offline |
-| MiniApp FR | `cpt-learn-fr-offline-courses` | Cached courses available |
-| Epic Story | `cpt-learn-course-catalog-story-cache-courses` | User can browse cached |
+| Platform FR | `cpt-superapp-fr-offline-support` | App works offline |
+| MiniApp FR | `cpt-superapp-learn-fr-offline-courses` | Cached courses available |
+| Epic Story | `cpt-superapp-learn-course-catalog-story-cache-courses` | User can browse cached |
 ```
 
 ### In Code
@@ -85,7 +85,7 @@ Reference Epic and higher levels:
 Reference Feature IDs:
 
 ```kotlin
-// @cpt-flow:cpt-learn-flow-course-list-load-cached:p1
+// @cpt-flow:cpt-superapp-learn-flow-course-list-load-cached:p1
 fun loadCachedCourses() {
     // Implementation
 }
@@ -104,7 +104,7 @@ cfs validate --check=platform-fr-coverage
 cfs validate --check=feature-impl-coverage
 
 # Trace specific ID
-cfs trace cpt-platform-fr-offline-support
+cfs trace cpt-superapp-fr-offline-support
 
 # Find orphans (IDs with no downstream refs)
 cfs find orphans
@@ -121,14 +121,14 @@ Output:
 ```
 Platform FR Coverage
 ═══════════════════════════════════════
-cpt-platform-fr-offline-support
-  └── cpt-learn-fr-offline-courses
-      └── cpt-learn-course-catalog-story-cache-courses
-          └── cpt-learn-flow-course-list-load-cached
+cpt-superapp-fr-offline-support
+  └── cpt-superapp-learn-fr-offline-courses
+      └── cpt-superapp-learn-course-catalog-story-cache-courses
+          └── cpt-superapp-learn-flow-course-list-load-cached
               └── @cpt-flow:...:p1 ✅
 
-cpt-platform-fr-push-notifications
-  └── cpt-learn-fr-course-reminders
+cpt-superapp-fr-push-notifications
+  └── cpt-superapp-learn-fr-course-reminders
       └── (no epic story) ⚠️
 
 Coverage: 1/2 (50%)
