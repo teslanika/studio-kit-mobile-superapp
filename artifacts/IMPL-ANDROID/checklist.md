@@ -1,310 +1,220 @@
-# IMPL-ANDROID Checklist
+# IMPL-ANDROID Checklist — Layer Delta
 
-**Artifact**: IMPL-ANDROID  
-**Kit**: mobile-superapp  
-**Level**: Implementation (Android)
+**Artifact**: IMPL-ANDROID
+**Kit**: mobile-superapp
+**Target**: Android (`android-app/feature/{miniapp}/`)
+**Base Checklist**: `{cf-studio-path}/config/kits/mobile-superapp/codebase/checklist.md`
 
-This checklist provides semantic quality criteria for Android Implementation Reference documents in mobile SuperApp projects.
+This checklist is a **delta over the mobile SuperApp code checklist**, not a replacement. The base itself layers over `{cf-studio-path}/.core/requirements/code-checklist.md` (generic code quality) and `{cf-studio-path}/config/kits/sdlc/codebase/checklist.md` (semantic alignment, SEM-CODE-001..007), so loading the base loads the whole chain.
+
+This file adds the criteria that apply to the **implementation-reference document** itself and narrows the base's code criteria to the Android target.
 
 ---
 
 ## Table of Contents
 
-1. [MUST HAVE Requirements](#must-have-requirements)
-2. [SHOULD HAVE Requirements](#should-have-requirements)
-3. [MUST NOT HAVE (Violations)](#must-not-have-violations)
-4. [Mobile-Specific Criteria](#mobile-specific-criteria)
-5. [Reporting](#reporting)
+1. [How To Use This Checklist](#how-to-use-this-checklist)
+2. [Code Criteria Scope At This Target](#code-criteria-scope-at-this-target)
+3. [Layer Delta: MUST HAVE](#layer-delta-must-have)
+4. [Layer Delta: MUST NOT HAVE](#layer-delta-must-not-have)
+5. [Layer Delta: Android-Specific Criteria](#layer-delta-android-specific-criteria)
+6. [Reporting](#reporting)
 
 ---
 
-## MUST HAVE Requirements
+## How To Use This Checklist
 
-### IMPL-ANDROID-001: Overview Section
+1. **LOAD the base checklist first** — `config/kits/mobile-superapp/codebase/checklist.md` — and apply it in full, including the generic and semantic bases it loads.
+2. **Apply the scope table** below.
+3. **Apply the delta criteria** in this file to the IMPL-ANDROID document.
+4. **Report once**, in the base report format, citing generic, SEM-CODE, base-delta (`ANDROID-001`), and this file's IDs (`IMPL-ANDROID-001`) in the same finding field.
 
-**Priority**: CRITICAL
-
-The IMPL MUST include overview:
-
-- [ ] Module path (`android-app/feature/{module}/`)
-- [ ] Clear statement linking implementation to product documentation
-
-**Why it matters**: Overview establishes module context.
-
-### IMPL-ANDROID-002: References Table
-
-**Priority**: CRITICAL
-
-The IMPL MUST include references:
-
-- [ ] Feature reference with path and ID
-- [ ] Epic DESIGN reference with path and ID
-- [ ] MiniApp DESIGN reference with path and ID
-
-**Why it matters**: References enable navigation to specifications.
-
-### IMPL-ANDROID-003: Scope Definition
-
-**Priority**: HIGH
-
-The IMPL MUST define scope:
-
-- [ ] What FEATURE sections this module implements (e.g., Section 3.2)
-- [ ] Android-specific components from DESIGN
-- [ ] Jetpack Compose UI, navigation, platform integration
-
-**Why it matters**: Scope prevents ambiguity about module responsibility.
-
-### IMPL-ANDROID-004: Traceability Table
-
-**Priority**: CRITICAL
-
-The IMPL MUST include traceability table:
-
-- [ ] Design Component ID column
-- [ ] Code File column (relative path)
-- [ ] Implementation ID column (`@cpt-impl cpt-android-{module}-{type}-{slug}`)
-- [ ] Screen components mapped
-- [ ] Widget components mapped
-- [ ] Navigation components mapped
-- [ ] UI algorithm mapped
-
-**Why it matters**: Traceability enables validation of code markers.
-
-### IMPL-ANDROID-005: Directory Structure
-
-**Priority**: HIGH
-
-The IMPL MUST include directory structure:
-
-- [ ] Tree diagram of module structure
-- [ ] IMPL.md location marked
-- [ ] ui/ folder with screens and components/
-- [ ] navigation/ folder
-- [ ] di/ folder (Hilt modules)
-- [ ] src/main/res/ for resources
-- [ ] build.gradle.kts location
-
-**Why it matters**: Structure guides code organization.
-
-### IMPL-ANDROID-006: Code Markers Format
-
-**Priority**: CRITICAL
-
-The IMPL MUST document code marker format:
-
-- [ ] Example showing `@cpt-impl` marker
-- [ ] Format: `// @cpt-impl cpt-android-{module}-{type}-{slug}`
-- [ ] Placement guidance (before @Composable function)
-
-**Why it matters**: Markers enable automated traceability validation.
-
-### IMPL-ANDROID-007: Dependencies Section
-
-**Priority**: HIGH
-
-The IMPL MUST include dependencies:
-
-- [ ] Dependencies table (dependency, purpose)
-- [ ] KMP shared module dependency (`constructor-sdk/feature/{module}`)
-- [ ] Common UI dependency (`android-app/common/ui`)
-- [ ] Common Navigation dependency (`android-app/common/navigation`)
-
-**Why it matters**: Dependencies document module relationships.
-
-### IMPL-ANDROID-008: Validation Command
-
-**Priority**: HIGH
-
-The IMPL MUST include validation:
-
-- [ ] Validation command (`cfs validate --artifact {path}`)
-- [ ] What validation checks
-- [ ] Coverage threshold mention
-
-**Why it matters**: Validation ensures traceability completeness.
+Severity values are the base checklists': CRITICAL, HIGH, MEDIUM, LOW.
 
 ---
 
-## SHOULD HAVE Requirements
+## Code Criteria Scope At This Target
 
-### IMPL-ANDROID-009: Implementation Notes
-
-**Priority**: MEDIUM
-
-The IMPL SHOULD include:
-
-- [ ] Android-specific decisions
-- [ ] Compose patterns used
-- [ ] Navigation setup details
-
-### IMPL-ANDROID-010: Component Type Markers
-
-**Priority**: MEDIUM
-
-Traceability table SHOULD cover all types:
-
-- [ ] `screen` type markers
-- [ ] `widget` type markers
-- [ ] `nav` type markers
-- [ ] `ui` type markers (for algorithms)
-
-### IMPL-ANDROID-011: Code Examples
-
-**Priority**: LOW
-
-The IMPL SHOULD include:
-
-- [ ] Composable screen example with marker
-- [ ] Proper state collection pattern shown
-- [ ] hiltViewModel() usage demonstrated
+| Base delta section | Scope for IMPL-ANDROID |
+|--------------------|------------------------|
+| Delta: Android Code (`ANDROID-001..005`) | Full — this is the owning target |
+| Delta: KMP Shared Code (`KMP-*`) | Out of scope — see `IMPL-KMP`; verify only that shared code is consumed, not duplicated |
+| Delta: iOS Code (`IOS-*`) | Out of scope — see `IMPL-IOS`; used only for the parity check |
+| Delta: WebView Bridge Code (`WEBVIEW-*`) | Full when this module hosts a WebView |
+| Delta: Mobile Performance (`MOBILE-PERF-*`) | Full for UI and rendering; network criteria belong to the shared repository |
+| Delta: Mobile Security (`MOBILE-SEC-*`) | Full for deep-link input validation, debug affordances, and logging |
+| Semantic Alignment (`SEM-CODE-001..007`) | Full, restricted to processes whose Target is Android |
 
 ---
 
-## MUST NOT HAVE (Violations)
+## Layer Delta: MUST HAVE
+
+### IMPL-ANDROID-001: Overview And Module Identity
+**Severity**: MEDIUM
+
+- [ ] The module path is stated and matches the DECOMPOSITION platform implementation table
+- [ ] The document states that it is a reference map, not a design or coding guide
+- [ ] Version and status are present
+
+### IMPL-ANDROID-002: References Resolve
+**Severity**: CRITICAL
+
+- [ ] FEATURE-MOBILE, Epic DESIGN, MiniApp DESIGN, and IMPL-KMP rows are present
+- [ ] Every path resolves and every ID exists (`cfs list-ids`)
+- [ ] IDs use the `cpt-{hierarchy-prefix}-{kind}-{slug}` scheme
+
+### IMPL-ANDROID-003: Scope Declares Target Ownership
+**Severity**: HIGH
+
+- [ ] Scope lists the Android-target processes, screens, widgets, and navigation this module implements
+- [ ] Out-of-scope names `IMPL-KMP` for business logic, `IMPL-IOS`, and the design system
+- [ ] No shared-target process appears in scope
+
+### IMPL-ANDROID-004: Traceability Table Completeness
+**Severity**: CRITICAL
+
+- [ ] Every process whose Target is Android has at least one row
+- [ ] Every screen and widget assigned to Android in the Epic DESIGN has a row
+- [ ] Every row's design ID exists, code file exists, and the marker is present in that file
+- [ ] No composable implementing a design element is missing from the table
+
+### IMPL-ANDROID-005: Navigation And Deep Links Mapped
+**Severity**: HIGH
+
+- [ ] Every navigation destination in the Epic DESIGN has a row pointing at the nav graph
+- [ ] Every declared deep link is listed with its destination and its parameter validation
+- [ ] The deep-link scheme matches the namespace assigned in DECOMPOSITION-PLATFORM
+
+### IMPL-ANDROID-006: Directory Structure Accuracy
+**Severity**: MEDIUM
+
+- [ ] The tree matches the module on disk, including `ui/`, `navigation/`, `di/`, resources, and both test source sets
+- [ ] Planned-but-absent directories are marked as planned
+
+### IMPL-ANDROID-007: Marker Format Correctness
+**Severity**: HIGH
+
+- [ ] FULL mode examples use `@cpt-{kind}:{cpt-id}:p{N}` scope markers and paired `@cpt-begin` / `@cpt-end` block markers
+- [ ] DOCS-ONLY mode is stated to use `@cpt-impl {cpt-id}`
+- [ ] The mode this module operates in is stated
+
+### IMPL-ANDROID-008: Dependencies Declared
+**Severity**: HIGH
+
+- [ ] The shared module dependency is listed and is the source of the ViewModel and use cases
+- [ ] Design-system and navigation commons are listed
+- [ ] No direct dependency on `ios-app/` and no feature-to-feature dependency that the design did not sanction
+
+### IMPL-ANDROID-009: Validation Commands Present
+**Severity**: MEDIUM
+
+- [ ] `cfs validate --artifact` for this module path is stated
+- [ ] `assembleDebug`, unit test, and UI test commands are stated
+- [ ] `ktlintCheck` and `detekt` are stated
+
+### IMPL-ANDROID-010: Implementation Notes Substance
+**Severity**: MEDIUM
+
+- [ ] Every deviation from the design is stated with its reason
+- [ ] Compose and navigation decisions that a reader could not infer from the code layout are recorded
+- [ ] The section is not left as a placeholder
+
+---
+
+## Layer Delta: MUST NOT HAVE
 
 ### IMPL-ANDROID-NO-001: No Full Implementation Code
+**Severity**: HIGH
 
-**Priority**: HIGH
+- [ ] No complete composable or class bodies beyond short marker illustrations
 
-The IMPL MUST NOT contain:
+**Where it belongs**: the source files
 
-- [ ] Complete Composable implementations
-- [ ] Full UI code
-- [ ] Production code beyond examples
+### IMPL-ANDROID-NO-002: No Unresolvable References
+**Severity**: CRITICAL
 
-**Why it matters**: Implementation belongs in code files, not IMPL.md.
+- [ ] No design ID that `cfs list-ids` cannot find
+- [ ] No file path that does not exist
 
-### IMPL-ANDROID-NO-002: No Missing Design References
+**Where it belongs**: fix the reference, or add the design element first
 
-**Priority**: CRITICAL
+### IMPL-ANDROID-NO-003: No Architecture Definitions
+**Severity**: HIGH
 
-The IMPL MUST NOT have:
+- [ ] No module boundary, layering, or API contract definitions
 
-- [ ] Traceability entries without design component IDs
-- [ ] Implementation IDs without corresponding design IDs
-- [ ] Orphaned code markers
+**Where it belongs**: `DESIGN-MINIAPP` / `DESIGN-PLATFORM`
 
-**Why it matters**: Every implementation must trace to design.
+### IMPL-ANDROID-NO-004: No Business Logic Mapping
+**Severity**: HIGH
 
-### IMPL-ANDROID-NO-003: No Incorrect Paths
+- [ ] No use case, repository, or domain rule documented as Android code
 
-**Priority**: HIGH
+**Where it belongs**: `IMPL-KMP`
 
-The IMPL MUST NOT have:
+### IMPL-ANDROID-NO-005: No Design-System Values
+**Severity**: MEDIUM
 
-- [ ] Code file paths that don't match actual structure
-- [ ] Module paths inconsistent with directory structure
-- [ ] Broken relative links
+- [ ] No colors, spacing, typography, or animation values
 
-**Why it matters**: Paths must be accurate for navigation and validation.
+**Where it belongs**: the design system
 
-### IMPL-ANDROID-NO-004: No KMP Code
+### IMPL-ANDROID-NO-006: No Coding Conventions
+**Severity**: LOW
 
-**Priority**: HIGH
+- [ ] No naming, formatting, or DI wiring instructions
 
-The IMPL MUST NOT contain:
-
-- [ ] ViewModel implementations (belongs in KMP IMPL)
-- [ ] Use Case implementations (belongs in KMP IMPL)
-- [ ] Repository implementations (belongs in KMP IMPL)
-
-**Why it matters**: Android IMPL covers UI only; shared logic is in KMP.
+**Where it belongs**: the project `AGENTS.md`
 
 ---
 
-## Mobile-Specific Criteria
+## Layer Delta: Android-Specific Criteria
 
-### MOBILE-IMPL-ANDROID-001: Compose Module Structure
+### MOBILE-IMPL-ANDROID-001: Screen And Widget Mapping
+**Severity**: HIGH
 
-**Priority**: CRITICAL
+- [ ] Each screen composable maps to exactly one Epic DESIGN screen ID
+- [ ] Each reusable widget maps to a widget ID, or is documented as feature-local and not a design element
 
-Directory structure MUST follow Android conventions:
+### MOBILE-IMPL-ANDROID-002: Shared ViewModel Consumption
+**Severity**: CRITICAL
 
-- [ ] `src/main/kotlin/com/constructor/android/feature/{module}/`
-- [ ] ui/ for Composables
-- [ ] components/ for reusable widgets
-- [ ] navigation/ for NavGraph
+- [ ] The screen consumes the shared ViewModel from `constructor-sdk/feature/{miniapp}`
+- [ ] No Android-local ViewModel duplicates shared state or logic
+- [ ] State collection is documented as lifecycle-aware
 
-### MOBILE-IMPL-ANDROID-002: Screen Pattern
+### MOBILE-IMPL-ANDROID-003: State Restoration Mapping
+**Severity**: HIGH
 
-**Priority**: HIGH
+- [ ] Configuration-change and process-death restoration is mapped to the state row
+- [ ] The behavior matches FEATURE-MOBILE section 4
 
-Screen markers MUST follow pattern:
+### MOBILE-IMPL-ANDROID-004: Accessibility Mapping
+**Severity**: HIGH
 
-- [ ] `@cpt-impl cpt-android-{module}-screen-{slug}`
-- [ ] @Composable annotation
-- [ ] Screen suffix on function names
-- [ ] ViewModel parameter with hiltViewModel()
+- [ ] The file that carries semantics and content descriptions for the screen is identified
+- [ ] Font-scaling and touch-target handling are noted where they required a decision
 
-### MOBILE-IMPL-ANDROID-003: Widget Pattern
+### MOBILE-IMPL-ANDROID-005: Resource And String Ownership
+**Severity**: MEDIUM
 
-**Priority**: HIGH
+- [ ] Feature strings live in the feature module, not in the app module
+- [ ] No hardcoded user-visible string is documented as intentional
 
-Widget markers MUST follow pattern:
+### MOBILE-IMPL-ANDROID-006: Parity With iOS
+**Severity**: HIGH
 
-- [ ] `@cpt-impl cpt-android-{module}-widget-{slug}`
-- [ ] @Composable annotation
-- [ ] Located in components/ folder
-
-### MOBILE-IMPL-ANDROID-004: Navigation Pattern
-
-**Priority**: HIGH
-
-Navigation markers MUST follow pattern:
-
-- [ ] `@cpt-impl cpt-android-{module}-nav-{slug}`
-- [ ] NavGraph suffix on function names
-- [ ] Located in navigation/ folder
-
-### MOBILE-IMPL-ANDROID-005: State Collection
-
-**Priority**: CRITICAL
-
-Screen code examples MUST show:
-
-- [ ] `collectAsStateWithLifecycle()` usage
-- [ ] State-based rendering pattern
-- [ ] Intent sending on user actions
-
-### MOBILE-IMPL-ANDROID-006: Hilt Integration
-
-**Priority**: HIGH
-
-DI structure MUST include:
-
-- [ ] di/ folder for Hilt modules
-- [ ] {Feature}Module.kt pattern
-- [ ] hiltViewModel() for ViewModel injection
+- [ ] Every element mapped here has an `IMPL-IOS` counterpart, or the divergence is documented in both
+- [ ] Deliberate divergences cite the FEATURE-MOBILE statement that authorizes them
 
 ---
 
 ## Reporting
 
-### Report Format
+Use the **base checklist's Reporting section** — `config/kits/mobile-superapp/codebase/checklist.md` — without modification.
 
-For each issue found, report:
+Additional reporting requirements for this artifact:
 
-```markdown
-## Issue: {CHECKLIST-ID}
-
-**Severity**: CRITICAL | HIGH | MEDIUM | LOW
-
-**Why Applicable**: {Why this requirement applies}
-
-**Issue**: {What is wrong}
-
-**Evidence**: {Quote from document or "Not found"}
-
-**Impact**: {Why this matters}
-
-**Proposal**: {How to fix}
-```
-
-### Reporting Commitment
-
-- [ ] I reported all issues I found
-- [ ] I used the exact report format
-- [ ] I included evidence for each issue
-- [ ] I proposed concrete fixes
-- [ ] I did not hide or omit known problems
+- [ ] Report base findings and delta findings in one merged report, ordered by severity
+- [ ] State the traceability mode and the Android-target marker coverage percentage
+- [ ] State the parity result against `IMPL-IOS`: matched elements, gaps, and documented divergences

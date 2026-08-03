@@ -1,281 +1,150 @@
 # FEATURE-MOBILE Rules
 
-**Artifact**: FEATURE-MOBILE  
-**Kit**: mobile-superapp  
+**Artifact**: FEATURE-MOBILE
+**Kit**: mobile-superapp
 **Level**: L3 (Feature)
 
-**Dependencies**:
-- `config/kits/mobile-superapp/artifacts/FEATURE-MOBILE/template.md` — structural reference
-- `config/kits/mobile-superapp/artifacts/FEATURE-MOBILE/checklist.md` — semantic quality criteria
-- `config/kits/mobile-superapp/artifacts/PRD-EPIC/template.md` — parent Epic PRD reference
-- `config/kits/mobile-superapp/artifacts/DESIGN-EPIC/template.md` — parent Epic DESIGN reference
+```pdsl
+UNIT FeatureMobileAuthoring
 
-## Table of Contents
+PURPOSE:
+  Author or revise a mobile feature specification: CDSL actor flows, processes /
+  business logic allocated across KMP / Android / iOS / WebView, state machines,
+  Definitions of Done, and acceptance criteria for one implementable unit.
 
-1. [Prerequisites](#prerequisites)
-2. [Requirements](#requirements)
-3. [Tasks](#tasks)
-4. [Validation](#validation)
-5. [Error Handling](#error-handling)
-6. [Next Steps](#next-steps)
+WHEN:
+  - REQUIRE authoring or revising a FEATURE-MOBILE
 
----
+DO:
+  - LOAD config/kits/mobile-superapp/artifacts/FEATURE-MOBILE/template.md for structure
+  - LOAD config/kits/sdlc/artifacts/FEATURE/checklist.md — the base checklist, applied in full
+  - LOAD config/kits/mobile-superapp/artifacts/FEATURE-MOBILE/checklist.md for the feature-layer delta over that base
+  - RUN read the Epic DECOMPOSITION to get this feature's ID, scope, out-of-scope, dependencies, and platform implementation targets
+  - RUN read Epic PRD for FRs, state requirements, widgets, error conditions, and acceptance criteria
+  - RUN read Epic DESIGN for components, widgets, use cases, repository operations, state contracts, and sequences
+  - RUN read the MiniApp DESIGN for the module structure, domain entities, and API contracts this feature consumes
+  - LOAD config/kits/mobile-superapp/constraints.toml for kit-level constraints
+  - LOAD {cf-studio-path}/.core/architecture/specs/traceability.md for ID formats and code-marker syntax
+  - RUN read project config for ID prefix and resolve output path from {cf-studio-path}/config/artifacts.toml
+  - RUN author each required section (Feature Context, Actor Flows, Processes / Business Logic, States, Definitions of Done, Acceptance Criteria, Traceability)
+  - SET featstatus ID under the H1 = cpt-{hierarchy-prefix}-featstatus-{feature-slug}; feature ref = cpt-{hierarchy-prefix}-feature-{feature-slug}; flow IDs = cpt-{hierarchy-prefix}-flow-{feature-slug}-{slug}; process IDs = cpt-{hierarchy-prefix}-algo-{feature-slug}-{slug}; state IDs = cpt-{hierarchy-prefix}-state-{feature-slug}; dod IDs = cpt-{hierarchy-prefix}-dod-{feature-slug}-{slug}
+  - RUN author CDSL instructions in the form `N. [ ] - \`pN\` - Description - \`inst-{slug}\`` using IF / ELSE / FOR EACH / TRY / CATCH / RETURN / FROM-TO-WHEN, nesting conditional branches
+  - RUN cfs list-ids to verify ID uniqueness
 
-## Prerequisites
+RULES:
+  - ALWAYS follow the template structure; all required sections present and non-empty
+  - ALWAYS reference the parent feature entry from the Epic DECOMPOSITION
+  - ALWAYS describe what happens, not how it is coded; CDSL steps are decision-level, not source lines
+  - ALWAYS allocate every process to exactly one target: KMP shared, Android, iOS, or the WebView bridge
+  - ALWAYS place business logic in a KMP shared process; platform processes are UI reduction and platform integration only
+  - ALWAYS name the shared, Android, and iOS locations for each process, matching the DECOMPOSITION platform implementation table
+  - ALWAYS reference platform actors as cpt-superapp-actor-{slug}; NEVER redefine actors here
+  - ALWAYS reuse the Epic PRD widget IDs and the Epic DESIGN component, use case, and repository IDs; NEVER mint a second ID for an existing element
+  - ALWAYS cover every state named in the Epic DESIGN screen state model with a transition here
+  - ALWAYS give every DoD item its Implements, Constraints, Touches, and Verification fields
+  - ALWAYS keep featstatus consistent: `[x]` iff ALL nested task-tracked ID definitions and task-checkbox references in scope are `[x]`
+  - ALWAYS check an element only when all its code markers exist and the implementation is verified; a dod is checked when implementation is complete AND tests pass
+  - ALWAYS treat the checklist as the single source of semantic quality criteria
+  - NEVER duplicate semantic criteria here; NEVER leave placeholders (TODO, TBD, FIXME); NEVER create duplicate IDs within the document
 
-### Load Dependencies
-
-- [ ] Load `config/kits/mobile-superapp/artifacts/FEATURE-MOBILE/template.md` for structure
-- [ ] Load `config/kits/mobile-superapp/artifacts/FEATURE-MOBILE/checklist.md` for semantic guidance
-- [ ] Read Epic PRD for requirements context
-- [ ] Read Epic DESIGN for architectural context
-- [ ] Read Epic DECOMPOSITION for feature boundaries
-- [ ] Load `config/kits/mobile-superapp/constraints.toml` for kit-level constraints
-- [ ] Load `{cf-studio-path}/.core/architecture/specs/traceability.md` for ID formats
-- [ ] Load `{cf-studio-path}/.core/architecture/specs/cdsl.md` for CDSL syntax
-
----
-
-## Requirements
-
-### Structural
-
-- [ ] FEATURE-MOBILE follows `config/kits/mobile-superapp/artifacts/FEATURE-MOBILE/template.md` structure
-- [ ] All required sections present and non-empty:
-  - Feature Context (overview, purpose, actors, references)
-  - Actor Flows (CDSL) — user-facing interactions
-  - Platform Implementation (CDSL) — KMP, Android, iOS, WebView
-  - States (CDSL) — state machine definition
-  - Definitions of Done
-  - Acceptance Criteria
-  - Traceability
-- [ ] All IDs follow appropriate conventions:
-  - Feature ID: `cpt-{miniapp}-feature-{slug}`
-  - Flow ID: `cpt-{miniapp}-flow-{feature-slug}-{slug}`
-  - Algo ID: `cpt-{miniapp}-algo-{feature-slug}-{platform}`
-  - State ID: `cpt-{miniapp}-state-{feature-slug}`
-  - DoD ID: `cpt-{miniapp}-dod-{feature-slug}-{slug}`
-- [ ] All CDSL steps have `inst-{id}` markers for implementation tracking
-- [ ] No placeholder content (TODO, TBD, FIXME)
-- [ ] No duplicate IDs within document
-
-### Mobile-Specific (CDSL Flows)
-
-- [ ] Actor Flows use CDSL syntax:
-  - Steps with priority: `[ ] - p{N} - {description} - inst-{id}`
-  - Conditionals: `**IF** {condition}`, `**ELSE**`
-  - API calls: `API: {METHOD} /path (summary)`
-  - DB operations: `DB: {OPERATION} {table} ({key columns})`
-  - Returns: `**RETURN** {result}`
-- [ ] Platform Implementation uses CDSL for each platform:
-  - KMP Shared Logic (ViewModel, UseCase, Repository steps)
-  - Android UI (Compose screen steps)
-  - iOS UI (SwiftUI view steps)
-  - WebView Integration (if applicable)
-- [ ] State machine uses CDSL format:
-  - States, Initial State, Transitions
-  - `**FROM** {state} **TO** {state} **WHEN** {trigger}`
-- [ ] Each flow has Success and Error scenarios
-
-### Traceability
-
-- [ ] Feature traces to Epic PRD requirements
-- [ ] Actor Flows implement use cases from Epic DESIGN
-- [ ] Platform Implementation traces to Epic DESIGN components
-- [ ] Definitions of Done specify:
-  - Implements (flow IDs)
-  - Touches (KMP, Android, iOS, API)
-  - Verification (tests)
-- [ ] Links to parent documents and implementation references
-
-### Versioning
-
-- [ ] When editing existing FEATURE: increment version in document header
-- [ ] When changing flow steps: preserve `inst-{id}` markers for continuity
-
----
-
-## Tasks
-
-### Phase 1: Setup
-
-- [ ] Load `config/kits/mobile-superapp/artifacts/FEATURE-MOBILE/template.md` for structure
-- [ ] Load `config/kits/mobile-superapp/artifacts/FEATURE-MOBILE/checklist.md` for semantic guidance
-- [ ] Load CDSL syntax reference
-- [ ] Read Epic PRD for requirements
-- [ ] Read Epic DESIGN for components and use cases
-- [ ] Read Epic DECOMPOSITION for feature scope
-
-### Phase 2: Content Creation
-
-Apply checklist semantics during creation:
-
-| Checklist Category | Generation Task |
-|-------------------|-----------------|
-| Feature Context | Document overview, purpose, actors, references |
-| Actor Flows | Write CDSL flows for user interactions |
-| KMP Implementation | Document ViewModel, UseCase, Repository steps |
-| Android Implementation | Document Compose screen steps |
-| iOS Implementation | Document SwiftUI view steps |
-| WebView Integration | Document JS bridge (if applicable) |
-| States | Define state machine with transitions |
-| Definitions of Done | Specify implementable work items |
-| Acceptance Criteria | Write testable criteria |
-
-**CDSL Writing Guidelines**:
-
-For Actor Flows:
-```markdown
-1. [ ] - `p1` - Actor opens {screen} - `inst-{id}`
-2. [ ] - `p1` - **IF** {condition} - `inst-{id}`
-   1. [ ] - `p1` - System {action} - `inst-{id}`
-3. [ ] - `p1` - API: `GET /api/v1/mobile/{path}` (response summary) - `inst-{id}`
-4. [ ] - `p1` - **RETURN** {result} - `inst-{id}`
+INVARIANTS:
+  - ALWAYS increment the version on edit and keep a changelog of significant changes
+  - ALWAYS add a `-v{N}` suffix to an ID whose flow, process, state, or DoD meaning changed; the matching code marker becomes @cpt-{kind}:cpt-{hierarchy-prefix}-{kind}-{slug}-v{N}:p{N}
+  - ALWAYS when all flows, processes, states, and DoD items are `[x]`, mark the feature `[x]` in the Epic DECOMPOSITION so status cascades to DESIGN and PRD
 ```
 
-For Platform Implementation:
-```markdown
-1. [ ] - `p1` - Receive intent from UI - `inst-kmp-1`
-2. [ ] - `p1` - **TRY** - `inst-kmp-2`
-   1. [ ] - `p1` - Call repository - `inst-kmp-2a`
-3. [ ] - `p1` - **CATCH** {error} - `inst-kmp-3`
-   1. [ ] - `p1` - Map to domain error - `inst-kmp-3a`
+```pdsl
+UNIT FeatureMobileOmissions
+
+PURPOSE:
+  Enforce FEATURE scope boundaries — content that MUST NOT appear and the artifact where it belongs. Report as a violation if found.
+
+RULES:
+  - NEVER redefine system-level types or domain entities (ARCH-FDESIGN-NO-001, CRITICAL) — they belong in DESIGN-MINIAPP
+  - NEVER introduce new API endpoints (ARCH-FDESIGN-NO-002, CRITICAL) — the API surface belongs in DESIGN-MINIAPP / DESIGN-PLATFORM
+  - NEVER include architectural decisions or technology rationale (ARCH-FDESIGN-NO-003, HIGH) — they belong in ADR
+  - NEVER define product requirements or user stories (BIZ-FDESIGN-NO-001, HIGH) — they belong in PRD-EPIC
+  - NEVER include sprint or task breakdowns (BIZ-FDESIGN-NO-002, HIGH) — sequencing belongs in DECOMPOSITION-EPIC
+  - NEVER include code snippets (MAINT-FDESIGN-NO-001, HIGH) — code belongs in the implementation
+  - NEVER include test implementations (TEST-FDESIGN-NO-001, MEDIUM) — test code belongs in the implementation
+  - NEVER include secrets, tokens, or credentials (SEC-FDESIGN-NO-001, CRITICAL) — they must never appear in documentation
+  - NEVER include infrastructure or build configuration (OPS-FDESIGN-NO-001, MEDIUM) — it belongs in the implementation and IMPL-* guides
+  - NEVER include platform coding conventions or style rules (FEATURE-MOBILE-NO-001, LOW) — they belong in IMPL-IOS / IMPL-ANDROID / IMPL-KMP
+  - NEVER include design-system token values, colors, spacing, or animation curves (FEATURE-MOBILE-NO-002, MEDIUM) — visual specification belongs in the design system
 ```
 
-**Partial Completion Handling**:
+```pdsl
+UNIT FeatureMobileValidate
 
-If FEATURE-MOBILE cannot be completed in a single session:
-1. Checkpoint progress with completed sections
-2. Add `status: DRAFT` to document header
-3. Mark incomplete flows with `INCOMPLETE: {reason}`
-4. Document resumption point
+PURPOSE:
+  Run deterministic, semantic, coverage, and TOC validation on the FEATURE-MOBILE.
 
-### Phase 3: IDs and References
+DO:
+  - RUN cfs validate --artifact <path> (template compliance, ID format, priority markers, CDSL format, no placeholders, parent reference, reference rules, heading scoping, checked-ref-implies-checked-def)
+  - LOAD config/kits/sdlc/artifacts/FEATURE/checklist.md and RUN the full base semantic pass (Review Scope Selection, all expertise domains, MUST NOT HAVE scan)
+  - LOAD config/kits/mobile-superapp/artifacts/FEATURE-MOBILE/checklist.md and RUN the feature-layer delta pass (domain scope table, delta MUST HAVE, delta MUST NOT HAVE, mobile-specific criteria)
+  - RETURN one merged report in the base checklist's report format, citing base and delta checklist IDs
+  - RUN cfs spec-coverage when code exists — percentage of CDSL instructions carrying code markers, plus missing/orphaned markers
+  - RUN cfs toc <path> then cfs validate-toc <path>
 
-- [ ] Generate feature status ID: `cpt-{miniapp}-featstatus-{feature-slug}`
-- [ ] Generate feature ID: `cpt-{miniapp}-feature-{slug}`
-- [ ] Generate flow IDs: `cpt-{miniapp}-flow-{feature-slug}-{slug}`
-- [ ] Generate algo IDs: `cpt-{miniapp}-algo-{feature-slug}-{platform}`
-- [ ] Generate state ID: `cpt-{miniapp}-state-{feature-slug}`
-- [ ] Generate DoD IDs: `cpt-{miniapp}-dod-{feature-slug}-{slug}`
-- [ ] Generate unique `inst-{id}` for each CDSL step
-- [ ] Link to Epic PRD requirements
-- [ ] Link to Epic DESIGN components
-- [ ] Verify uniqueness with `cfs list-ids`
-
-### Phase 4: Quality Check
-
-- [ ] Self-review against `config/kits/mobile-superapp/artifacts/FEATURE-MOBILE/checklist.md` MUST HAVE items
-- [ ] Ensure no MUST NOT HAVE violations
-- [ ] Verify CDSL syntax is correct
-- [ ] Verify all flows have success and error scenarios
-- [ ] Verify all platforms have implementation steps
-- [ ] Verify DoDs are implementable
-
-### Phase 5: Table of Contents
-
-- [ ] Run `cfs toc <path>` to generate/update Table of Contents
-- [ ] Verify TOC is present and complete
-
----
-
-## Validation
-
-### Phase 1: Structural Validation
-
-- [ ] Run `cfs validate --artifact <path>` for:
-  - Template structure compliance
-  - ID format validation
-  - CDSL syntax validation
-  - Cross-reference validity
-  - No placeholders
-
-### Phase 2: Semantic Validation
-
-- [ ] Read `config/kits/mobile-superapp/artifacts/FEATURE-MOBILE/checklist.md` in full
-- [ ] For each MUST HAVE item: check if requirement is met
-- [ ] For each MUST NOT HAVE item: scan document for violations
-
-### Phase 3: CDSL-Specific Validation
-
-- [ ] All CDSL steps have `inst-{id}` markers
-- [ ] All steps have priority (`p1`, `p2`, `p3`)
-- [ ] Conditionals (`IF/ELSE`, `TRY/CATCH`, `WHEN`) are properly nested
-- [ ] API calls specify method, path, and summary
-- [ ] State transitions are complete (all states reachable)
-- [ ] Platform implementations cover KMP, Android, iOS
-
-### Phase 4: Implementation Readiness Validation
-
-- [ ] Definitions of Done are specific and implementable
-- [ ] Each DoD specifies which flows it implements
-- [ ] Each DoD lists modules/components touched
-- [ ] Each DoD has verification criteria (tests)
-- [ ] Acceptance criteria are testable
-
-### Validation Report Format
-
-```
-FEATURE-MOBILE Validation Report
-════════════════════════════════
-
-Structural: PASS/FAIL
-Semantic: PASS/FAIL (N issues)
-CDSL: PASS/FAIL (N issues)
-Implementation Readiness: PASS/FAIL (N issues)
-
-Coverage:
-- Actor Flows: N defined
-- Platform Implementations: KMP: ✓/✗, Android: ✓/✗, iOS: ✓/✗
-- States: N states, M transitions
-- DoDs: N defined
-
-Issues:
-- [SEVERITY] CHECKLIST-ID: Description
+RULES:
+  - ALWAYS run cfs validate --artifact <path>
+  - ALWAYS verify every Epic PRD FR, state requirement, and error condition in this feature's scope is realized by a flow, process, or state transition
+  - ALWAYS trace to code: IDs with to_code="true" map to markers @cpt-{kind}:{cpt-id}:p{N}, and each CDSL instruction maps to a code marker
+  - NEVER leave a to_code="true" ID untraced to code
+  - NEVER consider the FEATURE done while validation reports fail/error or cfs validate-toc does not PASS
+  - ALWAYS use the checklist for semantic criteria, applicability handling, and report format — do not restate them here
 ```
 
----
+```pdsl
+UNIT FeatureMobileErrorHandling
 
-## Error Handling
+PURPOSE:
+  Recover deterministically from missing dependencies, config, and ambiguity.
 
-### Missing Epic DESIGN
+ON_ERROR:
+  missing_template ->
+    STOP — cannot proceed without the FEATURE-MOBILE template
+  missing_checklist ->
+    EMIT warning
+    SET skip semantic validation
+  missing_decomposition ->
+    EMIT "Epic DECOMPOSITION not found. Recommended: run /cf-generate DECOMPOSITION-EPIC first — this feature's ID, scope, and platform targets come from it. Or continue without the manifest, accepting that traceability is incomplete."
+    WAIT user.reply
+  missing_epic_design ->
+    EMIT "Epic DESIGN not found. Recommended: run /cf-generate DESIGN-EPIC first — components, state contracts, and use cases are referenced from it. Or continue with 'DESIGN pending' in the header and the referenced elements documented as assumptions."
+    WAIT user.reply
+  missing_parent_feature ->
+    EMIT "Feature ID cpt-{hierarchy-prefix}-feature-{slug} not found in the Epic DECOMPOSITION. If the feature is new, add the entry there first; if it is a typo, correct the reference."
+    WAIT user.reply
+  platform_divergence_undecided ->
+    EMIT warning
+    CONTINUE with the shared behavior specified and the divergence listed as an open decision
 
-- [ ] If Epic DESIGN not found:
-  - Option 1: Run `/cf-generate DESIGN-EPIC` first (recommended)
-  - Option 2: Continue without DESIGN (implementation details will be assumptions)
-  - Document "DESIGN pending" in FEATURE header
+RULES:
+  - ALWAYS escalate to the user when flow correctness needs domain expertise, when a state transition is ambiguous in the PRD, when a repository operation does not exist yet, or when Android and iOS must behave differently and the product choice is unmade
+```
 
-### Missing Epic PRD
+```pdsl
+UNIT FeatureMobileNextSteps
 
-- [ ] If Epic PRD not found:
-  - Option 1: Run `/cf-generate PRD-EPIC` first
-  - Option 2: Continue without PRD (requirements traceability will be incomplete)
-  - Document requirements assumptions made
+PURPOSE:
+  Offer next actions after the FEATURE-MOBILE is complete.
 
-### CDSL Syntax Errors
+DO:
+  - EMIT_MENU FeatureMobileNextStepsMenu
 
-- [ ] If CDSL validation fails:
-  - Check step format: `[ ] - p{N} - {description} - inst-{id}`
-  - Check conditional keywords: `**IF**`, `**ELSE**`, `**TRY**`, `**CATCH**`, `**WHEN**`
-  - Check nesting (indentation with numbers: 1., 1.1., etc.)
-  - Refer to CDSL syntax reference
-
-### Escalation
-
-- [ ] Ask user when flow scenarios are unclear
-- [ ] Ask user when API contracts are unavailable
-- [ ] Ask user when platform-specific behavior needs clarification
-
----
-
-## Next Steps
-
-### Options
-
-- [ ] FEATURE-MOBILE complete → `/cf-generate IMPL-KMP` — create KMP implementation reference
-- [ ] FEATURE-MOBILE complete → `/cf-generate IMPL-ANDROID` — create Android implementation reference
-- [ ] FEATURE-MOBILE complete → `/cf-generate IMPL-IOS` — create iOS implementation reference
-- [ ] DESIGN missing → `/cf-generate DESIGN-EPIC` — create Epic DESIGN first
-- [ ] PRD missing → `/cf-generate PRD-EPIC` — create Epic PRD first
-- [ ] FEATURE needs revision → continue editing FEATURE-MOBILE
-- [ ] Ready for implementation → start coding with FEATURE as spec
+MENU FeatureMobileNextStepsMenu:
+  TITLE: FEATURE-MOBILE next steps
+  OPTIONS:
+    1 -> RUN /cf-generate CODE (implement this feature)
+    2 -> RUN /cf-analyze CODE (validate the implementation against this spec)
+    3 -> RUN update feature status in DECOMPOSITION-EPIC (feature implemented)
+    4 -> CONTINUE FeatureMobileAuthoring (revise this feature spec)
+    5 -> RUN /cf-generate FEATURE-MOBILE (specify the next feature)
+    6 -> RUN /cf-analyze semantic (checklist-only review)
+  INVALID:
+    EMIT "Reply with 1, 2, 3, 4, 5, or 6."
+    WAIT user.reply
+    STOP_TURN
+```

@@ -1,6 +1,51 @@
 # Mobile SuperApp Kit Changelog
 
 [[releases]]
+version = "1.3.0"
+date = "2026-08-03"
+summary = "Full structural alignment with the sdlc kit: every artifact family now shares the sdlc document structure, all rules are PDSL, and all checklists inherit the sdlc base as a layer delta"
+
+[[releases.changes]]
+type = "changed"
+description = "PRD-PLATFORM/MINIAPP/EPIC, DESIGN-PLATFORM/MINIAPP/EPIC, DECOMPOSITION-PLATFORM/MINIAPP/EPIC, and FEATURE-MOBILE templates rewritten onto the sdlc skeletons: identical section names, numbering, and field contracts, with mobile layer content carried as subsections instead of a divergent outline"
+
+[[releases.changes]]
+type = "added"
+description = "PRD-PLATFORM artifact (template, PDSL rules, layer-delta checklist) plus its manifest resource entries; the kit previously had no L0 requirements artifact while DESIGN-PLATFORM and DECOMPOSITION-PLATFORM existed"
+
+[[releases.changes]]
+type = "added"
+description = "Glossary subsection in every PRD template, matching the sdlc PRD contract that the mobile templates were missing"
+
+[[releases.changes]]
+type = "added"
+description = "FEATURE-MOBILE section 3 Processes / Business Logic (CDSL) replaces the mobile-only Platform Implementation section; the six mobile processes (shared ViewModel, use case, repository, Android reducer, iOS reducer, WebView bridge) become its subsections, each declaring exactly one target"
+
+[[releases.changes]]
+type = "changed"
+description = "All checklists rewritten as layer deltas: each names its sdlc base checklist by path, maps every base expertise domain to Full / Narrowed / Deferred / Inherited with named deferral targets, adds only layer-specific criteria, and delegates the report format to the base so a review produces one merged report"
+
+[[releases.changes]]
+type = "changed"
+description = "codebase/checklist.md is now a delta over the core code-checklist plus the sdlc codebase checklist, with a SEM-CODE-001..007 substitution table mapping each semantic-alignment check onto the mobile artifact set; roughly 200 lines of duplicated generic quality criteria removed"
+
+[[releases.changes]]
+type = "changed"
+description = "codebase/rules.md and IMPL-KMP/IMPL-ANDROID/IMPL-IOS rules.md converted from prose to PDSL, mirroring the sdlc unit set (implementation, markers, cascade, validate, error-handling, next-steps); the kit now has no prose rules files"
+
+[[releases.changes]]
+type = "changed"
+description = "IMPL-KMP/IMPL-ANDROID/IMPL-IOS checklists rewritten as deltas over the kit codebase checklist, each with a scope table stating which code criteria the target owns and which belong to the sibling targets, plus Android/iOS parity criteria"
+
+[[releases.changes]]
+type = "changed"
+description = "IMPL templates adopt the numbered sdlc-style outline, the cfs toc marker, FULL-mode @cpt scope and block marker syntax, and the cpt-{hierarchy-prefix}-{kind}-{slug} ID scheme; previous templates used stale toc markers and the legacy cpt-{miniapp}-* forms"
+
+[[releases.changes]]
+type = "changed"
+description = "constraints.toml heading contracts and ID taxonomy updated to the v1.3.0 templates; machine enforcement stays disabled for the reasons already recorded in-file"
+
+[[releases]]
 version = "1.2.3"
 date = "2026-08-03"
 summary = "Rewrite constraints.toml: remove stale manifest reference, document heading contracts and why machine enforcement is disabled"

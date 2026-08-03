@@ -48,16 +48,16 @@ L3: Feature (miniapps/{miniapp}/capabilities/{epic}/features/{feature}/FEATURE.m
 Platform FR: cpt-superapp-fr-inapp-notifications
     │ refined-by
     ▼
-MiniApp FR: cpt-student-fr-notifications
+MiniApp FR: cpt-superapp-student-fr-notifications
     │ detailed-by
     ▼
-Epic FR: cpt-student-epic-notification-history-fr-badge
+Epic FR: cpt-superapp-student-epic-notification-history-fr-badge
     │ specified-by
     ▼
-Feature: cpt-student-feature-notification-badge
+Feature: cpt-superapp-student-feature-notification-badge
     │ implemented-by
     ▼
-Code: @cpt-impl:cpt-student-feature-notification-badge
+Code: @cpt-impl:cpt-superapp-student-feature-notification-badge
 ```
 
 ## What the Kit Provides
@@ -154,15 +154,15 @@ mobile-superapp/
 
 | Level | Pattern | Example |
 |-------|---------|---------|
-| Platform FR | `cpt-{platform}-fr-{slug}` | `cpt-superapp-fr-offline` |
-| Platform Component | `cpt-{platform}-component-{slug}` | `cpt-superapp-component-auth` |
-| MiniApp FR | `cpt-{miniapp}-fr-{slug}` | `cpt-student-fr-courses` |
-| MiniApp Epic | `cpt-{miniapp}-epic-{slug}` | `cpt-student-epic-home` |
-| Epic FR | `cpt-{miniapp}-epic-{epic}-fr-{slug}` | `cpt-student-epic-home-fr-streak` |
-| Feature | `cpt-{miniapp}-feature-{slug}` | `cpt-student-feature-daily-goal` |
-| KMP Impl | `cpt-kmp-{module}-{type}-{slug}` | `cpt-kmp-home-usecase-load` |
-| Android Impl | `cpt-android-{module}-{type}-{slug}` | `cpt-android-home-screen-main` |
-| iOS Impl | `cpt-ios-{module}-{type}-{slug}` | `cpt-ios-home-view-main` |
+| Platform FR | `cpt-{hierarchy-prefix}-fr-{slug}` | `cpt-superapp-fr-offline` |
+| Platform Component | `cpt-{hierarchy-prefix}-component-{slug}` | `cpt-superapp-component-auth` |
+| MiniApp FR | `cpt-{hierarchy-prefix}-fr-{slug}` | `cpt-superapp-student-fr-courses` |
+| MiniApp Epic | `cpt-{hierarchy-prefix}-epic-{slug}` | `cpt-superapp-student-epic-home` |
+| Epic FR | `cpt-{hierarchy-prefix}-fr-{slug}` | `cpt-superapp-student-home-fr-streak` |
+| Feature | `cpt-{hierarchy-prefix}-feature-{slug}` | `cpt-superapp-student-home-feature-daily-goal` |
+| Code marker (FULL) | `@cpt-{kind}:{cpt-id}:p{N}` | `@cpt-algo:cpt-superapp-student-home-algo-daily-goal-viewmodel:p1` |
+| Code marker (block) | `@cpt-begin:{cpt-id}:p{N}:inst-{local}` | `@cpt-begin:cpt-superapp-student-home-algo-daily-goal-viewmodel:p1:inst-vm-1` |
+| Code marker (DOCS-ONLY) | `@cpt-impl {cpt-id}` | `@cpt-impl cpt-superapp-student-home-algo-daily-goal-viewmodel` |
 
 ## Validation
 
@@ -222,15 +222,15 @@ Developer: "Which screens? What data? How fresh?"
 **Cascading FR traceability** solves this by requiring explicit links at each level:
 
 ```
-Platform FR: cpt-platform-fr-offline-support
+Platform FR: cpt-superapp-fr-offline-support
     ↓ "refined by"
-MiniApp FR: cpt-learn-fr-offline-courses
+MiniApp FR: cpt-superapp-learn-fr-offline-courses
     ↓ "detailed by"  
-Epic Story: cpt-learn-course-catalog-story-cache-courses
+Epic Story: cpt-superapp-learn-course-catalog-story-cache-courses
     ↓ "specified by"
-Feature Flow: cpt-learn-flow-course-list-load-cached
+Feature Flow: cpt-superapp-learn-flow-course-list-load-cached
     ↓ "implemented by"
-Code: @cpt-flow:cpt-learn-flow-course-list-load-cached:p1
+Code: @cpt-flow:cpt-superapp-learn-flow-course-list-load-cached:p1
 ```
 
 Benefits:
@@ -257,7 +257,7 @@ sealed class CourseListIntent {
 }
 
 // Code implements with markers:
-// @cpt-flow:cpt-learn-flow-course-list-load:p1
+// @cpt-flow:cpt-superapp-learn-flow-course-list-load:p1
 fun processIntent(intent: CourseListIntent) { ... }
 ```
 
@@ -285,20 +285,20 @@ Simple `@cpt-impl` markers show "this file implements X", but don't show **which
 Block markers provide **line-level traceability**:
 
 ```kotlin
-// @cpt-flow:cpt-learn-flow-course-list-load:p1
+// @cpt-flow:cpt-superapp-learn-flow-course-list-load:p1
 fun loadCourses() {
-    // @cpt-begin:cpt-learn-flow-course-list-load:p1:inst-kmp-1
+    // @cpt-begin:cpt-superapp-learn-flow-course-list-load:p1:inst-kmp-1
     viewModelScope.launch {
         _state.update { it.copy(isLoading = true) }
-    // @cpt-end:cpt-learn-flow-course-list-load:p1:inst-kmp-1
+    // @cpt-end:cpt-superapp-learn-flow-course-list-load:p1:inst-kmp-1
     
-    // @cpt-begin:cpt-learn-flow-course-list-load:p1:inst-kmp-2
+    // @cpt-begin:cpt-superapp-learn-flow-course-list-load:p1:inst-kmp-2
         val result = repository.getCourses()
-    // @cpt-end:cpt-learn-flow-course-list-load:p1:inst-kmp-2
+    // @cpt-end:cpt-superapp-learn-flow-course-list-load:p1:inst-kmp-2
     
-    // @cpt-begin:cpt-learn-flow-course-list-load:p1:inst-kmp-3
+    // @cpt-begin:cpt-superapp-learn-flow-course-list-load:p1:inst-kmp-3
         _state.update { it.copy(courses = result, isLoading = false) }
-    // @cpt-end:cpt-learn-flow-course-list-load:p1:inst-kmp-3
+    // @cpt-end:cpt-superapp-learn-flow-course-list-load:p1:inst-kmp-3
     }
 }
 ```

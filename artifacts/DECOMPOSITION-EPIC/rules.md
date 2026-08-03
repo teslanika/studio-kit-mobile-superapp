@@ -1,242 +1,135 @@
 # DECOMPOSITION-EPIC Rules
 
-**Artifact**: DECOMPOSITION-EPIC  
-**Kit**: mobile-superapp  
+**Artifact**: DECOMPOSITION-EPIC
+**Kit**: mobile-superapp
 **Level**: L2 (Epic)
 
-**Dependencies**:
-- `config/kits/mobile-superapp/artifacts/DECOMPOSITION-EPIC/template.md` — structural reference
-- `config/kits/mobile-superapp/artifacts/DECOMPOSITION-EPIC/checklist.md` — semantic quality criteria
-- `config/kits/mobile-superapp/artifacts/DESIGN-EPIC/template.md` — parent Epic DESIGN reference
-- `config/kits/mobile-superapp/artifacts/PRD-EPIC/template.md` — Epic PRD reference
+```pdsl
+UNIT DecompositionEpicAuthoring
 
-## Table of Contents
+PURPOSE:
+  Author or revise an Epic-level decomposition that breaks the Epic DESIGN into
+  implementable features with full coverage and a per-platform implementation map.
 
-1. [Prerequisites](#prerequisites)
-2. [Requirements](#requirements)
-3. [Tasks](#tasks)
-4. [Validation](#validation)
-5. [Error Handling](#error-handling)
-6. [Next Steps](#next-steps)
+WHEN:
+  - REQUIRE authoring or revising a DECOMPOSITION-EPIC
 
----
+DO:
+  - LOAD config/kits/mobile-superapp/artifacts/DECOMPOSITION-EPIC/template.md for structure
+  - LOAD config/kits/sdlc/artifacts/DECOMPOSITION/checklist.md — the base checklist, applied in full
+  - LOAD config/kits/mobile-superapp/artifacts/DECOMPOSITION-EPIC/checklist.md for the Epic-layer delta over that base
+  - RUN read Epic PRD and extract FRs, state requirements, widgets, error conditions, and acceptance criteria to cover
+  - RUN read Epic DESIGN and extract components, widgets, use cases, state contracts, sequences, and caches to assign
+  - RUN read the parent MiniApp DECOMPOSITION to confirm this epic's scope and dependencies
+  - LOAD config/kits/mobile-superapp/constraints.toml for kit-level constraints
+  - LOAD {cf-studio-path}/.core/architecture/specs/traceability.md for ID formats
+  - RUN read project config for ID prefix and resolve output path from {cf-studio-path}/config/artifacts.toml
+  - RUN group design elements into features that are independently implementable, testable, and deliverable
+  - RUN author each entry with Purpose, Depends On, Scope, Out of scope, Requirements Covered, Design Principles Covered, Design Constraints Covered, Domain Model Entities, Design Components, Use Cases, API, Sequences, Data, Platform Implementation
+  - RUN author Feature Dependencies as an acyclic graph with a rationale per edge
+  - RUN author the Coverage Matrix including the Platform Implementation Matrix, then Implementation Order and Acceptance Criteria Summary
+  - RUN cfs list-ids to verify ID uniqueness
 
-## Prerequisites
-
-### Load Dependencies
-
-- [ ] Load `config/kits/mobile-superapp/artifacts/DECOMPOSITION-EPIC/template.md` for structure
-- [ ] Load `config/kits/mobile-superapp/artifacts/DECOMPOSITION-EPIC/checklist.md` for semantic guidance
-- [ ] Read Epic PRD for requirements context
-- [ ] Read Epic DESIGN for architectural context
-- [ ] Read MiniApp DECOMPOSITION for Epic boundaries
-- [ ] Load `config/kits/mobile-superapp/constraints.toml` for kit-level constraints
-- [ ] Load `{cf-studio-path}/.core/architecture/specs/traceability.md` for ID formats
-
----
-
-## Requirements
-
-### Structural
-
-- [ ] DECOMPOSITION-EPIC follows `config/kits/mobile-superapp/artifacts/DECOMPOSITION-EPIC/template.md` structure
-- [ ] All required sections present and non-empty:
-  - Overview (parent documents reference)
-  - Feature Entries (all features with full details)
-  - Feature Dependencies
-  - Coverage Matrix (Requirements → Features, Design Components → Features)
-  - Platform Implementation Matrix
-  - Implementation Order
-  - Acceptance Criteria Summary
-- [ ] All IDs follow `cpt-{miniapp}-feature-{slug}` convention
-- [ ] Each Feature entry has complete metadata:
-  - Purpose, Depends On, Scope (in/out)
-  - Requirements Covered, Design Components
-  - Screen/Widget, Use Cases, API Endpoints
-  - Platform Implementation table
-- [ ] No placeholder content (TODO, TBD, FIXME)
-- [ ] No duplicate IDs within document
-
-### Mobile-Specific
-
-- [ ] Each Feature specifies platform implementation:
-  - KMP module and location
-  - Android component and location
-  - iOS component and location
-- [ ] Platform Implementation Matrix shows KMP/Android/iOS status per feature
-- [ ] Features reference screens, widgets, use cases from Epic DESIGN
-- [ ] API endpoints are documented for each feature
-- [ ] Features are independently testable
-
-### Traceability
-
-- [ ] Every Feature traces to Epic FRs it covers
-- [ ] Design components from Epic DESIGN are allocated to Features
-- [ ] Requirements → Features coverage matrix complete
-- [ ] Design Components → Features coverage matrix complete
-- [ ] Links to parent documents (Epic PRD, Epic DESIGN, MiniApp DECOMPOSITION)
-
-### Versioning
-
-- [ ] When editing existing DECOMPOSITION: increment version in document header
-- [ ] When adding/removing Feature: document rationale
-
----
-
-## Tasks
-
-### Phase 1: Setup
-
-- [ ] Load `config/kits/mobile-superapp/artifacts/DECOMPOSITION-EPIC/template.md` for structure
-- [ ] Load `config/kits/mobile-superapp/artifacts/DECOMPOSITION-EPIC/checklist.md` for semantic guidance
-- [ ] Read Epic PRD for requirements
-- [ ] Read Epic DESIGN for components
-- [ ] Identify natural Feature boundaries from use cases and widgets
-
-### Phase 2: Content Creation
-
-Apply checklist semantics during creation:
-
-| Checklist Category | Generation Task |
-|-------------------|-----------------|
-| Overview | Link to parent PRD, DESIGN, MiniApp DECOMPOSITION |
-| Feature Entries | Create entry for each feature with full metadata |
-| Dependencies | Create dependency diagram with rationale |
-| Coverage Matrix | Map FRs and components to Features |
-| Platform Matrix | Track KMP/Android/iOS implementation status |
-| Implementation Order | Plan phased implementation |
-| Acceptance Criteria | Summarize key criteria per feature |
-
-**Feature Entry Checklist**:
-
-For each Feature, document:
-- [ ] Purpose (few sentences)
-- [ ] Depends On (other Features or "None")
-- [ ] Scope (in-scope and out-of-scope items)
-- [ ] Requirements Covered (Epic FRs with priority)
-- [ ] Design Components (IDs from Epic DESIGN)
-- [ ] Screen/Widget (component IDs)
-- [ ] Use Cases (use case IDs)
-- [ ] API Endpoints (methods and paths)
-- [ ] Platform Implementation (KMP, Android, iOS locations)
-
-**Partial Completion Handling**:
-
-If DECOMPOSITION-EPIC cannot be completed in a single session:
-1. Checkpoint progress with completed Feature entries
-2. Add `status: DRAFT` to document header
-3. Mark incomplete Features with `INCOMPLETE: {reason}`
-4. Document resumption point
-
-### Phase 3: IDs and References
-
-- [ ] Generate overall status ID: `cpt-{miniapp}-{epic}-status-overall`
-- [ ] Generate Feature IDs: `cpt-{miniapp}-feature-{slug}`
-- [ ] Link to Epic FR IDs
-- [ ] Link to Epic component IDs (screens, widgets, use cases)
-- [ ] Verify uniqueness with `cfs list-ids`
-
-### Phase 4: Quality Check
-
-- [ ] Self-review against `config/kits/mobile-superapp/artifacts/DECOMPOSITION-EPIC/checklist.md` MUST HAVE items
-- [ ] Ensure no MUST NOT HAVE violations
-- [ ] Verify all Epic FRs are covered by at least one Feature
-- [ ] Verify all DESIGN components are allocated
-- [ ] Verify Features are independently implementable
-- [ ] Verify Platform Implementation Matrix is complete
-
-### Phase 5: Table of Contents
-
-- [ ] Run `cfs toc <path>` to generate/update Table of Contents
-- [ ] Verify TOC is present and complete
-
----
-
-## Validation
-
-### Phase 1: Structural Validation
-
-- [ ] Run `cfs validate --artifact <path>` for:
-  - Template structure compliance
-  - ID format validation
-  - Cross-reference validity
-  - No placeholders
-
-### Phase 2: Semantic Validation
-
-- [ ] Read `config/kits/mobile-superapp/artifacts/DECOMPOSITION-EPIC/checklist.md` in full
-- [ ] For each MUST HAVE item: check if requirement is met
-- [ ] For each MUST NOT HAVE item: scan document for violations
-
-### Phase 3: Decomposition-Specific Validation
-
-- [ ] All Epic FRs have Feature coverage
-- [ ] All DESIGN components are allocated to Features
-- [ ] Features are right-sized (not too big, not too small)
-- [ ] Dependencies are minimal and justified
-- [ ] Implementation order respects dependencies
-- [ ] Platform Implementation Matrix is consistent
-
-### Validation Report Format
-
-```
-DECOMPOSITION-EPIC Validation Report
-════════════════════════════════════
-
-Structural: PASS/FAIL
-Semantic: PASS/FAIL (N issues)
-Decomposition-Specific: PASS/FAIL (N issues)
-
-Coverage:
-- Epic FRs covered: N/M (X%)
-- DESIGN components allocated: N/M (X%)
-- Platform coverage: KMP: N/M, Android: N/M, iOS: N/M
-
-Issues:
-- [SEVERITY] CHECKLIST-ID: Description
+RULES:
+  - ALWAYS follow the template structure; all required sections present and non-empty
+  - ALWAYS give each entry a unique ID cpt-{hierarchy-prefix}-feature-{slug}, a priority marker p1-p9, and a checkbox
+  - ALWAYS define checkbox IDs per constraints: kind `status` (cpt-{hierarchy-prefix}-status-overall, checked when ALL entries checked) and kind `feature` (checked when that feature's FEATURE-MOBILE spec is complete)
+  - ALWAYS treat cpt-... occurrences outside an **ID** definition line as references (kinds: fr, state, principle, constraint, component, widget, usecase, seq, db)
+  - ALWAYS reuse the Epic PRD widget IDs and the Epic DESIGN component IDs when listing what a feature covers; NEVER mint a new ID for an existing element
+  - ALWAYS achieve 100% coverage: every epic design component, widget, use case, sequence, and cache is assigned to at least one feature, and every epic FR and state requirement is covered transitively
+  - ALWAYS keep feature scopes mutually exclusive with clear boundaries
+  - ALWAYS name the shared, Android, and iOS implementation targets with source locations for each feature, or justify the divergence
+  - ALWAYS make dependencies explicit and acyclic; a foundation feature has no dependencies
+  - ALWAYS size features so that each can be implemented and verified independently
+  - ALWAYS apply ID versioning per the traceability spec; IDs stay stable through implementation
+  - ALWAYS treat the checklist as the single source of semantic quality criteria
+  - NEVER duplicate semantic criteria here; NEVER leave placeholders (TODO, TBD, FIXME); NEVER create duplicate IDs within the document
 ```
 
----
+```pdsl
+UNIT DecompositionEpicOmissions
 
-## Error Handling
+PURPOSE:
+  Enforce DECOMPOSITION scope boundaries — content that MUST NOT appear and the artifact where it belongs. Report as a violation if found.
 
-### Missing Epic DESIGN
+RULES:
+  - NEVER include implementation details — code, algorithms, state machines, API request/response schemas (DECOMP-NO-001, CRITICAL) — they belong in FEATURE-MOBILE
+  - NEVER define requirements — FRs, state requirements, use cases, actors (DECOMP-NO-002, HIGH) — they belong in PRD-EPIC
+  - NEVER include architecture decisions or technology rationale (DECOMP-NO-003, HIGH) — they belong in ADR and DESIGN-EPIC
+  - NEVER leave silent omissions — an uncovered design element or a deliberate overlap must be stated with reasoning (DOC-001, CRITICAL)
+  - NEVER include CDSL flows, step-by-step business logic, or a Definition of Done (EPIC-DECOMP-NO-001, HIGH) — they belong in FEATURE-MOBILE
+  - NEVER restate epic state contracts, intents, or effects (EPIC-DECOMP-NO-002, MEDIUM) — reference DESIGN-EPIC elements by ID
+  - NEVER include test case definitions or QA scripts (EPIC-DECOMP-NO-003, MEDIUM) — they belong in FEATURE-MOBILE and code
+  - NEVER include design-system token values, colors, or spacing (EPIC-DECOMP-NO-004, LOW) — visual specification belongs in the design system
+```
 
-- [ ] If Epic DESIGN not found:
-  - Option 1: Run `/cf-generate DESIGN-EPIC` first (recommended)
-  - Option 2: Continue without DESIGN (component allocation will be incomplete)
-  - Document "DESIGN pending" in DECOMPOSITION header
+```pdsl
+UNIT DecompositionEpicValidate
 
-### Missing Epic PRD
+PURPOSE:
+  Run deterministic, semantic, and TOC validation on the DECOMPOSITION-EPIC.
 
-- [ ] If Epic PRD not found:
-  - Option 1: Run `/cf-generate PRD-EPIC` first
-  - Option 2: Continue without PRD (requirements coverage will be incomplete)
-  - Document requirements assumptions made
+DO:
+  - RUN cfs validate --artifact <path> (template structure, ID format, priority markers, valid status, no placeholders, no duplicate IDs)
+  - LOAD config/kits/sdlc/artifacts/DECOMPOSITION/checklist.md and RUN the full base semantic pass (COV, EXC, ATTR, LEV, CFG, TRC, DEP, CHK, DOC, FMT, MUST NOT HAVE scan)
+  - LOAD config/kits/mobile-superapp/artifacts/DECOMPOSITION-EPIC/checklist.md and RUN the Epic-layer delta pass (domain scope table, delta MUST HAVE, delta MUST NOT HAVE, mobile-specific criteria)
+  - RETURN one merged report in the base checklist's report format, citing base and delta checklist IDs
+  - RUN cfs toc <path> then cfs validate-toc <path>
 
-### Feature Boundary Uncertainty
+RULES:
+  - ALWAYS run cfs validate --artifact <path>
+  - ALWAYS verify every epic design component, widget, and use case is assigned, and every epic FR and state requirement is covered
+  - ALWAYS maintain cascade rules — a `feature` ID is not checked until that feature is fully implemented; `status-overall` is not checked until ALL entries are checked
+  - NEVER consider the DECOMPOSITION done while validation reports fail/error or cfs validate-toc does not PASS
+  - ALWAYS use the checklist for semantic criteria, applicability handling, and report format — do not restate them here
+```
 
-- [ ] If uncertain about Feature boundaries:
-  - Ask user for guidance
-  - Consider use case boundaries (one use case = one Feature)
-  - Consider widget boundaries (complex widget = one Feature)
-  - Consider API boundaries (related endpoints = one Feature)
-  - Document decision rationale
+```pdsl
+UNIT DecompositionEpicErrorHandling
 
-### Escalation
+PURPOSE:
+  Recover deterministically from missing dependencies, config, and ambiguity.
 
-- [ ] Ask user when Feature scope is unclear
-- [ ] Ask user when platform implementation varies significantly
-- [ ] Ask user when API contracts are unavailable
+ON_ERROR:
+  missing_template ->
+    STOP — cannot proceed without the DECOMPOSITION-EPIC template
+  missing_checklist ->
+    EMIT warning
+    SET skip semantic validation
+  missing_epic_design ->
+    EMIT "Epic DESIGN not found. Recommended: run /cf-generate DESIGN-EPIC first — components, widgets, and use cases are assigned from it. Or continue with the design elements documented as assumptions."
+    WAIT user.reply
+  missing_miniapp_decomposition ->
+    EMIT warning
+    CONTINUE with this epic's scope taken from its own PRD and the gap listed as an open dependency
+  coverage_gap ->
+    RUN assign the design element to a feature or document the exclusion with reasoning
+  scope_overlap ->
+    RUN assign to a single feature, or document the sharing with reasoning
 
----
+RULES:
+  - ALWAYS escalate to the user when feature granularity is unclear, when a widget spans several features, or when platform sequencing (Android before iOS or in parallel) needs a delivery decision
+```
 
-## Next Steps
+```pdsl
+UNIT DecompositionEpicNextSteps
 
-### Options
+PURPOSE:
+  Offer next actions after the DECOMPOSITION-EPIC is complete.
 
-- [ ] DECOMPOSITION-EPIC complete → `/cf-generate FEATURE-MOBILE` — create Feature specification
-- [ ] DESIGN missing → `/cf-generate DESIGN-EPIC` — create Epic DESIGN first
-- [ ] PRD missing → `/cf-generate PRD-EPIC` — create Epic PRD first
-- [ ] DECOMPOSITION needs revision → continue editing DECOMPOSITION-EPIC
-- [ ] Ready for implementation → `/cf-generate IMPL-KMP` — create KMP implementation reference
+DO:
+  - EMIT_MENU DecompositionEpicNextStepsMenu
+
+MENU DecompositionEpicNextStepsMenu:
+  TITLE: DECOMPOSITION-EPIC next steps
+  OPTIONS:
+    1 -> RUN /cf-generate FEATURE-MOBILE (specify the first feature)
+    2 -> RUN update feature status in this decomposition
+    3 -> RUN /cf-analyze DESIGN-EPIC (all features implemented — validate design completion)
+    4 -> CONTINUE DecompositionEpicAuthoring (add or revise an entry)
+    5 -> RUN /cf-analyze semantic (checklist-only review)
+  INVALID:
+    EMIT "Reply with 1, 2, 3, 4, or 5."
+    WAIT user.reply
+    STOP_TURN
+```

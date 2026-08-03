@@ -1,236 +1,126 @@
 # IMPL-KMP Rules
 
-**Artifact**: IMPL-KMP  
-**Kit**: mobile-superapp  
-**Level**: Implementation (KMP Shared Logic)
+**Artifact**: IMPL-KMP
+**Kit**: mobile-superapp
+**Target**: KMP shared (`constructor-sdk/feature/{miniapp}/`)
 
-**Dependencies**:
-- `config/kits/mobile-superapp/artifacts/IMPL-KMP/template.md` — structural reference
-- `config/kits/mobile-superapp/artifacts/IMPL-KMP/checklist.md` — semantic quality criteria
-- `config/kits/mobile-superapp/artifacts/FEATURE-MOBILE/template.md` — parent FEATURE reference
-- `config/kits/mobile-superapp/artifacts/DESIGN-EPIC/template.md` — Epic DESIGN reference
+```pdsl
+UNIT ImplKmpAuthoring
 
-## Table of Contents
+PURPOSE:
+  Author or revise the implementation reference that maps the KMP shared module
+  to the FEATURE-MOBILE processes and DESIGN components it realizes.
 
-1. [Prerequisites](#prerequisites)
-2. [Requirements](#requirements)
-3. [Tasks](#tasks)
-4. [Validation](#validation)
-5. [Error Handling](#error-handling)
-6. [Next Steps](#next-steps)
+WHEN:
+  - REQUIRE authoring or revising an IMPL-KMP
 
----
+DO:
+  - LOAD config/kits/mobile-superapp/artifacts/IMPL-KMP/template.md for structure
+  - LOAD config/kits/mobile-superapp/codebase/checklist.md — the base checklist for code at this layer, applied in full
+  - LOAD config/kits/mobile-superapp/artifacts/IMPL-KMP/checklist.md for the KMP-target delta over that base
+  - RUN read the FEATURE-MOBILE documents this module implements; collect every process whose Target is KMP shared
+  - RUN read the Epic DESIGN for the component, use case, repository, and state contracts assigned to shared code
+  - RUN read the MiniApp DESIGN for domain entities and API contracts, and the Platform DESIGN for kernel contracts consumed
+  - LOAD {cf-studio-path}/.core/architecture/specs/traceability.md for marker syntax
+  - RUN scan the module tree for existing @cpt markers so the traceability table reflects actual code
+  - RUN author each required section (Overview, References, Scope, Implementation Notes, Traceability Table, Directory Structure, Code Markers, Dependencies, Validation)
+  - RUN cfs list-ids to confirm every referenced design ID exists
 
-## Prerequisites
-
-### Load Dependencies
-
-- [ ] Load `config/kits/mobile-superapp/artifacts/IMPL-KMP/template.md` for structure
-- [ ] Load `config/kits/mobile-superapp/artifacts/IMPL-KMP/checklist.md` for semantic guidance
-- [ ] Read parent FEATURE-MOBILE for CDSL specifications
-- [ ] Read Epic DESIGN for component definitions
-- [ ] Read MiniApp DESIGN for shared patterns
-- [ ] Load `config/kits/mobile-superapp/constraints.toml` for kit-level constraints
-- [ ] Load `{cf-studio-path}/.core/architecture/specs/traceability.md` for ID formats
-
----
-
-## Requirements
-
-### Structural
-
-- [ ] IMPL-KMP follows `config/kits/mobile-superapp/artifacts/IMPL-KMP/template.md` structure
-- [ ] All required sections present and non-empty:
-  - Overview (module path)
-  - References (Feature, Epic DESIGN, MiniApp DESIGN)
-  - Scope (what KMP module implements)
-  - Implementation Notes
-  - Traceability Table
-  - Directory Structure
-  - Code Markers
-  - Validation
-- [ ] Module path is correct: `constructor-sdk/feature/{module}/`
-- [ ] All references have valid paths and IDs
-- [ ] No placeholder content (TODO, TBD, FIXME)
-
-### Code Traceability
-
-- [ ] Traceability Table maps:
-  - Design Component ID → Code File → Implementation ID
-- [ ] Implementation IDs follow format: `@cpt-impl cpt-kmp-{module}-{kind}-{slug}`
-- [ ] All FEATURE CDSL steps (Section 3.1) have corresponding code markers
-- [ ] All Epic DESIGN components (ViewModel, UseCase, Repository) have markers
-- [ ] Code markers are in `@cpt-impl` comment format
-
-### Mobile-Specific
-
-- [ ] Directory structure follows KMP conventions:
-  - `src/commonMain/kotlin/com/constructor/sdk/feature/{module}/`
-  - `domain/model/` — Domain entities
-  - `domain/usecase/` — Use cases
-  - `data/repository/` — Repository implementations
-  - `data/remote/` — API clients, DTOs
-  - `data/local/` — Local data sources
-  - `presentation/` — ViewModel, State, Intent, Effect
-- [ ] MVI pattern components documented:
-  - `{Feature}ViewModel.kt`
-  - `{Feature}State.kt`
-  - `{Feature}Intent.kt`
-  - `{Feature}Effect.kt`
-- [ ] Kotlin code markers are valid comment syntax
-
-### Versioning
-
-- [ ] When editing existing IMPL: update traceability table
-- [ ] When adding new components: add to traceability table
-- [ ] When code moves: update file paths in table
-
----
-
-## Tasks
-
-### Phase 1: Setup
-
-- [ ] Load `config/kits/mobile-superapp/artifacts/IMPL-KMP/template.md` for structure
-- [ ] Load `config/kits/mobile-superapp/artifacts/IMPL-KMP/checklist.md` for semantic guidance
-- [ ] Read FEATURE-MOBILE Section 3.1 (KMP Shared Logic)
-- [ ] Read Epic DESIGN for component definitions
-- [ ] Identify all KMP components to implement
-
-### Phase 2: Content Creation
-
-Apply checklist semantics during creation:
-
-| Checklist Category | Generation Task |
-|-------------------|-----------------|
-| Overview | Document module path |
-| References | Link to FEATURE, Epic DESIGN, MiniApp DESIGN |
-| Scope | Describe what this KMP module implements |
-| Implementation Notes | Document KMP-specific decisions, constraints |
-| Traceability Table | Map design IDs → code files → impl IDs |
-| Directory Structure | Document module file organization |
-| Code Markers | Show `@cpt-impl` marker examples |
-
-**Traceability Table Format**:
-
-| Design Component ID | Code File | Implementation ID |
-|---------------------|-----------|-------------------|
-| `cpt-{miniapp}-{epic}-usecase-{slug}` | `src/commonMain/kotlin/.../usecase/{UseCase}.kt` | `@cpt-impl cpt-kmp-{module}-usecase-{slug}` |
-| `cpt-{miniapp}-{epic}-state` | `src/commonMain/kotlin/.../presentation/{State}.kt` | `@cpt-impl cpt-kmp-{module}-state-{slug}` |
-
-**Partial Completion Handling**:
-
-If IMPL-KMP cannot be completed in a single session:
-1. Checkpoint progress with documented components
-2. Mark incomplete mappings with `PENDING: {reason}`
-3. Document resumption point
-
-### Phase 3: IDs and References
-
-- [ ] Link to FEATURE ID: `cpt-{miniapp}-feature-{slug}`
-- [ ] Link to Epic DESIGN ID: `cpt-{miniapp}-epic-{epic}`
-- [ ] Link to MiniApp DESIGN ID: `cpt-{miniapp}-design`
-- [ ] Generate implementation IDs:
-  - Use cases: `@cpt-impl cpt-kmp-{module}-usecase-{slug}`
-  - State: `@cpt-impl cpt-kmp-{module}-state-{slug}`
-  - ViewModel: `@cpt-impl cpt-kmp-{module}-vm-{slug}`
-  - Repository: `@cpt-impl cpt-kmp-{module}-repo-{slug}`
-  - Entity: `@cpt-impl cpt-kmp-{module}-entity-{slug}`
-- [ ] Verify implementation IDs match FEATURE CDSL `inst-` markers
-
-### Phase 4: Quality Check
-
-- [ ] Self-review against `config/kits/mobile-superapp/artifacts/IMPL-KMP/checklist.md` MUST HAVE items
-- [ ] Ensure no MUST NOT HAVE violations
-- [ ] Verify all FEATURE Section 3.1 steps have impl markers
-- [ ] Verify all Epic DESIGN KMP components are mapped
-- [ ] Verify directory structure matches actual code
-
-### Phase 5: Validation Commands
-
-- [ ] Document `cfs validate` command for this module
-- [ ] Verify validation checks are appropriate
-
----
-
-## Validation
-
-### Phase 1: Structural Validation
-
-- [ ] Run `cfs validate --artifact constructor-sdk/feature/{module}/` for:
-  - Template structure compliance
-  - ID format validation
-  - Cross-reference validity
-
-### Phase 2: Code Marker Validation
-
-- [ ] All design components have `@cpt-impl` markers in code
-- [ ] All code markers reference valid design IDs
-- [ ] No orphan markers (markers without design IDs)
-- [ ] No missing markers (design IDs without code markers)
-
-### Phase 3: Coverage Validation
-
-- [ ] All FEATURE CDSL steps (Section 3.1) are implemented
-- [ ] All Epic DESIGN KMP components have implementations
-- [ ] Coverage meets minimum threshold (e.g., 100% for P1 items)
-
-### Validation Report Format
-
-```
-IMPL-KMP Validation Report
-══════════════════════════
-
-Module: constructor-sdk/feature/{module}/
-
-Structural: PASS/FAIL
-Code Markers: PASS/FAIL (N markers found)
-Coverage: X/Y components (Z%)
-
-Issues:
-- [SEVERITY] Description
+RULES:
+  - ALWAYS follow the template structure; all required sections present and non-empty
+  - ALWAYS reference design IDs that already exist; NEVER mint a design ID here
+  - ALWAYS list only processes whose declared Target is KMP shared
+  - ALWAYS give every traceability row a code file path that exists in the repository
+  - ALWAYS state deviations from the design in Implementation Notes, with their reason
+  - ALWAYS keep the directory structure section in sync with the module on disk
+  - NEVER define architecture, module boundaries, or API contracts here — reference DESIGN-MINIAPP / DESIGN-PLATFORM
+  - NEVER include full implementation code; short illustrative marker snippets only
+  - NEVER restate project coding conventions from AGENTS.md
+  - ALWAYS treat the checklist as the single source of semantic quality criteria
 ```
 
----
+```pdsl
+UNIT ImplKmpOmissions
 
-## Error Handling
+PURPOSE:
+  Enforce IMPL-KMP scope boundaries — content that MUST NOT appear and where it belongs.
 
-### Missing FEATURE-MOBILE
+RULES:
+  - NEVER include full implementation code (IMPL-KMP-NO-001, HIGH) — code belongs in the source files
+  - NEVER reference a design ID that does not exist (IMPL-KMP-NO-002, CRITICAL) — fix the reference or add the design element first
+  - NEVER use file paths that do not exist in the repository (IMPL-KMP-NO-003, HIGH)
+  - NEVER define architecture or module boundaries (IMPL-KMP-NO-004, HIGH) — they belong in DESIGN-MINIAPP / DESIGN-PLATFORM
+  - NEVER document Android- or iOS-target processes here (IMPL-KMP-NO-005, MEDIUM) — they belong in IMPL-ANDROID / IMPL-IOS
+  - NEVER include secrets, tokens, or credentials (SEC-IMPL-NO-001, CRITICAL)
+```
 
-- [ ] If parent FEATURE-MOBILE not found:
-  - Option 1: Run `/cf-generate FEATURE-MOBILE` first (recommended)
-  - Option 2: Continue without FEATURE (traceability will be incomplete)
-  - Document "FEATURE pending" in IMPL header
+```pdsl
+UNIT ImplKmpValidate
 
-### Missing Epic DESIGN
+PURPOSE:
+  Run deterministic, semantic, and coverage validation on the IMPL-KMP.
 
-- [ ] If Epic DESIGN not found:
-  - Option 1: Run `/cf-generate DESIGN-EPIC` first
-  - Option 2: Continue with assumptions documented
-  - Document component assumptions made
+DO:
+  - RUN cfs validate --artifact <path> (template compliance, reference resolution, no placeholders)
+  - LOAD config/kits/mobile-superapp/codebase/checklist.md and RUN the full base pass — it loads {cf-studio-path}/.core/requirements/code-checklist.md and config/kits/sdlc/codebase/checklist.md as its own bases
+  - LOAD config/kits/mobile-superapp/artifacts/IMPL-KMP/checklist.md and RUN the KMP-target delta pass
+  - RETURN one merged report in the base report format, citing base and delta checklist IDs
+  - RUN cfs spec-coverage — percentage of shared-target CDSL instructions carrying code markers, plus missing/orphaned markers
+  - RUN ./gradlew :constructor-sdk:build and ./gradlew :constructor-sdk:allTests -> REQUIRE success
+  - RUN ktlintCheck and detekt -> REQUIRE pass
+  - RUN cfs toc <path> then cfs validate-toc <path>
 
-### Code Marker Mismatches
+RULES:
+  - ALWAYS verify every traceability row resolves: design ID exists, code file exists, marker present in that file
+  - ALWAYS report unmapped shared-target processes as coverage gaps
+  - NEVER consider the IMPL-KMP done while validation reports fail/error or cfs validate-toc does not PASS
+  - NEVER restate semantic criteria here
+```
 
-- [ ] If code markers don't match design IDs:
-  - Review FEATURE CDSL `inst-` markers
-  - Update code markers to match
-  - Or update IMPL traceability table to reflect actual code
+```pdsl
+UNIT ImplKmpErrorHandling
 
-### Escalation
+PURPOSE:
+  Recover deterministically from missing dependencies and mismatches.
 
-- [ ] Ask user when KMP patterns deviate from FEATURE spec
-- [ ] Ask user when code organization differs from template
-- [ ] Ask user when implementation constraints arise
+ON_ERROR:
+  missing_feature_spec ->
+    EMIT "FEATURE-MOBILE not found. Recommended: run /cf-generate FEATURE-MOBILE first — the shared-target process list comes from it. Or continue documenting only what the code shows, marking coverage as unverified."
+    WAIT user.reply
+  missing_epic_design ->
+    EMIT "Epic DESIGN not found. Recommended: run /cf-generate DESIGN-EPIC first — component and state contracts are referenced from it. Or continue with the referenced elements documented as assumptions."
+    WAIT user.reply
+  marker_mismatch ->
+    EMIT "A traceability row names a marker absent from the code file, or a marker in code has no row. List both directions and ask which side to correct."
+    WAIT user.reply
+  module_missing ->
+    EMIT warning
+    CONTINUE with the directory structure marked as planned, not as existing
 
----
+RULES:
+  - ALWAYS escalate when the code implements behavior that no design element specifies
+  - NEVER invent a design ID to make a marker resolve
+```
 
-## Next Steps
+```pdsl
+UNIT ImplKmpNextSteps
 
-### Options
+PURPOSE:
+  Offer next actions after the IMPL-KMP is complete.
 
-- [ ] IMPL-KMP complete → Implement actual Kotlin code with `@cpt-impl` markers
-- [ ] IMPL-KMP complete → `/cf-generate IMPL-ANDROID` — create Android implementation reference
-- [ ] IMPL-KMP complete → `/cf-generate IMPL-IOS` — create iOS implementation reference
-- [ ] FEATURE missing → `/cf-generate FEATURE-MOBILE` — create FEATURE first
-- [ ] IMPL needs revision → continue editing IMPL-KMP
-- [ ] Ready for code review → validate markers with `cfs validate`
+DO:
+  - EMIT_MENU ImplKmpNextStepsMenu
+
+MENU ImplKmpNextStepsMenu:
+  TITLE: IMPL-KMP next steps
+  OPTIONS:
+    1 -> RUN /cf-generate IMPL-ANDROID (map the Android module)
+    2 -> RUN /cf-generate IMPL-IOS (map the iOS module)
+    3 -> RUN /cf-analyze CODE (review the shared implementation against FEATURE-MOBILE)
+    4 -> CONTINUE ImplKmpAuthoring (revise this reference)
+    5 -> RUN update feature status in DECOMPOSITION-EPIC
+  INVALID:
+    EMIT "Reply with 1, 2, 3, 4, or 5."
+    WAIT user.reply
+    STOP_TURN
+```

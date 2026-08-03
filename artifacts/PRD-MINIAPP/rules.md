@@ -15,12 +15,13 @@ WHEN:
 
 DO:
   - LOAD config/kits/mobile-superapp/artifacts/PRD-MINIAPP/template.md for structure
-  - LOAD config/kits/mobile-superapp/artifacts/PRD-MINIAPP/checklist.md for semantic criteria
+  - LOAD config/kits/sdlc/artifacts/PRD/checklist.md — the base checklist, applied in full
+  - LOAD config/kits/mobile-superapp/artifacts/PRD-MINIAPP/checklist.md for the MiniApp-layer delta over that base
   - RUN read parent Platform PRD (architecture/PRD.md) and identify which Platform FRs this MiniApp refines
   - LOAD config/kits/mobile-superapp/constraints.toml for kit-level constraints
   - RUN read project config for ID prefix and resolve output path from {cf-studio-path}/config/artifacts.toml
-  - RUN author each required section guided by template prompts (Overview, Actors, Functional Requirements, MiniApp NFRs, Use Cases, Dependencies, Assumptions, Risks, Traceability Matrix, Acceptance Criteria)
-  - SET PRD anchor = cpt-{miniapp}-prd; FR IDs = cpt-{miniapp}-fr-{slug}; NFR IDs = cpt-{miniapp}-nfr-{slug}; use case IDs = cpt-{miniapp}-usecase-{slug}; assign priorities p1-p9 by business impact
+  - RUN author each required section guided by template prompts (Overview incl. Glossary and platform traces, Actors, Operational Concept & Environment, Scope, Functional Requirements, Non-Functional Requirements, Public MiniApp Interfaces, Use Cases, Acceptance Criteria, Dependencies, Assumptions, Risks, Traceability Matrix)
+  - SET PRD anchor = cpt-{hierarchy-prefix}-prd; FR IDs = cpt-{hierarchy-prefix}-fr-{slug}; NFR IDs = cpt-{hierarchy-prefix}-nfr-{slug}; interface IDs = cpt-{hierarchy-prefix}-interface-{slug}; contract IDs = cpt-{hierarchy-prefix}-contract-{slug}; use case IDs = cpt-{hierarchy-prefix}-usecase-{slug}; assign priorities p1-p9 by business impact
   - RUN cfs list-ids to verify ID uniqueness
 
 RULES:
@@ -32,6 +33,7 @@ RULES:
   - ALWAYS address mobile context: offline capabilities, push notification scenarios, deep link entry points, iOS/Android parity
   - ALWAYS keep the PRD requirements-only (WHAT not HOW); express every NFR as a business-level quality requirement (user/business outcome, SLA, measurable Threshold), not a technical implementation spec
   - ALWAYS state authorization as exact per-actor/operation permissions (which actor may perform which action on which resource); NEVER restate the generic "every operation requires authentication/authorization", which is assumed
+  - ALWAYS declare Type, Stability, and Breaking Change Policy for every public MiniApp surface (deep link, navigation entry point, host widget, notification channel, consumed kernel contract)
   - ALWAYS name backend dependencies at capability level (which service provides what data or operation); NEVER specify endpoints, payloads, or API contracts
   - ALWAYS version on change: increment the header version when editing; keep a changelog of significant changes
   - ALWAYS treat the checklist as the single source of semantic quality criteria
@@ -66,7 +68,9 @@ PURPOSE:
 
 DO:
   - RUN cfs validate --artifact <path> (template structure, ID format, priority markers, no placeholders, no duplicate IDs)
-  - LOAD config/kits/mobile-superapp/artifacts/PRD-MINIAPP/checklist.md and RUN semantic validation + report using it (MUST HAVE items, MUST NOT HAVE scan, mobile-specific criteria)
+  - LOAD config/kits/sdlc/artifacts/PRD/checklist.md and RUN the full base semantic pass (all expertise domains, MUST NOT HAVE scan)
+  - LOAD config/kits/mobile-superapp/artifacts/PRD-MINIAPP/checklist.md and RUN the MiniApp-layer delta pass (domain scope table, delta MUST HAVE, delta MUST NOT HAVE, mobile-specific criteria)
+  - RETURN one merged report in the base checklist's report format, citing base and delta checklist IDs
   - RUN cfs toc <path> then cfs validate-toc <path>
 
 RULES:

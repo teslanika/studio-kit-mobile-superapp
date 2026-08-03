@@ -18,22 +18,22 @@ See the full example in the repository:
 
 | ID | Name | Description |
 |----|------|-------------|
-| `cpt-platform-actor-student` | Student | Learner using the app |
-| `cpt-platform-actor-instructor` | Instructor | Course creator |
+| `cpt-superapp-actor-student` | Student | Learner using the app |
+| `cpt-superapp-actor-instructor` | Instructor | Course creator |
 
 ## Functional Requirements
 
 | ID | Requirement | Priority |
 |----|-------------|----------|
-| `cpt-platform-fr-offline-support` | App works without internet | P0 |
-| `cpt-platform-fr-push-notifications` | Receive course updates | P1 |
+| `cpt-superapp-fr-offline-support` | App works without internet | P0 |
+| `cpt-superapp-fr-push-notifications` | Receive course updates | P1 |
 
 ## Non-Functional Requirements
 
 | ID | Requirement | Target |
 |----|-------------|--------|
-| `cpt-platform-nfr-launch-time` | Cold start time | < 3s |
-| `cpt-platform-nfr-memory` | Memory usage | < 200MB |
+| `cpt-superapp-nfr-launch-time` | Cold start time | < 3s |
+| `cpt-superapp-nfr-memory` | Memory usage | < 200MB |
 ```
 
 ### MiniApp PRD (L1)
@@ -46,14 +46,14 @@ See the full example in the repository:
 ### Platform Requirements
 | Platform FR | MiniApp FR |
 |-------------|-----------|
-| `cpt-platform-fr-offline-support` | `cpt-learn-fr-offline-courses` |
+| `cpt-superapp-fr-offline-support` | `cpt-superapp-learn-fr-offline-courses` |
 
 ## Functional Requirements
 
 | ID | Requirement | Priority |
 |----|-------------|----------|
-| `cpt-learn-fr-browse-courses` | Browse course catalog | P0 |
-| `cpt-learn-fr-offline-courses` | Access cached courses offline | P0 |
+| `cpt-superapp-learn-fr-browse-courses` | Browse course catalog | P0 |
+| `cpt-superapp-learn-fr-offline-courses` | Access cached courses offline | P0 |
 ```
 
 ### FEATURE-MOBILE (L3)
@@ -65,7 +65,7 @@ See the full example in the repository:
 
 | Field | Value |
 |-------|-------|
-| Feature ID | `cpt-learn-course-catalog-feature-course-list` |
+| Feature ID | `cpt-superapp-learn-course-catalog-feature-course-list` |
 | Epic | Course Catalog |
 | Status | DESIGNED |
 
@@ -92,10 +92,10 @@ sealed class CourseListIntent {
 
 ## Actor Flows
 
-### Flow: Load Courses `cpt-learn-flow-course-list-load` `to_code="true"`
+### Flow: Load Courses `cpt-superapp-learn-flow-course-list-load` `to_code="true"`
 
 \`\`\`cdsl
-flow cpt-learn-flow-course-list-load {
+flow cpt-superapp-learn-flow-course-list-load {
   actor: Student
   
   p1: [x] User opens course catalog `inst-open`
@@ -111,7 +111,7 @@ flow cpt-learn-flow-course-list-load {
 ### KMP Implementation
 
 ```kotlin
-// @cpt-impl cpt-learn-course-list-viewmodel-kmp
+// @cpt-impl cpt-superapp-learn-course-list-viewmodel-kmp
 class CourseListViewModel(
     private val repository: CourseRepository
 ) : ViewModel() {
@@ -119,22 +119,22 @@ class CourseListViewModel(
     private val _state = MutableStateFlow(CourseListState())
     val state: StateFlow<CourseListState> = _state.asStateFlow()
     
-    // @cpt-flow:cpt-learn-flow-course-list-load:p1
+    // @cpt-flow:cpt-superapp-learn-flow-course-list-load:p1
     fun loadCourses() {
-        // @cpt-begin:cpt-learn-flow-course-list-load:p1:inst-loading
+        // @cpt-begin:cpt-superapp-learn-flow-course-list-load:p1:inst-loading
         _state.update { it.copy(isLoading = true) }
-        // @cpt-end:cpt-learn-flow-course-list-load:p1:inst-loading
+        // @cpt-end:cpt-superapp-learn-flow-course-list-load:p1:inst-loading
         
         viewModelScope.launch {
-            // @cpt-begin:cpt-learn-flow-course-list-load:p1:inst-fetch
+            // @cpt-begin:cpt-superapp-learn-flow-course-list-load:p1:inst-fetch
             val result = repository.getCourses()
-            // @cpt-end:cpt-learn-flow-course-list-load:p1:inst-fetch
+            // @cpt-end:cpt-superapp-learn-flow-course-list-load:p1:inst-fetch
             
-            // @cpt-begin:cpt-learn-flow-course-list-load:p1:inst-display
+            // @cpt-begin:cpt-superapp-learn-flow-course-list-load:p1:inst-display
             _state.update { 
                 it.copy(isLoading = false, courses = result) 
             }
-            // @cpt-end:cpt-learn-flow-course-list-load:p1:inst-display
+            // @cpt-end:cpt-superapp-learn-flow-course-list-load:p1:inst-display
         }
     }
 }
@@ -143,7 +143,7 @@ class CourseListViewModel(
 ### Android Compose
 
 ```kotlin
-// @cpt-impl cpt-learn-course-list-screen-android
+// @cpt-impl cpt-superapp-learn-course-list-screen-android
 @Composable
 fun CourseListScreen(
     viewModel: CourseListViewModel = hiltViewModel()
@@ -165,7 +165,7 @@ fun CourseListScreen(
 ### iOS SwiftUI
 
 ```swift
-// @cpt-impl cpt-learn-course-list-view-ios
+// @cpt-impl cpt-superapp-learn-course-list-view-ios
 struct CourseListView: View {
     @StateObject private var viewModel = CourseListViewModelWrapper()
     

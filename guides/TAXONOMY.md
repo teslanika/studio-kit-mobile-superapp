@@ -55,11 +55,11 @@ Epics (L2) can belong to either the HostApp or a MiniApp:
 **Purpose**: Platform-wide product intent and requirements.
 
 **Defines IDs**:
-- Actors: `cpt-platform-actor-{slug}`
-- Functional requirements: `cpt-platform-fr-{slug}`
-- Non-functional requirements: `cpt-platform-nfr-{slug}`
-- Use cases: `cpt-platform-usecase-{slug}`
-- Constraints: `cpt-platform-constraint-{slug}`
+- Actors: `cpt-superapp-actor-{slug}`
+- Functional requirements: `cpt-superapp-fr-{slug}`
+- Non-functional requirements: `cpt-superapp-nfr-{slug}`
+- Use cases: `cpt-superapp-usecase-{slug}`
+- Constraints: `cpt-superapp-constraint-{slug}`
 
 **Transforms into**:
 - **DESIGN-PLATFORM**: architecture decisions reference PRD FR/NFR IDs
@@ -78,11 +78,11 @@ Epics (L2) can belong to either the HostApp or a MiniApp:
 - PRD-PLATFORM FR/NFR IDs
 
 **Defines IDs**:
-- Principles: `cpt-platform-principle-{slug}`
-- Constraints: `cpt-platform-constraint-{slug}`
-- Components: `cpt-platform-component-{slug}`
-- Modules: `cpt-platform-module-{slug}`
-- Interfaces: `cpt-platform-interface-{slug}`
+- Principles: `cpt-superapp-principle-{slug}`
+- Constraints: `cpt-superapp-constraint-{slug}`
+- Components: `cpt-superapp-component-{slug}`
+- Modules: `cpt-superapp-module-{slug}`
+- Interfaces: `cpt-superapp-interface-{slug}`
 
 **Transforms into**:
 - **DECOMPOSITION-PLATFORM**: MiniApps reference platform components
@@ -98,8 +98,8 @@ Epics (L2) can belong to either the HostApp or a MiniApp:
 **Purpose**: Break platform into MiniApps.
 
 **Defines IDs**:
-- MiniApps: `cpt-platform-miniapp-{slug}`
-- Status tracker: `cpt-platform-status-overall`
+- MiniApps: `cpt-superapp-miniapp-{slug}`
+- Status tracker: `cpt-superapp-status-overall`
 
 **References upstream IDs**:
 - PRD-PLATFORM FR/NFR IDs (coverage)
@@ -126,10 +126,10 @@ Epics (L2) can belong to either the HostApp or a MiniApp:
 - DECOMPOSITION-PLATFORM MiniApp ID
 
 **Defines IDs**:
-- Actors: `cpt-{miniapp}-actor-{slug}`
-- Functional requirements: `cpt-{miniapp}-fr-{slug}`
-- Non-functional requirements: `cpt-{miniapp}-nfr-{slug}`
-- Use cases: `cpt-{miniapp}-usecase-{slug}`
+- Actors: `cpt-{hierarchy-prefix}-actor-{slug}`
+- Functional requirements: `cpt-{hierarchy-prefix}-fr-{slug}`
+- Non-functional requirements: `cpt-{hierarchy-prefix}-nfr-{slug}`
+- Use cases: `cpt-{hierarchy-prefix}-usecase-{slug}`
 
 **Transforms into**:
 - **DESIGN-MINIAPP**: MiniApp architecture
@@ -149,10 +149,10 @@ Epics (L2) can belong to either the HostApp or a MiniApp:
 - DESIGN-PLATFORM component/module IDs
 
 **Defines IDs**:
-- Components: `cpt-{miniapp}-component-{slug}`
-- ViewModels: `cpt-{miniapp}-viewmodel-{slug}`
-- Repositories: `cpt-{miniapp}-repository-{slug}`
-- Navigation: `cpt-{miniapp}-nav-{slug}`
+- Components: `cpt-{hierarchy-prefix}-component-{slug}`
+- ViewModels: `cpt-{hierarchy-prefix}-viewmodel-{slug}`
+- Repositories: `cpt-{hierarchy-prefix}-repository-{slug}`
+- Navigation: `cpt-{hierarchy-prefix}-nav-{slug}`
 
 **Transforms into**:
 - **DECOMPOSITION-MINIAPP**: Epics reference MiniApp components
@@ -168,8 +168,8 @@ Epics (L2) can belong to either the HostApp or a MiniApp:
 **Purpose**: Break MiniApp into Epics.
 
 **Defines IDs**:
-- Epics: `cpt-{miniapp}-epic-{slug}`
-- Status tracker: `cpt-{miniapp}-status-overall`
+- Epics: `cpt-{hierarchy-prefix}-epic-{slug}`
+- Status tracker: `cpt-{hierarchy-prefix}-status-overall`
 
 **References upstream IDs**:
 - PRD-MINIAPP FR/NFR IDs (coverage)
@@ -196,8 +196,8 @@ Epics (L2) can belong to either the HostApp or a MiniApp:
 - DECOMPOSITION-MINIAPP Epic ID
 
 **Defines IDs**:
-- User stories: `cpt-{miniapp}-{epic}-story-{slug}`
-- Acceptance criteria: `cpt-{miniapp}-{epic}-ac-{slug}`
+- User stories: `cpt-{hierarchy-prefix}-story-{slug}`
+- Acceptance criteria: `cpt-{hierarchy-prefix}-ac-{slug}`
 
 **Transforms into**:
 - **DESIGN-EPIC**: Epic technical design
@@ -217,9 +217,9 @@ Epics (L2) can belong to either the HostApp or a MiniApp:
 - DESIGN-MINIAPP component IDs
 
 **Defines IDs**:
-- Components: `cpt-{miniapp}-{epic}-component-{slug}`
-- Sequences: `cpt-{miniapp}-{epic}-seq-{slug}`
-- Data models: `cpt-{miniapp}-{epic}-model-{slug}`
+- Components: `cpt-{hierarchy-prefix}-component-{slug}`
+- Sequences: `cpt-{hierarchy-prefix}-seq-{slug}`
+- Data models: `cpt-{hierarchy-prefix}-model-{slug}`
 
 **Transforms into**:
 - **DECOMPOSITION-EPIC**: Features reference Epic components
@@ -235,8 +235,8 @@ Epics (L2) can belong to either the HostApp or a MiniApp:
 **Purpose**: Break Epic into Features.
 
 **Defines IDs**:
-- Features: `cpt-{miniapp}-{epic}-feature-{slug}`
-- Status tracker: `cpt-{miniapp}-{epic}-status-overall`
+- Features: `cpt-{hierarchy-prefix}-feature-{slug}`
+- Status tracker: `cpt-{hierarchy-prefix}-status-overall`
 
 **References upstream IDs**:
 - PRD-EPIC story/AC IDs (coverage)
@@ -265,10 +265,10 @@ Epics (L2) can belong to either the HostApp or a MiniApp:
 - Cascading: PRD-MINIAPP, PRD-PLATFORM FR IDs
 
 **Defines IDs** (code-traceable kinds):
-- Flow: `cpt-{miniapp}-flow-{feature-slug}-{slug}`
-- Algorithm: `cpt-{miniapp}-algo-{feature-slug}-{slug}`
-- State machine: `cpt-{miniapp}-state-{feature-slug}-{slug}`
-- Definition-of-done: `cpt-{miniapp}-dod-{feature-slug}-{slug}`
+- Flow: `cpt-{hierarchy-prefix}-flow-{feature-slug}-{slug}`
+- Algorithm: `cpt-{hierarchy-prefix}-algo-{feature-slug}-{slug}`
+- State machine: `cpt-{hierarchy-prefix}-state-{feature-slug}-{slug}`
+- Definition-of-done: `cpt-{hierarchy-prefix}-dod-{feature-slug}-{slug}`
 
 **Mobile-specific sections**:
 - MVI State/Intent/Effect definitions
@@ -330,19 +330,19 @@ Epics (L2) can belong to either the HostApp or a MiniApp:
 
 | Level | Kind | Pattern |
 |-------|------|---------|
-| Platform | FR | `cpt-platform-fr-{slug}` |
-| Platform | NFR | `cpt-platform-nfr-{slug}` |
-| Platform | Component | `cpt-platform-component-{slug}` |
-| Platform | MiniApp | `cpt-platform-miniapp-{slug}` |
-| MiniApp | FR | `cpt-{miniapp}-fr-{slug}` |
-| MiniApp | Component | `cpt-{miniapp}-component-{slug}` |
-| MiniApp | Epic | `cpt-{miniapp}-epic-{slug}` |
-| Epic | Story | `cpt-{miniapp}-{epic}-story-{slug}` |
-| Epic | Feature | `cpt-{miniapp}-{epic}-feature-{slug}` |
-| Feature | Flow | `cpt-{miniapp}-flow-{feature}-{slug}` |
-| Feature | Algo | `cpt-{miniapp}-algo-{feature}-{slug}` |
-| Feature | State | `cpt-{miniapp}-state-{feature}-{slug}` |
-| Feature | DoD | `cpt-{miniapp}-dod-{feature}-{slug}` |
+| Platform | FR | `cpt-superapp-fr-{slug}` |
+| Platform | NFR | `cpt-superapp-nfr-{slug}` |
+| Platform | Component | `cpt-superapp-component-{slug}` |
+| Platform | MiniApp | `cpt-superapp-miniapp-{slug}` |
+| MiniApp | FR | `cpt-{hierarchy-prefix}-fr-{slug}` |
+| MiniApp | Component | `cpt-{hierarchy-prefix}-component-{slug}` |
+| MiniApp | Epic | `cpt-{hierarchy-prefix}-epic-{slug}` |
+| Epic | Story | `cpt-{hierarchy-prefix}-story-{slug}` |
+| Epic | Feature | `cpt-{hierarchy-prefix}-feature-{slug}` |
+| Feature | Flow | `cpt-{hierarchy-prefix}-flow-{feature}-{slug}` |
+| Feature | Algo | `cpt-{hierarchy-prefix}-algo-{feature}-{slug}` |
+| Feature | State | `cpt-{hierarchy-prefix}-state-{feature}-{slug}` |
+| Feature | DoD | `cpt-{hierarchy-prefix}-dod-{feature}-{slug}` |
 
 ---
 
@@ -351,15 +351,15 @@ Epics (L2) can belong to either the HostApp or a MiniApp:
 Requirements cascade through all four levels:
 
 ```
-cpt-platform-fr-offline-support
+cpt-superapp-fr-offline-support
     ↓ references
-cpt-learn-fr-offline-courses
+cpt-superapp-learn-fr-offline-courses
     ↓ references
-cpt-learn-course-catalog-story-cache-courses
+cpt-superapp-learn-course-catalog-story-cache-courses
     ↓ references
-cpt-learn-flow-course-list-load-cached
+cpt-superapp-learn-flow-course-list-load-cached
     ↓ implemented by
-@cpt-flow:cpt-learn-flow-course-list-load-cached:p1
+@cpt-flow:cpt-superapp-learn-flow-course-list-load-cached:p1
 ```
 
 Each level must maintain references to upstream requirements it implements.

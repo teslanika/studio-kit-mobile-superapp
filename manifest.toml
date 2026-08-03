@@ -10,6 +10,32 @@ user_modifiable = true
 # PRD ARTIFACTS
 # ══════════════════════════════════════════════════════════════════════════════
 
+# ── PRD-PLATFORM artifact files ───────────────────────────────────────────────
+
+[[resources]]
+id = "prd_platform_template"
+description = "PRD-PLATFORM artifact template (L0: platform level requirements)"
+source = "artifacts/PRD-PLATFORM/template.md"
+default_path = "artifacts/PRD-PLATFORM/template.md"
+type = "file"
+user_modifiable = true
+
+[[resources]]
+id = "prd_platform_rules"
+description = "PRD-PLATFORM validation rules"
+source = "artifacts/PRD-PLATFORM/rules.md"
+default_path = "artifacts/PRD-PLATFORM/rules.md"
+type = "file"
+user_modifiable = true
+
+[[resources]]
+id = "prd_platform_checklist"
+description = "PRD-PLATFORM review checklist"
+source = "artifacts/PRD-PLATFORM/checklist.md"
+default_path = "artifacts/PRD-PLATFORM/checklist.md"
+type = "file"
+user_modifiable = true
+
 # ── PRD-MINIAPP artifact files ────────────────────────────────────────────────
 
 [[resources]]

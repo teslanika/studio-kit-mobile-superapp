@@ -15,13 +15,14 @@ WHEN:
 
 DO:
   - LOAD config/kits/mobile-superapp/artifacts/PRD-EPIC/template.md for structure
-  - LOAD config/kits/mobile-superapp/artifacts/PRD-EPIC/checklist.md for semantic criteria
+  - LOAD config/kits/sdlc/artifacts/PRD/checklist.md — the base checklist, applied in full
+  - LOAD config/kits/mobile-superapp/artifacts/PRD-EPIC/checklist.md for the Epic-layer delta over that base
   - RUN read parent MiniApp PRD and identify which MiniApp FRs this Epic details
   - RUN read MiniApp DESIGN for architectural context (if present)
   - LOAD config/kits/mobile-superapp/constraints.toml for kit-level constraints
   - RUN read project config for ID prefix and resolve output path from {cf-studio-path}/config/artifacts.toml
-  - RUN author each required section guided by template prompts (Overview, Actors & Context, Functional Requirements, State Requirements, Error Handling, UI/UX Requirements, Data Requirements, Traceability Matrix, Acceptance Criteria)
-  - SET Epic PRD anchor = cpt-{miniapp}-epic-{epic}-prd; FR IDs = cpt-{miniapp}-epic-{epic}-fr-{slug}; state ID = cpt-{miniapp}-epic-{epic}-state; widget IDs = cpt-{miniapp}-{epic}-widget-{slug}; assign priorities p1-p9 by business impact
+  - RUN author each required section guided by template prompts (Overview incl. Glossary and parent traces, Actors, Operational Concept & Environment, Scope, Functional Requirements incl. State Requirements and Error Handling, Non-Functional Requirements, Public Epic Interfaces, Use Cases, Acceptance Criteria, Dependencies, Assumptions, Risks, UI/UX Requirements, Data Requirements, Traceability Matrix)
+  - SET Epic PRD anchor = cpt-{hierarchy-prefix}-prd; FR IDs = cpt-{hierarchy-prefix}-fr-{slug}; NFR IDs = cpt-{hierarchy-prefix}-nfr-{slug}; state IDs = cpt-{hierarchy-prefix}-state-{slug}; widget IDs = cpt-{hierarchy-prefix}-widget-{slug}; interface IDs = cpt-{hierarchy-prefix}-interface-{slug}; use case IDs = cpt-{hierarchy-prefix}-usecase-{slug}; assign priorities p1-p9 by business impact
   - RUN cfs list-ids to verify ID uniqueness
 
 RULES:
@@ -69,7 +70,9 @@ PURPOSE:
 
 DO:
   - RUN cfs validate --artifact <path> (template structure, ID format, priority markers, no placeholders, no duplicate IDs)
-  - LOAD config/kits/mobile-superapp/artifacts/PRD-EPIC/checklist.md and RUN semantic validation + report using it (MUST HAVE items, MUST NOT HAVE scan, mobile-specific criteria)
+  - LOAD config/kits/sdlc/artifacts/PRD/checklist.md and RUN the full base semantic pass (all expertise domains, MUST NOT HAVE scan)
+  - LOAD config/kits/mobile-superapp/artifacts/PRD-EPIC/checklist.md and RUN the Epic-layer delta pass (domain scope table, delta MUST HAVE, delta MUST NOT HAVE, mobile-specific criteria)
+  - RETURN one merged report in the base checklist's report format, citing base and delta checklist IDs
   - RUN cfs toc <path> then cfs validate-toc <path>
 
 RULES:

@@ -1,312 +1,184 @@
-# DECOMPOSITION-MINIAPP Checklist
+# DECOMPOSITION-MINIAPP Checklist — Layer Delta
 
-**Artifact**: DECOMPOSITION-MINIAPP  
-**Kit**: mobile-superapp  
+**Artifact**: DECOMPOSITION-MINIAPP
+**Kit**: mobile-superapp
 **Level**: L1 (MiniApp)
+**Base Checklist**: `{cf-studio-path}/config/kits/sdlc/artifacts/DECOMPOSITION/checklist.md` (sdlc DECOMPOSITION Expert Checklist)
 
-This checklist provides semantic quality criteria for MiniApp-level Decomposition documents in mobile SuperApp projects.
+This checklist is a **delta over the sdlc DECOMPOSITION Expert Checklist**, not a replacement. Every criterion in the base checklist applies to a DECOMPOSITION-MINIAPP document; this file states how each expertise domain is scoped at the MiniApp layer and adds the criteria that exist only at this layer.
 
 ---
 
 ## Table of Contents
 
-1. [MUST HAVE Requirements](#must-have-requirements)
-2. [SHOULD HAVE Requirements](#should-have-requirements)
-3. [MUST NOT HAVE (Violations)](#must-not-have-violations)
-4. [Mobile-Specific Criteria](#mobile-specific-criteria)
-5. [Reporting](#reporting)
+1. [How To Use This Checklist](#how-to-use-this-checklist)
+2. [Expertise Domain Scope At This Layer](#expertise-domain-scope-at-this-layer)
+3. [Layer Delta: MUST HAVE](#layer-delta-must-have)
+4. [Layer Delta: MUST NOT HAVE](#layer-delta-must-not-have)
+5. [Layer Delta: Mobile-Specific Criteria](#layer-delta-mobile-specific-criteria)
+6. [Reporting](#reporting)
 
 ---
 
-## MUST HAVE Requirements
+## How To Use This Checklist
 
-### DECOMP-MINIAPP-001: Overview Section
+1. **LOAD the base checklist first** and apply it in full: Referenced Standards, Prerequisites, Applicability Context, Severity Dictionary, Checkpointing, all MUST HAVE domains (COV, EXC, ATTR, LEV, CFG, TRC, DEP, CHK, DOC, FMT), and all MUST NOT HAVE items.
+2. **Apply the domain scope table** below. The decomposition entity at this layer is an **epic** (screen, capability, or flow), not a feature — read every base criterion that says "feature" as applying to an epic entry.
+3. **Apply the delta criteria** in this file after the base pass.
+4. **Report once.** Use the base checklist's Reporting section for a single merged report citing base IDs (`EXC-001`) and delta IDs (`DECOMP-MINIAPP-001`) in the same `Checklist Item` field.
 
-**Priority**: CRITICAL
-
-The DECOMPOSITION MUST include:
-
-- [ ] Clear purpose statement
-- [ ] Link to MiniApp PRD
-- [ ] Link to MiniApp DESIGN
-- [ ] Link to Platform DECOMPOSITION
-- [ ] Overall implementation status marker with ID
-
-**Why it matters**: Overview establishes context for Epic decomposition.
-
-### DECOMP-MINIAPP-002: Epic Categories
-
-**Priority**: CRITICAL
-
-The DECOMPOSITION MUST organize Epics by category:
-
-- [ ] Screens section (Screen Epics)
-- [ ] Capabilities section (cross-cutting Epics)
-- [ ] Flows section (multi-screen journey Epics)
-
-**Why it matters**: Categories clarify Epic types and dependencies.
-
-### DECOMP-MINIAPP-003: Screen Epic Entries
-
-**Priority**: CRITICAL
-
-Each Screen Epic entry MUST include:
-
-- [ ] Epic ID following `cpt-{miniapp}-epic-{screen}` pattern
-- [ ] Link to Epic folder
-- [ ] Priority (HIGH, MEDIUM, LOW)
-- [ ] Category: Screen
-- [ ] Purpose description
-- [ ] Actors (actor references)
-- [ ] Depends On (other Epics or "None")
-- [ ] Scope (widgets/features list)
-- [ ] Out of scope (explicit exclusions)
-
-**Why it matters**: Complete entries enable independent Epic development.
-
-### DECOMP-MINIAPP-004: Capability Epic Entries
-
-**Priority**: HIGH
-
-Each Capability Epic entry MUST include:
-
-- [ ] Epic ID following `cpt-{miniapp}-epic-{capability}` pattern
-- [ ] Category: Capability (cross-cutting)
-- [ ] Purpose description
-- [ ] Kernel integration references
-- [ ] Scope of capability
-
-**Why it matters**: Capabilities are shared across screens.
-
-### DECOMP-MINIAPP-005: Flow Epic Entries
-
-**Priority**: HIGH
-
-Each Flow Epic entry MUST include:
-
-- [ ] Epic ID following `cpt-{miniapp}-epic-{flow}` pattern
-- [ ] Category: Flow (multi-screen journey)
-- [ ] Purpose description
-- [ ] Screens involved (ordered list)
-- [ ] Depends On (screen Epics involved)
-
-**Why it matters**: Flows define user journeys spanning screens.
-
-### DECOMP-MINIAPP-006: Requirements Coverage
-
-**Priority**: CRITICAL
-
-Each Epic entry MUST document:
-
-- [ ] Requirements covered list
-- [ ] `cpt-{miniapp}-fr-{slug}` references for FRs
-- [ ] `cpt-{miniapp}-nfr-{slug}` references for NFRs (if applicable)
-- [ ] Priority marker for each requirement
-- [ ] Checkbox for implementation status
-
-**Why it matters**: Coverage ensures all MiniApp FRs are allocated to Epics.
-
-### DECOMP-MINIAPP-007: Design Components
-
-**Priority**: HIGH
-
-Each Epic entry MUST list:
-
-- [ ] Design components from MiniApp DESIGN
-- [ ] `cpt-{miniapp}-component-{slug}` references
-- [ ] Priority marker for each component
-
-**Why it matters**: Components trace DESIGN elements to Epics.
-
-### DECOMP-MINIAPP-008: Epic Dependencies
-
-**Priority**: HIGH
-
-The DECOMPOSITION MUST include:
-
-- [ ] Dependency diagram (text or visual)
-- [ ] Dependency rationale for each relationship
-- [ ] Cross-cutting capabilities noted
-
-**Why it matters**: Dependencies determine implementation order.
-
-### DECOMP-MINIAPP-009: Coverage Matrices
-
-**Priority**: CRITICAL
-
-The DECOMPOSITION MUST include:
-
-- [ ] Requirements coverage matrix (requirement ID → Epic → status)
-- [ ] Design component coverage matrix (component ID → Epic → status)
-- [ ] All items with checkbox status
-
-**Why it matters**: Matrices enable coverage validation.
-
-### DECOMP-MINIAPP-010: Implementation Order
-
-**Priority**: HIGH
-
-The DECOMPOSITION MUST include:
-
-- [ ] Implementation order table (phase, Epics, rationale)
-- [ ] Foundation Epics first
-- [ ] Dependent Epics ordered by dependencies
-- [ ] Parallel Epics identified
-
-**Why it matters**: Order enables sprint planning.
+Severity values are the base checklist's: CRITICAL, HIGH, MEDIUM, LOW.
 
 ---
 
-## SHOULD HAVE Requirements
+## Expertise Domain Scope At This Layer
 
-### DECOMP-MINIAPP-011: Target Release Per Epic
+| Domain | Scope at L1 (MiniApp) | Notes |
+|--------|-----------------------|-------|
+| COV | Full | Every MiniApp design component, entity, repository operation, sequence, and data store must be assigned to an epic |
+| EXC | Full | Epic scopes must be mutually exclusive; a shared widget belongs to one owning epic and is referenced by the others |
+| ATTR | Full | Each entry needs ID, category (Screen/Capability/Flow), purpose, actors, scope, and subordinates |
+| LEV | Full | Decomposition stops at the epic; features are the next level down |
+| CFG | Narrowed | An epic is a change-control unit inside the MiniApp, not an independently releasable binary |
+| TRC | Full | Forward to epic PRD/DESIGN, backward to MiniApp PRD/DESIGN and up to the Platform DECOMPOSITION entry |
+| DEP | Full | Epic dependency graph must be a DAG; entry-point epics have no epic dependencies |
+| CHK | Full | `status-overall` cascades from all `epic` entries |
+| DOC | Full | Explicit non-applicability is mandatory at every layer |
+| FMT | Full | Entry format, required fields, and checkbox syntax as in the base |
 
-**Priority**: MEDIUM
-
-Each Epic entry SHOULD include:
-
-- [ ] Target release (Q{X} 202{Y})
-- [ ] Alignment with Platform roadmap
-
-### DECOMP-MINIAPP-012: KMP Module References
-
-**Priority**: MEDIUM
-
-Screen/Capability Epics SHOULD include:
-
-- [ ] KMP module reference `cpt-{miniapp}-component-kmp-{slug}`
-- [ ] Module location hint
-
-### DECOMP-MINIAPP-013: Widget Lists
-
-**Priority**: LOW
-
-Screen Epics SHOULD list:
-
-- [ ] Key widgets in scope
-- [ ] Widget-to-Epic allocation
+*Narrowed* domains inherit the platform disposition: CFG release-unit criteria are satisfied at L0 by `DECOMPOSITION-PLATFORM`.
 
 ---
 
-## MUST NOT HAVE (Violations)
+## Layer Delta: MUST HAVE
 
-### DECOMP-MINIAPP-NO-001: No Feature Details
+### DECOMP-MINIAPP-001: Parent Scope Consistency
+**Severity**: CRITICAL
 
-**Priority**: HIGH
+- [ ] The parent Platform DECOMPOSITION entry for this MiniApp is linked
+- [ ] No epic here extends beyond the scope the platform decomposition assigned to this MiniApp
+- [ ] Anything that exceeds that scope is raised as a change to the parent, not silently added
 
-The DECOMPOSITION MUST NOT contain:
+### DECOMP-MINIAPP-002: Entry Category Assignment
+**Severity**: HIGH
 
-- [ ] Feature-level breakdowns (belongs in DECOMPOSITION-EPIC)
-- [ ] CDSL flows (belongs in FEATURE)
-- [ ] DoD definitions (belongs in FEATURE)
+- [ ] Each entry is classified as exactly one of Screen, Capability, or Flow
+- [ ] Screen entries correspond to destinations in the MiniApp navigation graph
+- [ ] Capability entries are cross-cutting and name the screens that consume them
+- [ ] Flow entries name their entry and exit points
 
-**Why it matters**: MiniApp DECOMPOSITION only covers Epics.
+### DECOMP-MINIAPP-003: Navigation Graph Coverage
+**Severity**: CRITICAL
 
-### DECOMP-MINIAPP-NO-002: No Implementation Details
+- [ ] Every destination in the MiniApp navigation graph is covered by exactly one Screen epic
+- [ ] Every epic states its Entry Points (navigation, deep link, or notification)
+- [ ] Deep links referenced here exist in the MiniApp DESIGN deep-link table
 
-**Priority**: HIGH
+### DECOMP-MINIAPP-004: Actors From The Platform
+**Severity**: HIGH
 
-The DECOMPOSITION MUST NOT contain:
+- [ ] Each entry names its actors as `cpt-superapp-actor-{slug}`
+- [ ] No actor is defined or renamed in this document
+- [ ] Every actor served by this MiniApp appears in at least one entry
 
-- [ ] Code locations (belongs in DESIGN/IMPL)
-- [ ] API contracts (belongs in DESIGN)
-- [ ] State definitions (belongs in DESIGN)
+### DECOMP-MINIAPP-005: Design Element Assignment Completeness
+**Severity**: CRITICAL
 
-**Why it matters**: Decomposition is organizational, not technical.
+- [ ] Every DESIGN-MINIAPP component, domain entity, sequence, and data store appears in the Coverage Matrix with an owning epic
+- [ ] MiniApp principles and constraints are assigned to the epics that must honour them
+- [ ] Unassigned elements are listed with a reason (module-internal, deferred, out of scope)
 
-### DECOMP-MINIAPP-NO-003: No Missing Traceability
+### DECOMP-MINIAPP-006: Platform Coverage Declared
+**Severity**: HIGH
 
-**Priority**: CRITICAL
+- [ ] Every entry declares Platform Coverage (shared / Android / iOS)
+- [ ] An entry planned for only one platform states the reason and the parity plan
+- [ ] Shared-only coverage with no UI target is challenged
 
-The DECOMPOSITION MUST NOT have:
+### DECOMP-MINIAPP-007: Implementation Order
+**Severity**: MEDIUM
 
-- [ ] Epics without requirement coverage
-- [ ] Requirements without Epic allocation
-- [ ] Components without Epic assignment
+- [ ] Implementation Order agrees with the dependency graph
+- [ ] Phase 1 contains at least one entry-point epic with no dependencies
+- [ ] Target releases per entry are consistent with the phase table
 
-**Why it matters**: Full traceability is the purpose of decomposition.
+### DECOMP-MINIAPP-008: Traceability Links
+**Severity**: HIGH
 
-### DECOMP-MINIAPP-NO-004: No Platform DECOMPOSITION Duplication
-
-**Priority**: MEDIUM
-
-The DECOMPOSITION MUST NOT:
-
-- [ ] Repeat MiniApp entry details from Platform DECOMPOSITION
-- [ ] Redefine MiniApp scope (reference only)
-
-**Why it matters**: Reference Platform DECOMPOSITION for MiniApp context.
+- [ ] Links to MiniApp PRD, MiniApp DESIGN, and the Platform DECOMPOSITION are present
+- [ ] Each entry links to its epic folder path
+- [ ] Coverage Matrix rows are consistent with the entry bodies
 
 ---
 
-## Mobile-Specific Criteria
+## Layer Delta: MUST NOT HAVE
 
-### MOBILE-DECOMP-001: Platform Implementation Matrix
+These are additional to the base checklist's MUST NOT HAVE items, all of which apply here unchanged.
 
-**Priority**: HIGH
+### DECOMP-MINIAPP-NO-001: No Feature-Level Decomposition
+**Severity**: HIGH
 
-Coverage matrices SHOULD include:
+**What to check**:
+- [ ] No feature entries, task lists, or per-widget breakdown inside an epic entry
+- [ ] No Definition of Done or acceptance criteria per feature
 
-- [ ] KMP implementation column
-- [ ] Android implementation column
-- [ ] iOS implementation column
-- [ ] Status checkboxes per platform
+**Where it belongs**: `DECOMPOSITION-EPIC`
 
-### MOBILE-DECOMP-002: Kernel Integration References
+### DECOMP-MINIAPP-NO-002: No MiniApp Design Restatement
+**Severity**: MEDIUM
 
-**Priority**: HIGH
+**What to check**:
+- [ ] No redefined module structure, domain entities, repositories, or navigation graph
+- [ ] No re-derived NFR thresholds beyond a reference
 
-Capability Epics MUST reference:
+**Where it belongs**: `DESIGN-MINIAPP` — reference by ID
 
-- [ ] Kernel services used
-- [ ] `cpt-{platform}-component-{kernel}` IDs
+### DECOMP-MINIAPP-NO-003: No Screen Composition Or Visual Detail
+**Severity**: MEDIUM
 
-### MOBILE-DECOMP-003: Navigation Dependencies
+**What to check**:
+- [ ] No widget layouts, states, or interaction specification
+- [ ] No colors, spacing, or design tokens
 
-**Priority**: MEDIUM
+**Where it belongs**: `PRD-EPIC` / `DESIGN-EPIC` and the design system
 
-Screen Epics SHOULD note:
+---
 
-- [ ] Entry point screens (no dependencies)
-- [ ] Navigation flow dependencies
+## Layer Delta: Mobile-Specific Criteria
 
-### MOBILE-DECOMP-004: Offline Epics
+### MOBILE-DECOMP-MINIAPP-001: Offline Scope Per Epic
+**Severity**: MEDIUM
 
-**Priority**: MEDIUM
+- [ ] Epics that must work offline are identified and consistent with the MiniApp offline policy
+- [ ] Their local data stores are listed in the entry's Data field
 
-Epics with offline capability SHOULD note:
+### MOBILE-DECOMP-MINIAPP-002: Notification-Triggered Epics
+**Severity**: MEDIUM
 
-- [ ] Offline capability in scope
-- [ ] Storage requirements
+- [ ] Epics reachable from a push notification declare it as an entry point
+- [ ] The cold-start path into such an epic is acknowledged as in scope
+
+### MOBILE-DECOMP-MINIAPP-003: WebView Epics Flagged
+**Severity**: MEDIUM
+
+- [ ] Epics realized wholly or partly in WebView are flagged
+- [ ] Their native-shell responsibilities (navigation, session, error surface) are stated as in scope
+
+### MOBILE-DECOMP-MINIAPP-004: Delivery Sequencing Across Platforms
+**Severity**: LOW
+
+- [ ] The implementation order states whether shared logic lands before, with, or after each platform UI
+- [ ] Any deliberate Android-first or iOS-first sequencing is stated with the reason
 
 ---
 
 ## Reporting
 
-### Report Format
+Use the **base checklist's Reporting section** — `{cf-studio-path}/config/kits/sdlc/artifacts/DECOMPOSITION/checklist.md` — without modification: the Validation Summary, Reporting Readiness Checklist, Full/Compact report formats, and Reporting Commitment.
 
-For each issue found, report:
+Additional reporting requirements for this layer:
 
-```markdown
-## Issue: {CHECKLIST-ID}
-
-**Severity**: CRITICAL | HIGH | MEDIUM | LOW
-
-**Why Applicable**: {Why this requirement applies}
-
-**Issue**: {What is wrong}
-
-**Evidence**: {Quote from document or "Not found"}
-
-**Impact**: {Why this matters}
-
-**Proposal**: {How to fix}
-```
-
-### Reporting Commitment
-
-- [ ] I reported all issues I found
-- [ ] I used the exact report format
-- [ ] I included evidence for each issue
-- [ ] I proposed concrete fixes
-- [ ] I did not hide or omit known problems
+- [ ] Report base findings and delta findings in one merged report, ordered by severity
+- [ ] State the base checklist version/source used, so a reviewer can reproduce the pass
+- [ ] State the coverage result explicitly: number of MiniApp design elements, number assigned, number documented as excluded
+- [ ] Confirm the parent Platform DECOMPOSITION scope was checked, and report any epic that exceeds it
