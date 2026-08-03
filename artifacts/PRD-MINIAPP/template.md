@@ -1,8 +1,8 @@
 # PRD — {MiniApp Name} MiniApp
 
-> **Level**: L1 (MiniApp)  
-> **Parent**: [Platform PRD](../../architecture/PRD.md) `cpt-superapp-prd`  
-> **Version**: 1.0  
+> **Level**: L1 (MiniApp)
+> **Parent**: [Platform PRD](../../architecture/PRD.md) `cpt-superapp-prd`
+> **Version**: 1.0
 > **Status**: Draft
 
 ---
@@ -12,6 +12,8 @@
 ### 1.1 Purpose
 
 This PRD defines requirements for the **{MiniApp Name}** MiniApp within the Constructor Mobile SuperApp.
+
+{1-2 paragraphs: What is this MiniApp and what problem does it solve? What are the key capabilities?}
 
 ### 1.2 Scope
 
@@ -33,106 +35,140 @@ This PRD defines requirements for the **{MiniApp Name}** MiniApp within the Cons
 
 ## 2. Actors
 
-### 2.1 Primary Actors
+> **Note**: Actors are defined at Platform level. Reference platform actor IDs and add only MiniApp-specific context — do not redefine actors.
 
 | Actor ID | Role | MiniApp-Specific Context |
 |----------|------|------------------------|
 | `cpt-superapp-actor-student` | Primary | {How student uses this MiniApp} |
 | `cpt-superapp-actor-instructor` | Secondary | {How instructor uses this MiniApp} |
 
+**Permissions**: {Exact per-actor permissions — which actor may perform which action on which resource, e.g., "student: read own enrollments; instructor: read/update courses they teach". Do not restate the generic "all operations require authentication/authorization" — it is assumed.}
+
 ---
 
 ## 3. Functional Requirements
 
+Functional requirements define WHAT the MiniApp must do. Each is a checkbox with a priority marker `p1`-`p9` (assigned by business impact).
+
 ### 3.1 Core Capabilities
 
-#### FR-01: {Feature Name}
+#### {Feature Name}
 
-**ID**: `cpt-{miniapp}-fr-{slug}`
+- [ ] `p1` - **ID**: `cpt-{miniapp}-fr-{slug}`
 
-**Traces To:** `cpt-superapp-fr-{parent-slug}` (refines)
+The MiniApp **MUST** {do something specific and verifiable}.
 
-| Attribute | Value |
-|-----------|-------|
-| Priority | P1 |
-| Actor | `cpt-superapp-actor-{actor}` |
-| Description | {What the system must do} |
-| Acceptance | {Measurable acceptance criteria} |
+**Traces To**: `cpt-superapp-fr-{parent-slug}` (refines)
+
+**Actors**: `cpt-superapp-actor-{actor}`
+
+**Rationale**: {Why this requirement exists — business value or parent requirement.}
+
+**Acceptance**: {Measurable acceptance criteria}
+
+**Verification Method** (optional): {Only if non-standard: analysis | inspection | demonstration}
 
 ---
 
-#### FR-02: {MiniApp-Specific Feature}
+#### {MiniApp-Specific Feature}
 
-**ID**: `cpt-{miniapp}-fr-{slug}`
+- [ ] `p2` - **ID**: `cpt-{miniapp}-fr-{slug}`
+
+The MiniApp **MUST** {MiniApp-specific capability not derived from Platform}.
 
 **Tags**: `miniapp-specific`
 
-**Traces To:** — (MiniApp-specific requirement)
+**Traces To**: — (MiniApp-specific requirement)
 
-| Attribute | Value |
-|-----------|-------|
-| Priority | P2 |
-| Actor | `cpt-superapp-actor-{actor}` |
-| Description | {MiniApp-specific capability not from Platform} |
-| Rationale | {Why this is needed at MiniApp level only} |
+**Actors**: `cpt-superapp-actor-{actor}`
 
----
+**Rationale**: {Why this is needed at MiniApp level only}
 
-### 3.2 MiniApp-Level NFRs
-
-#### NFR-01: {Quality Attribute}
-
-**ID**: `cpt-{miniapp}-nfr-{slug}`
-
-**Traces To:** `cpt-superapp-nfr-{parent-slug}` (extends)
-
-| Attribute | Value |
-|-----------|-------|
-| Category | Performance / Security / Usability |
-| Metric | {Measurable metric} |
-| Target | {Specific target value} |
-| Rationale | {Why MiniApp needs stricter/different requirement} |
+**Acceptance**: {Measurable acceptance criteria}
 
 ---
 
-## 4. Use Cases
+## 4. Non-Functional Requirements
 
-### UC-01: {Use Case Name}
+> **NFR framing**: State NFRs as business-level quality expectations — user/business outcomes, SLAs, and measurable targets (e.g., "course list opens in <2s at p95 on a mid-tier device"). Do NOT specify technical implementation (caching strategy, technology stack, component tuning) — those belong in DESIGN/ADR.
 
-**ID**: `cpt-{miniapp}-usecase-{slug}`
+#### {Quality Attribute}
 
-**Traces To:** `cpt-{miniapp}-fr-{slug}`
+- [ ] `p2` - **ID**: `cpt-{miniapp}-nfr-{slug}`
 
-| Attribute | Value |
-|-----------|-------|
-| Primary Actor | `cpt-superapp-actor-{actor}` |
-| Precondition | {Starting state} |
-| Main Flow | 1. {Step 1}<br/>2. {Step 2}<br/>3. {Step 3} |
-| Postcondition | {End state} |
-| Exceptions | {Error scenarios} |
+The MiniApp **MUST** {measurable business-level quality expectation}.
+
+**Traces To**: `cpt-superapp-nfr-{parent-slug}` (extends)
+
+**Category**: Performance | Security | Usability | Reliability
+
+**Threshold**: {Quantitative target with units and conditions}
+
+**Rationale**: {Why this MiniApp needs a stricter/different requirement}
 
 ---
 
-## 5. Dependencies
+## 5. Use Cases
 
-### 5.1 Platform Dependencies
+#### {Use Case Name}
+
+- [ ] `p2` - **ID**: `cpt-{miniapp}-usecase-{slug}`
+
+**Traces To**: `cpt-{miniapp}-fr-{slug}`
+
+**Actor**: `cpt-superapp-actor-{actor}`
+
+**Preconditions**:
+- {Required state before execution}
+
+**Main Flow**:
+1. {Actor action or system response}
+2. {Next step}
+
+**Postconditions**:
+- {State after successful completion}
+
+**Alternative Flows**:
+- **{Condition}**: {What happens instead}
+
+---
+
+## 6. Dependencies
+
+> **Note**: Name dependencies at capability level (which service provides what data or operation). API contracts, endpoints, and payloads belong in DESIGN-MINIAPP.
+
+### 6.1 Platform Dependencies
 
 | Dependency | Type | Description |
 |------------|------|-------------|
 | Auth Kernel | Required | `cpt-superapp-component-auth-kernel` |
 | Storage Kernel | Required | `cpt-superapp-component-storage-kernel` |
 
-### 5.2 External Dependencies
+### 6.2 External Dependencies
 
-| System | Integration Type | Description |
-|--------|-----------------|-------------|
-| {Backend Service} | API | {What data/operations} |
+| System | Capability Provided | Criticality |
+|--------|--------------------|-------------|
+| {Backend Service} | {What data/operations it provides, business level} | {p1/p2/p3} |
 
 ---
 
-## 6. Traceability Matrix
+## 7. Assumptions
 
-### 6.1 Platform FR → MiniApp FR Coverage
+- {Assumption about environment, users, or dependent systems}
+
+---
+
+## 8. Risks
+
+| Risk | Impact | Mitigation |
+|------|--------|------------|
+| {Risk description} | {Potential impact} | {Mitigation strategy} |
+
+---
+
+## 9. Traceability Matrix
+
+### 9.1 Platform FR → MiniApp FR Coverage
 
 | Platform FR | MiniApp FRs | Coverage Status |
 |-------------|-----------|-----------------|
@@ -140,7 +176,7 @@ This PRD defines requirements for the **{MiniApp Name}** MiniApp within the Cons
 | `cpt-superapp-fr-{slug-2}` | `cpt-{miniapp}-fr-{c}` | Partial |
 | `cpt-superapp-fr-{slug-3}` | — | Not in scope |
 
-### 6.2 MiniApp FR → Epic Coverage
+### 9.2 MiniApp FR → Epic Coverage
 
 | MiniApp FR | Target Epics | Status |
 |-----------|--------------|--------|
@@ -148,7 +184,9 @@ This PRD defines requirements for the **{MiniApp Name}** MiniApp within the Cons
 
 ---
 
-## 7. Acceptance Criteria
+## 10. Acceptance Criteria
+
+Business-level acceptance criteria for the PRD as a whole.
 
 - [ ] All Platform FRs in scope are refined
 - [ ] All MiniApp FRs have epic-level detailing

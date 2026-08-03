@@ -1,208 +1,122 @@
 # PRD-MINIAPP Rules
 
-**Artifact**: PRD-MINIAPP  
-**Kit**: mobile-superapp  
+**Artifact**: PRD-MINIAPP
+**Kit**: mobile-superapp
 **Level**: L1 (MiniApp)
 
-**Dependencies**:
-- `config/kits/mobile-superapp/artifacts/PRD-MINIAPP/template.md` — structural reference
-- `config/kits/mobile-superapp/artifacts/PRD-MINIAPP/checklist.md` — semantic quality criteria
-- `{platform_prd}` — parent Platform PRD reference
+```pdsl
+UNIT PrdMiniappAuthoring
 
-## Table of Contents
+PURPOSE:
+  Author or revise a MiniApp-level PRD that follows the template, conventions, and authoring boundaries.
 
-1. [Prerequisites](#prerequisites)
-2. [Requirements](#requirements)
-3. [Tasks](#tasks)
-4. [Validation](#validation)
-5. [Error Handling](#error-handling)
-6. [Next Steps](#next-steps)
+WHEN:
+  - REQUIRE authoring or revising a PRD-MINIAPP
 
----
+DO:
+  - LOAD config/kits/mobile-superapp/artifacts/PRD-MINIAPP/template.md for structure
+  - LOAD config/kits/mobile-superapp/artifacts/PRD-MINIAPP/checklist.md for semantic criteria
+  - RUN read parent Platform PRD (architecture/PRD.md) and identify which Platform FRs this MiniApp refines
+  - LOAD config/kits/mobile-superapp/constraints.toml for kit-level constraints
+  - RUN read project config for ID prefix and resolve output path from {cf-studio-path}/config/artifacts.toml
+  - RUN author each required section guided by template prompts (Overview, Actors, Functional Requirements, MiniApp NFRs, Use Cases, Dependencies, Assumptions, Risks, Traceability Matrix, Acceptance Criteria)
+  - SET PRD anchor = cpt-{miniapp}-prd; FR IDs = cpt-{miniapp}-fr-{slug}; NFR IDs = cpt-{miniapp}-nfr-{slug}; use case IDs = cpt-{miniapp}-usecase-{slug}; assign priorities p1-p9 by business impact
+  - RUN cfs list-ids to verify ID uniqueness
 
-## Prerequisites
-
-### Load Dependencies
-
-- [ ] Load `config/kits/mobile-superapp/artifacts/PRD-MINIAPP/template.md` for structure
-- [ ] Load `config/kits/mobile-superapp/artifacts/PRD-MINIAPP/checklist.md` for semantic guidance
-- [ ] Read parent Platform PRD for context
-- [ ] Load `config/kits/mobile-superapp/constraints.toml` for kit-level constraints
-- [ ] Load `{cf-studio-path}/.core/architecture/specs/traceability.md` for ID formats
-
----
-
-## Requirements
-
-### Structural
-
-- [ ] PRD-MINIAPP follows `config/kits/mobile-superapp/artifacts/PRD-MINIAPP/template.md` structure
-- [ ] All required sections present and non-empty:
-  - Overview (purpose, scope, traces to platform)
-  - Actors (primary actors with MiniApp-specific context)
-  - Functional Requirements (core capabilities, MiniApp-level NFRs)
-  - Use Cases (key user scenarios)
-  - Dependencies (platform, external)
-  - Traceability Matrix
-  - Acceptance Criteria
-- [ ] All IDs follow `cpt-{miniapp}-{kind}-{slug}` convention
-- [ ] References to Platform PRD are valid
-- [ ] No placeholder content (TODO, TBD, FIXME)
-- [ ] No duplicate IDs within document
-
-### Mobile-Specific
-
-- [ ] Requirements address mobile context:
-  - Offline capabilities where needed
-  - Push notification scenarios
-  - Deep link entry points
-  - Platform-specific UX considerations
-- [ ] Actors reference platform-level actor IDs (`cpt-superapp-actor-{slug}`)
-- [ ] Dependencies specify required Kernel services (Auth, Storage, Network)
-- [ ] Integration points clearly identify backend APIs
-
-### Traceability
-
-- [ ] Every MiniApp FR traces to Platform PRD FR (refines relationship)
-- [ ] Platform NFRs applicable to MiniApp are inherited with `inherits` relation
-- [ ] MiniApp-specific FRs are tagged `miniapp-specific` with rationale
-- [ ] Use cases trace to MiniApp FRs
-- [ ] Traceability matrix documents:
-  - Platform FR → MiniApp FR coverage
-  - MiniApp FR → Epic coverage (planned)
-
-### Versioning
-
-- [ ] When editing existing PRD: increment version in document header
-- [ ] When changing requirement: update version field in requirement table
-
----
-
-## Tasks
-
-### Phase 1: Setup
-
-- [ ] Load `config/kits/mobile-superapp/artifacts/PRD-MINIAPP/template.md` for structure
-- [ ] Load `config/kits/mobile-superapp/artifacts/PRD-MINIAPP/checklist.md` for semantic guidance
-- [ ] Read Platform PRD for parent requirements
-- [ ] Identify which Platform FRs this MiniApp refines
-
-### Phase 2: Content Creation
-
-Apply checklist semantics during creation:
-
-| Checklist Category | Generation Task |
-|-------------------|-----------------|
-| Overview | Document purpose, scope (in/out), platform traces |
-| Actors | List primary actors with MiniApp-specific context |
-| Functional Requirements | Define FRs with priority, actor, description, acceptance |
-| NFRs | Extend/specialize Platform NFRs for MiniApp context |
-| Use Cases | Document key user scenarios with flows |
-| Dependencies | List Kernel services and external integrations |
-| Traceability | Build coverage matrix for Platform → MiniApp |
-
-**Partial Completion Handling**:
-
-If PRD-MINIAPP cannot be completed in a single session:
-1. Checkpoint progress with completed sections
-2. Add `status: DRAFT` to document header
-3. Mark incomplete sections with `INCOMPLETE: {reason}`
-4. Document resumption point
-
-### Phase 3: IDs and References
-
-- [ ] Generate MiniApp PRD anchor: `cpt-{miniapp}-prd`
-- [ ] Generate FR IDs: `cpt-{miniapp}-fr-{slug}`
-- [ ] Generate NFR IDs: `cpt-{miniapp}-nfr-{slug}`
-- [ ] Generate use case IDs: `cpt-{miniapp}-usecase-{slug}`
-- [ ] Link to Platform PRD requirements
-- [ ] Reference platform actor IDs
-- [ ] Verify uniqueness with `cfs list-ids`
-
-### Phase 4: Quality Check
-
-- [ ] Self-review against `config/kits/mobile-superapp/artifacts/PRD-MINIAPP/checklist.md` MUST HAVE items
-- [ ] Ensure no MUST NOT HAVE violations
-- [ ] Verify every FR is testable (measurable acceptance criteria)
-- [ ] Verify Platform traceability is complete
-
-### Phase 5: Table of Contents
-
-- [ ] Run `cfs toc <path>` to generate/update Table of Contents
-- [ ] Verify TOC is present and complete
-
----
-
-## Validation
-
-### Phase 1: Structural Validation
-
-- [ ] Run `cfs validate --artifact <path>` for:
-  - Template structure compliance
-  - ID format validation
-  - Cross-reference validity
-  - No placeholders
-
-### Phase 2: Semantic Validation
-
-- [ ] Read `config/kits/mobile-superapp/artifacts/PRD-MINIAPP/checklist.md` in full
-- [ ] For each MUST HAVE item: check if requirement is met
-- [ ] For each MUST NOT HAVE item: scan document for violations
-
-### Phase 3: Requirements Quality Validation
-
-- [ ] All FRs have measurable acceptance criteria
-- [ ] All FRs have assigned priority (P1/P2/P3)
-- [ ] All FRs have associated actor
-- [ ] No ambiguous requirements (avoid "should", "might", "usually")
-- [ ] No implementation details in requirements
-
-### Validation Report Format
-
-```
-PRD-MINIAPP Validation Report
-════════════════════════════
-
-Structural: PASS/FAIL
-Semantic: PASS/FAIL (N issues)
-Requirements Quality: PASS/FAIL (N issues)
-
-Issues:
-- [SEVERITY] CHECKLIST-ID: Description
+RULES:
+  - ALWAYS follow the template structure; all required sections present and non-empty
+  - ALWAYS mark every FR/NFR/use case as a checkbox with a priority marker: - [ ] `pN` - **ID**: `cpt-...`
+  - ALWAYS state each FR as a verifiable MUST statement with Rationale and Actors fields
+  - ALWAYS trace every MiniApp FR to a Platform FR (refines) or tag it `miniapp-specific` with rationale
+  - ALWAYS reference platform actor IDs (cpt-superapp-actor-{slug}); NEVER redefine actors — only add MiniApp-specific context
+  - ALWAYS address mobile context: offline capabilities, push notification scenarios, deep link entry points, iOS/Android parity
+  - ALWAYS keep the PRD requirements-only (WHAT not HOW); express every NFR as a business-level quality requirement (user/business outcome, SLA, measurable Threshold), not a technical implementation spec
+  - ALWAYS state authorization as exact per-actor/operation permissions (which actor may perform which action on which resource); NEVER restate the generic "every operation requires authentication/authorization", which is assumed
+  - ALWAYS name backend dependencies at capability level (which service provides what data or operation); NEVER specify endpoints, payloads, or API contracts
+  - ALWAYS version on change: increment the header version when editing; keep a changelog of significant changes
+  - ALWAYS treat the checklist as the single source of semantic quality criteria
+  - NEVER duplicate semantic criteria here; NEVER leave placeholders (TODO, TBD, FIXME); NEVER create duplicate IDs within the document
 ```
 
----
+```pdsl
+UNIT PrdMiniappOmissions
 
-## Error Handling
+PURPOSE:
+  Enforce PRD scope boundaries — content that MUST NOT appear and the artifact where it belongs. Report as a violation if found.
 
-### Missing Platform PRD
+RULES:
+  - NEVER include technical implementation details (ARCH-PRD-NO-001, CRITICAL) — PRD captures what, not how
+  - NEVER include architectural decisions (ARCH-PRD-NO-002, CRITICAL) — they belong in ADR
+  - NEVER include implementation tasks (BIZ-PRD-NO-001, HIGH) — they belong in DECOMPOSITION-MINIAPP
+  - NEVER include spec-level design (BIZ-PRD-NO-002, HIGH) — specs belong in FEATURE-MOBILE
+  - NEVER include data schema definitions (DATA-PRD-NO-001, HIGH) — schemas belong in DESIGN-MINIAPP
+  - NEVER include API specifications (INT-PRD-NO-001, HIGH) — no API contracts/OpenAPI, REST endpoints, HTTP methods, HTTP/REST status codes, authentication header specifications, or standardized error response formats; API contracts belong in DESIGN-MINIAPP, API design decisions in ADR
+  - NEVER include test cases (TEST-PRD-NO-001, MEDIUM) — tests belong in FEATURE/code
+  - NEVER include infrastructure specifications (OPS-PRD-NO-001, MEDIUM) — infra belongs in DESIGN
+  - NEVER include security implementation details (SEC-PRD-NO-001, HIGH) — implementation belongs in DESIGN/code
+  - NEVER include code-level documentation (MAINT-PRD-NO-001, MEDIUM) — code docs belong in code
+  - NEVER redefine Platform-level requirements or duplicate Platform constraints verbatim — refine with traces instead
+```
 
-- [ ] If parent Platform PRD not found:
-  - Option 1: Run `/cf-generate PRD-PLATFORM` first (recommended)
-  - Option 2: Continue without Platform PRD (document assumptions)
-  - Document "Platform PRD pending" in MiniApp PRD header
+```pdsl
+UNIT PrdMiniappValidate
 
-### Unclear Scope
+PURPOSE:
+  Run deterministic, semantic, and TOC validation on the PRD-MINIAPP.
 
-- [ ] If uncertain about MiniApp scope:
-  - Ask user for scope clarification
-  - Document assumptions made
-  - Mark scope section for review
+DO:
+  - RUN cfs validate --artifact <path> (template structure, ID format, priority markers, no placeholders, no duplicate IDs)
+  - LOAD config/kits/mobile-superapp/artifacts/PRD-MINIAPP/checklist.md and RUN semantic validation + report using it (MUST HAVE items, MUST NOT HAVE scan, mobile-specific criteria)
+  - RUN cfs toc <path> then cfs validate-toc <path>
 
-### Escalation
+RULES:
+  - ALWAYS run cfs validate --artifact <path>
+  - NEVER consider the PRD done while validation reports fail/error or cfs validate-toc does not PASS
+  - ALWAYS use the checklist for semantic criteria, applicability handling, and report format — do not restate them here
+```
 
-- [ ] Ask user when uncertain about requirement priority
-- [ ] Ask user when Platform FR mapping is unclear
-- [ ] Ask user when actors/personas need clarification
+```pdsl
+UNIT PrdMiniappErrorHandling
 
----
+PURPOSE:
+  Recover deterministically from missing dependencies, config, and ambiguity.
 
-## Next Steps
+ON_ERROR:
+  missing_template ->
+    STOP — cannot proceed without the PRD-MINIAPP template
+  missing_checklist ->
+    EMIT warning
+    SET skip semantic validation
+  missing_platform_prd ->
+    EMIT "Parent Platform PRD not found. Recommended: run /cf-generate PRD-PLATFORM first. Or continue with documented assumptions and 'Platform PRD pending' in the header."
+    WAIT user.reply
+  unclear_scope ->
+    EMIT "MiniApp scope is unclear — please clarify what is in/out of scope."
+    WAIT user.reply
 
-### Options
+RULES:
+  - ALWAYS escalate to the user when requirement priority is uncertain, when Platform FR mapping is unclear, when actors/personas need clarification, or when uncertain whether a checklist category is truly N/A vs missing
+```
 
-- [ ] PRD-MINIAPP complete → `/cf-generate DESIGN-MINIAPP` — create technical design
-- [ ] Need Platform context → `/cf-generate PRD-PLATFORM` — create Platform PRD first
-- [ ] PRD needs revision → continue editing PRD-MINIAPP
-- [ ] Ready for Epic → `/cf-generate PRD-EPIC` — create Epic-level PRD
-- [ ] Ready for decomposition → `/cf-generate DECOMPOSITION-MINIAPP` — break into epics
+```pdsl
+UNIT PrdMiniappNextSteps
+
+PURPOSE:
+  Offer next actions after the PRD-MINIAPP is complete.
+
+DO:
+  - EMIT_MENU PrdMiniappNextStepsMenu
+
+MENU PrdMiniappNextStepsMenu:
+  TITLE: PRD-MINIAPP next steps
+  OPTIONS:
+    1 -> RUN /cf-generate DESIGN-MINIAPP (create MiniApp technical design)
+    2 -> RUN /cf-generate DECOMPOSITION-MINIAPP (break MiniApp into epics)
+    3 -> RUN /cf-generate PRD-EPIC (create Epic-level PRD)
+    4 -> CONTINUE PrdMiniappAuthoring (revise PRD)
+    5 -> RUN /cf-analyze semantic (checklist-only review)
+  INVALID:
+    EMIT "Reply with 1, 2, 3, 4, or 5."
+    WAIT user.reply
+    STOP_TURN
+```

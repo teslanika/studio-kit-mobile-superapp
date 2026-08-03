@@ -67,11 +67,11 @@ The PRD MUST define:
 
 Each Functional Requirement MUST include:
 
+- [ ] Checkbox with priority marker: `- [ ] \`pN\` - **ID**: ...` (priority `p1`-`p9` by business impact)
 - [ ] Unique ID following `cpt-{miniapp}-epic-{epic}-fr-{slug}` pattern
-- [ ] Traces To field (parent MiniApp FR or "Epic-specific")
-- [ ] Priority (P1, P2, P3)
-- [ ] Actor reference
-- [ ] Description (specific behavior)
+- [ ] Verifiable MUST statement (specific behavior)
+- [ ] Traces To field (parent MiniApp FR or "Epic-specific" with `epic-specific` tag and rationale)
+- [ ] Actors field referencing `cpt-superapp-actor-{slug}`
 - [ ] UI element reference
 - [ ] Acceptance criteria
 
@@ -118,12 +118,12 @@ The PRD MUST include UI requirements:
 
 **Priority**: HIGH
 
-The PRD MUST specify data needs:
+The PRD MUST specify data needs at business level:
 
-- [ ] Required data table (data, source, caching)
-- [ ] API contracts table (endpoint, method, request, response)
+- [ ] Required data table (data, owning backend capability, freshness/offline expectation)
+- [ ] No endpoints, HTTP methods, or payload specifications (API contracts belong in DESIGN-EPIC)
 
-**Why it matters**: Data requirements enable backend coordination.
+**Why it matters**: Data requirements enable backend coordination without locking API design prematurely.
 
 ### PRD-EPIC-009: Traceability Matrices
 
@@ -136,6 +136,20 @@ The PRD MUST include:
 - [ ] Full traceability chain diagram (Platform → MiniApp → Epic)
 
 **Why it matters**: Complete traceability ensures coverage validation.
+
+### PRD-EPIC-013: Authorization as Exact Permissions
+
+**Priority**: CRITICAL
+
+> **Note**: That every protected capability requires authentication and authorization is assumed and need not be restated per requirement. Instead, specify the **exact permissions**.
+
+The PRD MUST specify:
+
+- [ ] Exact permissions per actor and operation within this Epic (which actor may perform which action on which resource)
+- [ ] Data access boundaries per actor
+- [ ] No blanket "all operations require authentication/authorization" statements restated per requirement
+
+**Why it matters**: Exact per-actor permissions are testable and drive access-control design; blanket statements add noise without information.
 
 ---
 
@@ -227,6 +241,22 @@ The PRD MUST NOT contain:
 - [ ] Widgets without IDs
 
 **Why it matters**: IDs enable traceability and automation.
+
+### PRD-EPIC-NO-005: No API Specifications
+
+**Priority**: HIGH
+
+The PRD MUST NOT contain:
+
+- [ ] REST endpoints or HTTP methods
+- [ ] HTTP/REST status code specifications (e.g., 200/201/400/401/403/404/409/500)
+- [ ] API contract / OpenAPI / Swagger definitions
+- [ ] Authentication header specifications (which header, auth scheme, required/optional)
+- [ ] Standardized error response formats (status codes, error body schema/fields)
+
+**Where it belongs**: DESIGN-EPIC (API contract specs); API design decisions belong in ADR.
+
+**Why it matters**: API specifications in the PRD lock design decisions prematurely and drift from the actual contracts.
 
 ---
 

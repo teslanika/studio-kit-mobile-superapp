@@ -65,11 +65,12 @@ The PRD MUST define actors:
 
 Each Functional Requirement MUST include:
 
+- [ ] Checkbox with priority marker: `- [ ] \`pN\` - **ID**: ...` (priority `p1`-`p9` by business impact)
 - [ ] Unique ID following `cpt-{miniapp}-fr-{slug}` pattern
-- [ ] Traces To field (parent Platform FR or "MiniApp-specific")
-- [ ] Priority (P1, P2, P3)
-- [ ] Actor reference
-- [ ] Description (what the system must do)
+- [ ] Verifiable MUST statement (what the system must do)
+- [ ] Traces To field (parent Platform FR or "MiniApp-specific" with `miniapp-specific` tag)
+- [ ] Actors field referencing `cpt-superapp-actor-{slug}`
+- [ ] Rationale (business value or parent requirement)
 - [ ] Acceptance criteria (measurable)
 
 **Why it matters**: Well-structured FRs enable traceability, prioritization, and validation.
@@ -78,13 +79,16 @@ Each Functional Requirement MUST include:
 
 **Priority**: HIGH
 
+> **NFR framing**: NFRs MUST be stated as business-level quality expectations — user/business outcomes, SLAs, and measurable targets (e.g., "course list opens in <2s at p95 on a mid-tier device"). Technical implementation (caching strategy, technology stack, component tuning) belongs in DESIGN/ADR.
+
 Each NFR MUST include:
 
+- [ ] Checkbox with priority marker: `- [ ] \`pN\` - **ID**: ...`
 - [ ] Unique ID following `cpt-{miniapp}-nfr-{slug}` pattern
+- [ ] Business-level MUST statement (user/business outcome, not implementation)
 - [ ] Traces To field (parent Platform NFR)
 - [ ] Category (Performance, Security, Usability, etc.)
-- [ ] Measurable metric
-- [ ] Target value
+- [ ] Threshold (quantitative target with units and conditions)
 - [ ] Rationale for MiniApp-specific value
 
 **Why it matters**: NFRs ensure quality attributes are explicitly defined and measurable.
@@ -131,6 +135,20 @@ The PRD MUST include traceability matrices:
 
 **Why it matters**: Traceability ensures complete coverage and enables change impact analysis.
 
+### PRD-MINIAPP-012: Authorization as Exact Permissions
+
+**Priority**: CRITICAL
+
+> **Note**: That every protected capability requires authentication and authorization is assumed and need not be restated per requirement. Instead, specify the **exact permissions**.
+
+The PRD MUST specify:
+
+- [ ] Exact permissions per actor and operation (which actor may perform which action on which resource)
+- [ ] Data access boundaries per actor
+- [ ] No blanket "all operations require authentication/authorization" statements restated per requirement
+
+**Why it matters**: Exact per-actor permissions are testable and drive access-control design; blanket statements add noise without information.
+
 ---
 
 ## SHOULD HAVE Requirements
@@ -176,12 +194,28 @@ The PRD SHOULD include ID pattern reference:
 
 The PRD MUST NOT contain:
 
-- [ ] Architecture decisions (belongs in DESIGN)
+- [ ] Architecture decisions (belongs in ADR)
 - [ ] Module structures (belongs in DESIGN)
 - [ ] Code examples (belongs in DESIGN/FEATURE)
-- [ ] API contracts (belongs in DESIGN)
+- [ ] Data schema definitions (belongs in DESIGN-MINIAPP)
 
 **Why it matters**: PRD defines WHAT, not HOW.
+
+### PRD-MINIAPP-NO-005: No API Specifications
+
+**Priority**: HIGH
+
+The PRD MUST NOT contain:
+
+- [ ] REST endpoints or HTTP methods
+- [ ] HTTP/REST status code specifications (e.g., 200/201/400/401/403/404/409/500)
+- [ ] API contract / OpenAPI / Swagger definitions
+- [ ] Authentication header specifications (which header, auth scheme, required/optional)
+- [ ] Standardized error response formats (status codes, error body schema/fields)
+
+**Where it belongs**: DESIGN-MINIAPP (API contract specs); API design decisions belong in ADR.
+
+**Why it matters**: API specifications in the PRD lock design decisions prematurely and drift from the actual contracts.
 
 ### PRD-MINIAPP-NO-002: No Platform Duplication
 

@@ -1,6 +1,31 @@
 # Mobile SuperApp Kit Changelog
 
 [[releases]]
+version = "1.2.1"
+date = "2026-08-03"
+summary = "Align PRD-EPIC/PRD-MINIAPP definitions with official sdlc kit v1.2.1 authoring contract"
+
+[[releases.changes]]
+type = "changed"
+description = "PRD-EPIC and PRD-MINIAPP rules.md rewritten in compact PDSL format (authoring, omissions, validate, error-handling, next-steps units) mirroring sdlc v1.2.1 PRD rules"
+
+[[releases.changes]]
+type = "changed"
+description = "Templates adopt the sdlc requirement field contract: checkbox + p1-p9 priority markers, verifiable MUST statements, Rationale/Actors fields, optional Verification Method; NFRs framed as business-level quality expectations with Threshold"
+
+[[releases.changes]]
+type = "changed"
+description = "API specifications removed from PRD scope: PRD-EPIC Data Requirements restated at business level (owning capability, freshness/offline expectation); endpoints, HTTP methods, status codes, auth headers, and error response formats belong in DESIGN (INT-PRD-NO-001)"
+
+[[releases.changes]]
+type = "added"
+description = "Authorization-as-exact-permissions criteria (PRD-MINIAPP-012, PRD-EPIC-013) and No-API-Specifications violations (PRD-MINIAPP-NO-005, PRD-EPIC-NO-005) in checklists"
+
+[[releases.changes]]
+type = "added"
+description = "PRD-MINIAPP template gains Assumptions and Risks sections per sdlc PRD structure"
+
+[[releases]]
 version = "1.2.0"
 date = "2026-08-03"
 summary = "PRD creation workflow and check-language installation fix"

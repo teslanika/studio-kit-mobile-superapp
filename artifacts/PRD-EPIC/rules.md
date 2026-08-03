@@ -1,222 +1,128 @@
 # PRD-EPIC Rules
 
-**Artifact**: PRD-EPIC  
-**Kit**: mobile-superapp  
+**Artifact**: PRD-EPIC
+**Kit**: mobile-superapp
 **Level**: L2 (Epic)
 
-**Dependencies**:
-- `config/kits/mobile-superapp/artifacts/PRD-EPIC/template.md` — structural reference
-- `config/kits/mobile-superapp/artifacts/PRD-EPIC/checklist.md` — semantic quality criteria
-- `config/kits/mobile-superapp/artifacts/PRD-MINIAPP/template.md` — parent MiniApp PRD reference
+```pdsl
+UNIT PrdEpicAuthoring
 
-## Table of Contents
+PURPOSE:
+  Author or revise an Epic-level PRD that follows the template, conventions, and authoring boundaries.
 
-1. [Prerequisites](#prerequisites)
-2. [Requirements](#requirements)
-3. [Tasks](#tasks)
-4. [Validation](#validation)
-5. [Error Handling](#error-handling)
-6. [Next Steps](#next-steps)
+WHEN:
+  - REQUIRE authoring or revising a PRD-EPIC
 
----
+DO:
+  - LOAD config/kits/mobile-superapp/artifacts/PRD-EPIC/template.md for structure
+  - LOAD config/kits/mobile-superapp/artifacts/PRD-EPIC/checklist.md for semantic criteria
+  - RUN read parent MiniApp PRD and identify which MiniApp FRs this Epic details
+  - RUN read MiniApp DESIGN for architectural context (if present)
+  - LOAD config/kits/mobile-superapp/constraints.toml for kit-level constraints
+  - RUN read project config for ID prefix and resolve output path from {cf-studio-path}/config/artifacts.toml
+  - RUN author each required section guided by template prompts (Overview, Actors & Context, Functional Requirements, State Requirements, Error Handling, UI/UX Requirements, Data Requirements, Traceability Matrix, Acceptance Criteria)
+  - SET Epic PRD anchor = cpt-{miniapp}-epic-{epic}-prd; FR IDs = cpt-{miniapp}-epic-{epic}-fr-{slug}; state ID = cpt-{miniapp}-epic-{epic}-state; widget IDs = cpt-{miniapp}-{epic}-widget-{slug}; assign priorities p1-p9 by business impact
+  - RUN cfs list-ids to verify ID uniqueness
 
-## Prerequisites
-
-### Load Dependencies
-
-- [ ] Load `config/kits/mobile-superapp/artifacts/PRD-EPIC/template.md` for structure
-- [ ] Load `config/kits/mobile-superapp/artifacts/PRD-EPIC/checklist.md` for semantic guidance
-- [ ] Read parent MiniApp PRD for context
-- [ ] Read MiniApp DESIGN for architectural context
-- [ ] Load `config/kits/mobile-superapp/constraints.toml` for kit-level constraints
-- [ ] Load `{cf-studio-path}/.core/architecture/specs/traceability.md` for ID formats
-
----
-
-## Requirements
-
-### Structural
-
-- [ ] PRD-EPIC follows `config/kits/mobile-superapp/artifacts/PRD-EPIC/template.md` structure
-- [ ] All required sections present and non-empty:
-  - Overview (purpose, scope, epic type, traces to parent)
-  - Actors & Context (actors, entry points)
-  - Functional Requirements (core, state, error handling)
-  - UI/UX Requirements (layout, components, interactions)
-  - Data Requirements (required data, API contracts)
-  - Traceability Matrix
-  - Acceptance Criteria
-- [ ] All IDs follow `cpt-{miniapp}-epic-{epic}-{kind}-{slug}` convention
-- [ ] References to MiniApp PRD are valid
-- [ ] Epic type is specified: Screen | Capability | Flow | Widget
-- [ ] No placeholder content (TODO, TBD, FIXME)
-- [ ] No duplicate IDs within document
-
-### Mobile-Specific
-
-- [ ] Screen states defined (Loading, Content, Empty, Error, Offline)
-- [ ] Entry points include:
-  - Navigation (tab bar, menu, parent screen)
-  - Deep links with format `constructor://{miniapp}/{epic}?{params}`
-  - Push notifications (if applicable)
-- [ ] UI layout uses platform-appropriate patterns
-- [ ] Interactions are touch-optimized (tap, swipe, long press)
-- [ ] Error handling includes recovery actions
-
-### Traceability
-
-- [ ] Every Epic FR traces to MiniApp PRD FR (details relationship)
-- [ ] Epic-specific FRs are tagged `epic-specific` with rationale
-- [ ] Widget IDs use `cpt-{miniapp}-{epic}-widget-{slug}` format
-- [ ] Indirect Platform trace documented
-- [ ] Traceability matrix documents:
-  - MiniApp FR → Epic FR coverage
-  - Epic FR → Feature mapping (planned)
-- [ ] Full traceability chain shown (Platform → MiniApp → Epic)
-
-### Versioning
-
-- [ ] When editing existing PRD: increment version in document header
-- [ ] When changing requirement: update version field in requirement table
-
----
-
-## Tasks
-
-### Phase 1: Setup
-
-- [ ] Load `config/kits/mobile-superapp/artifacts/PRD-EPIC/template.md` for structure
-- [ ] Load `config/kits/mobile-superapp/artifacts/PRD-EPIC/checklist.md` for semantic guidance
-- [ ] Read MiniApp PRD for parent requirements
-- [ ] Read MiniApp DESIGN for architectural patterns
-- [ ] Identify which MiniApp FRs this Epic details
-
-### Phase 2: Content Creation
-
-Apply checklist semantics during creation:
-
-| Checklist Category | Generation Task |
-|-------------------|-----------------|
-| Overview | Document purpose, scope, epic type, parent traces |
-| Actors & Context | Define actors' roles in epic, entry points |
-| Core Requirements | Detail FRs with UI elements, acceptance criteria |
-| State Requirements | Define all screen states and conditions |
-| Error Handling | Document error types, messages, recovery actions |
-| UI/UX | Design screen layout, components, interactions |
-| Data | Specify required data, sources, caching, API contracts |
-| Traceability | Build coverage matrix for MiniApp → Epic |
-
-**Partial Completion Handling**:
-
-If PRD-EPIC cannot be completed in a single session:
-1. Checkpoint progress with completed sections
-2. Add `status: DRAFT` to document header
-3. Mark incomplete sections with `INCOMPLETE: {reason}`
-4. Document resumption point
-
-### Phase 3: IDs and References
-
-- [ ] Generate Epic PRD anchor: `cpt-{miniapp}-epic-{epic}-prd`
-- [ ] Generate Epic FR IDs: `cpt-{miniapp}-epic-{epic}-fr-{slug}`
-- [ ] Generate state ID: `cpt-{miniapp}-epic-{epic}-state`
-- [ ] Generate widget IDs: `cpt-{miniapp}-{epic}-widget-{slug}`
-- [ ] Link to MiniApp PRD requirements
-- [ ] Document indirect Platform trace
-- [ ] Verify uniqueness with `cfs list-ids`
-
-### Phase 4: Quality Check
-
-- [ ] Self-review against `config/kits/mobile-superapp/artifacts/PRD-EPIC/checklist.md` MUST HAVE items
-- [ ] Ensure no MUST NOT HAVE violations
-- [ ] Verify every FR is implementable at Epic scope
-- [ ] Verify all states have UI behavior defined
-- [ ] Verify MiniApp traceability is complete
-
-### Phase 5: Table of Contents
-
-- [ ] Run `cfs toc <path>` to generate/update Table of Contents
-- [ ] Verify TOC is present and complete
-
----
-
-## Validation
-
-### Phase 1: Structural Validation
-
-- [ ] Run `cfs validate --artifact <path>` for:
-  - Template structure compliance
-  - ID format validation
-  - Cross-reference validity
-  - No placeholders
-
-### Phase 2: Semantic Validation
-
-- [ ] Read `config/kits/mobile-superapp/artifacts/PRD-EPIC/checklist.md` in full
-- [ ] For each MUST HAVE item: check if requirement is met
-- [ ] For each MUST NOT HAVE item: scan document for violations
-
-### Phase 3: Epic-Specific Validation
-
-- [ ] Epic type is appropriate for content
-- [ ] All screen states are defined and have UI behavior
-- [ ] All entry points have deep link format
-- [ ] All error scenarios have recovery actions
-- [ ] All API contracts are specified
-- [ ] Component list is complete for screen layout
-
-### Validation Report Format
-
-```
-PRD-EPIC Validation Report
-══════════════════════════
-
-Structural: PASS/FAIL
-Semantic: PASS/FAIL (N issues)
-Epic-Specific: PASS/FAIL (N issues)
-
-Issues:
-- [SEVERITY] CHECKLIST-ID: Description
+RULES:
+  - ALWAYS follow the template structure; all required sections present and non-empty
+  - ALWAYS specify the Epic type: Screen | Capability | Flow | Widget
+  - ALWAYS mark every FR as a checkbox with a priority marker: - [ ] `pN` - **ID**: `cpt-...`
+  - ALWAYS state each FR as a verifiable MUST statement with Actors, UI Element, and Acceptance fields
+  - ALWAYS trace every Epic FR to a MiniApp FR (details) or tag it `epic-specific` with rationale; document the indirect Platform trace
+  - ALWAYS define all screen states (Loading, Content, Empty, Error, Offline) with condition and UI behavior
+  - ALWAYS define entry points (navigation, deep link constructor://{miniapp}/{epic}?{params}, push notification where applicable)
+  - ALWAYS define error handling with user message and recovery action per error type; keep interactions touch-optimized
+  - ALWAYS keep the PRD requirements-only (WHAT not HOW); express any quality expectation as a business-level outcome with a measurable Threshold, not a technical implementation spec
+  - ALWAYS state authorization as exact per-actor/operation permissions (which actor may perform which action on which resource); NEVER restate the generic "every operation requires authentication/authorization", which is assumed
+  - ALWAYS state data needs at business level (what data, owning backend capability, freshness/offline expectation); NEVER specify endpoints, payloads, or API contracts
+  - ALWAYS version on change: increment the header version when editing; keep a changelog of significant changes
+  - ALWAYS treat the checklist as the single source of semantic quality criteria
+  - NEVER duplicate semantic criteria here; NEVER leave placeholders (TODO, TBD, FIXME); NEVER create duplicate IDs within the document
 ```
 
----
+```pdsl
+UNIT PrdEpicOmissions
 
-## Error Handling
+PURPOSE:
+  Enforce PRD scope boundaries — content that MUST NOT appear and the artifact where it belongs. Report as a violation if found.
 
-### Missing MiniApp PRD
+RULES:
+  - NEVER include technical implementation details (ARCH-PRD-NO-001, CRITICAL) — PRD captures what, not how
+  - NEVER include architectural decisions (ARCH-PRD-NO-002, CRITICAL) — they belong in ADR
+  - NEVER include component architecture or state management implementation — they belong in DESIGN-EPIC
+  - NEVER include implementation tasks (BIZ-PRD-NO-001, HIGH) — they belong in DECOMPOSITION-EPIC
+  - NEVER include spec-level design, CDSL flows, step-by-step implementation, or Definition of Done (BIZ-PRD-NO-002, HIGH) — they belong in FEATURE-MOBILE
+  - NEVER include data schema definitions (DATA-PRD-NO-001, HIGH) — schemas belong in DESIGN-EPIC
+  - NEVER include API specifications (INT-PRD-NO-001, HIGH) — no API contracts/OpenAPI, REST endpoints, HTTP methods, HTTP/REST status codes, authentication header specifications, or standardized error response formats; API contracts belong in DESIGN-EPIC, API design decisions in ADR
+  - NEVER include test cases (TEST-PRD-NO-001, MEDIUM) — tests belong in FEATURE/code
+  - NEVER include infrastructure specifications (OPS-PRD-NO-001, MEDIUM) — infra belongs in DESIGN
+  - NEVER include security implementation details (SEC-PRD-NO-001, HIGH) — implementation belongs in DESIGN/code
+  - NEVER redefine MiniApp-level requirements, duplicate MiniApp constraints verbatim, or redefine actors — detail with traces and add Epic context instead
+```
 
-- [ ] If parent MiniApp PRD not found:
-  - Option 1: Run `/cf-generate PRD-MINIAPP` first (recommended)
-  - Option 2: Continue without MiniApp PRD (Epic will lack traceability)
-  - Document "MiniApp PRD pending" in Epic PRD header
+```pdsl
+UNIT PrdEpicValidate
 
-### Missing MiniApp DESIGN
+PURPOSE:
+  Run deterministic, semantic, and TOC validation on the PRD-EPIC.
 
-- [ ] If MiniApp DESIGN not found:
-  - Option 1: Run `/cf-generate DESIGN-MINIAPP` first
-  - Option 2: Continue with assumptions documented
-  - Document architectural assumptions made
+DO:
+  - RUN cfs validate --artifact <path> (template structure, ID format, priority markers, no placeholders, no duplicate IDs)
+  - LOAD config/kits/mobile-superapp/artifacts/PRD-EPIC/checklist.md and RUN semantic validation + report using it (MUST HAVE items, MUST NOT HAVE scan, mobile-specific criteria)
+  - RUN cfs toc <path> then cfs validate-toc <path>
 
-### Unclear Epic Scope
+RULES:
+  - ALWAYS run cfs validate --artifact <path>
+  - NEVER consider the PRD done while validation reports fail/error or cfs validate-toc does not PASS
+  - ALWAYS use the checklist for semantic criteria, applicability handling, and report format — do not restate them here
+```
 
-- [ ] If uncertain about what belongs in this Epic:
-  - Ask user for scope clarification
-  - Reference MiniApp DECOMPOSITION for epic boundaries
-  - Mark scope section for review
+```pdsl
+UNIT PrdEpicErrorHandling
 
-### Escalation
+PURPOSE:
+  Recover deterministically from missing dependencies, config, and ambiguity.
 
-- [ ] Ask user when uncertain about screen states
-- [ ] Ask user when API contracts are unclear
-- [ ] Ask user when UI/UX decisions need stakeholder input
+ON_ERROR:
+  missing_template ->
+    STOP — cannot proceed without the PRD-EPIC template
+  missing_checklist ->
+    EMIT warning
+    SET skip semantic validation
+  missing_miniapp_prd ->
+    EMIT "Parent MiniApp PRD not found. Recommended: run /cf-generate PRD-MINIAPP first. Or continue without it (Epic will lack traceability) and note 'MiniApp PRD pending' in the header."
+    WAIT user.reply
+  missing_miniapp_design ->
+    EMIT warning
+    CONTINUE with documented architectural assumptions
+  unclear_scope ->
+    EMIT "Epic scope is unclear — please clarify; MiniApp DECOMPOSITION defines epic boundaries."
+    WAIT user.reply
 
----
+RULES:
+  - ALWAYS escalate to the user when screen states are uncertain, when data needs are unclear, or when UI/UX decisions need stakeholder input
+```
 
-## Next Steps
+```pdsl
+UNIT PrdEpicNextSteps
 
-### Options
+PURPOSE:
+  Offer next actions after the PRD-EPIC is complete.
 
-- [ ] PRD-EPIC complete → `/cf-generate DESIGN-EPIC` — create Epic technical design
-- [ ] Need MiniApp context → `/cf-generate PRD-MINIAPP` — create MiniApp PRD first
-- [ ] PRD needs revision → continue editing PRD-EPIC
-- [ ] Ready for features → `/cf-generate DECOMPOSITION-EPIC` — decompose into features
-- [ ] Ready for implementation → `/cf-generate FEATURE-MOBILE` — create feature spec
+DO:
+  - EMIT_MENU PrdEpicNextStepsMenu
+
+MENU PrdEpicNextStepsMenu:
+  TITLE: PRD-EPIC next steps
+  OPTIONS:
+    1 -> RUN /cf-generate DESIGN-EPIC (create Epic technical design)
+    2 -> RUN /cf-generate DECOMPOSITION-EPIC (decompose Epic into features)
+    3 -> RUN /cf-generate FEATURE-MOBILE (create feature spec)
+    4 -> CONTINUE PrdEpicAuthoring (revise PRD)
+    5 -> RUN /cf-analyze semantic (checklist-only review)
+  INVALID:
+    EMIT "Reply with 1, 2, 3, 4, or 5."
+    WAIT user.reply
+    STOP_TURN
+```
