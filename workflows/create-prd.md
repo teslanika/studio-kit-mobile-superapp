@@ -3,14 +3,7 @@ cf: true
 type: workflow
 name: cf-mobile-superapp-create-prd
 version: 1.0
-description: >-
-  Create a full-quality PRD using a 6-subagent pipeline. Produces TWO outputs:
-  (1) Login-Router format PRD for YouTrack/stakeholders, (2) Constructor Studio
-  PRD (kit template) for code generation. Subagents: PRD Interviewer
-  (interactive Q&A), Best Practices Reviewer (market comparison + 5-star
-  scoring), Studio PRD Builder, Nielsen Heuristics Checker, WCAG Expert, and
-  Devil's Advocate. Invoke when the user says "create PRD", "new PRD",
-  "write PRD", or wants to build a product requirements document from scratch.
+description: "Create a full-quality PRD using a 6-subagent pipeline (PRD Interviewer, Best Practices Reviewer, Studio PRD Builder, Nielsen Heuristics Checker, WCAG Expert, Devil's Advocate). Produces TWO outputs: a stakeholder-format PRD for YouTrack and a Constructor Studio kit-template PRD for code generation. Invoke when the user says 'create PRD', 'new PRD', 'write PRD', or wants to build a product requirements document from scratch."
 purpose: Multi-subagent PRD creation pipeline with interview, benchmarking, dual-format authoring, parallel UX/accessibility review, and adversarial verification
 ---
 

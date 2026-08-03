@@ -1,6 +1,15 @@
 # Mobile SuperApp Kit Changelog
 
 [[releases]]
+version = "1.2.2"
+date = "2026-08-03"
+summary = "Fix create-prd workflow frontmatter so cfs generate-agents emits a correct skill description"
+
+[[releases.changes]]
+type = "fixed"
+description = "workflows/create-prd.md description converted from a YAML multiline block scalar to a single-line value; cfs generate-agents only parses single-line frontmatter values and previously emitted a literal '>-' as the generated skill description"
+
+[[releases]]
 version = "1.2.1"
 date = "2026-08-03"
 summary = "Align PRD-EPIC/PRD-MINIAPP definitions with official sdlc kit v1.2.1 authoring contract"
