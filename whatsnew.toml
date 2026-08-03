@@ -1,6 +1,19 @@
 # Mobile SuperApp Kit Changelog
 
 [[releases]]
+version = "1.2.0"
+date = "2026-08-03"
+summary = "PRD creation workflow and check-language installation fix"
+
+[[releases.changes]]
+type = "added"
+description = "Workflow create-prd: 6-subagent PRD pipeline (Interviewer, Best Practices Reviewer, Studio PRD Builder, Nielsen Heuristics Checker, WCAG Expert, Devil's Advocate) producing stakeholder-format and kit-template PRDs"
+
+[[releases.changes]]
+type = "fixed"
+description = "scripts/check-language.py was present in the repo but missing from manifest.toml resources, so cfs never installed it; registered as scripts_check_language"
+
+[[releases]]
 version = "1.1.0"
 date = "2026-07-07"
 summary = "Constructor Studio migration: rebrand from Cypilot across kit content and docs"
