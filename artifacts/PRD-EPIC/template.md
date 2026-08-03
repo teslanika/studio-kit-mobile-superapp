@@ -1,9 +1,9 @@
 # PRD — {Epic Name}
 
-> **Level**: L2 (Epic)  
-> **Parent MiniApp**: [{MiniApp Name} PRD](../../PRD.md) `cpt-{miniapp}-prd`  
-> **Parent Platform**: [Platform PRD](../../../../architecture/PRD.md) `cpt-superapp-prd`  
-> **Version**: 1.0  
+> **Level**: L2 (Epic)
+> **Parent MiniApp**: [{MiniApp Name} PRD](../../PRD.md) `cpt-{miniapp}-prd`
+> **Parent Platform**: [Platform PRD](../../../../architecture/PRD.md) `cpt-superapp-prd`
+> **Version**: 1.0
 > **Status**: Draft
 
 ---
@@ -41,9 +41,13 @@ This PRD defines requirements for the **{Epic Name}** epic within the {MiniApp N
 
 ### 2.1 Primary Actors
 
+> **Note**: Actors are defined at Platform level. Reference platform actor IDs and add only the Epic-specific role — do not redefine actors.
+
 | Actor ID | Role in this Epic |
 |----------|------------------|
 | `cpt-superapp-actor-student` | {Specific role in this epic} |
+
+**Permissions**: {Exact per-actor permissions within this Epic — which actor may perform which action on which resource. Do not restate the generic "all operations require authentication/authorization" — it is assumed.}
 
 ### 2.2 Entry Points
 
@@ -57,37 +61,43 @@ This PRD defines requirements for the **{Epic Name}** epic within the {MiniApp N
 
 ## 3. Functional Requirements
 
+Functional requirements define WHAT this Epic must do. Each is a checkbox with a priority marker `p1`-`p9` (assigned by business impact).
+
 ### 3.1 Core Requirements
 
-#### FR-01: {Requirement Name}
+#### {Requirement Name}
 
-**ID**: `cpt-{miniapp}-epic-{epic}-fr-{slug}`
+- [ ] `p1` - **ID**: `cpt-{miniapp}-epic-{epic}-fr-{slug}`
 
-**Traces To:** `cpt-{miniapp}-fr-{parent-slug}` (details)
+The {screen/flow} **MUST** {specific, verifiable behavior in this screen/flow}.
 
-| Attribute | Value |
-|-----------|-------|
-| Priority | P1 |
-| Actor | `cpt-superapp-actor-{actor}` |
-| Description | {Specific behavior in this screen/flow} |
-| UI Element | {Widget/component involved} |
-| Acceptance | {Specific acceptance criteria} |
+**Traces To**: `cpt-{miniapp}-fr-{parent-slug}` (details)
+
+**Actors**: `cpt-superapp-actor-{actor}`
+
+**UI Element**: {Widget/component involved}
+
+**Acceptance**: {Specific acceptance criteria}
+
+**Verification Method** (optional): {Only if non-standard: analysis | inspection | demonstration}
 
 ---
 
-#### FR-02: {Epic-Specific Requirement}
+#### {Epic-Specific Requirement}
 
-**ID**: `cpt-{miniapp}-epic-{epic}-fr-{slug}`
+- [ ] `p2` - **ID**: `cpt-{miniapp}-epic-{epic}-fr-{slug}`
+
+The {screen/flow} **MUST** {behavior specific to this Epic only}.
 
 **Tags**: `epic-specific`
 
-**Traces To:** — (Epic-specific requirement)
+**Traces To**: — (Epic-specific requirement)
 
-| Attribute | Value |
-|-----------|-------|
-| Priority | P2 |
-| Description | {Behavior specific to this Epic only} |
-| Rationale | {Why this is needed at Epic level only} |
+**Actors**: `cpt-superapp-actor-{actor}`
+
+**Rationale**: {Why this is needed at Epic level only}
+
+**Acceptance**: {Specific acceptance criteria}
 
 ---
 
@@ -95,19 +105,21 @@ This PRD defines requirements for the **{Epic Name}** epic within the {MiniApp N
 
 #### Screen States
 
-**ID**: `cpt-{miniapp}-epic-{epic}-state`
+- [ ] `p1` - **ID**: `cpt-{miniapp}-epic-{epic}-state`
 
 | State | Condition | UI Behavior |
 |-------|-----------|-------------|
 | Loading | Initial load | Show skeleton |
 | Content | Data loaded | Show main content |
 | Empty | No data | Show empty state with CTA |
-| Error | API failed | Show error with retry |
+| Error | Data unavailable | Show error with retry |
 | Offline | No network | Show cached data with offline banner |
 
 ---
 
 ### 3.3 Error Handling
+
+> **Note**: Describe errors as user-facing conditions and recovery actions. HTTP status codes and error response formats belong in DESIGN-EPIC.
 
 | Error Type | User Message | Recovery Action |
 |------------|--------------|-----------------|
@@ -152,18 +164,12 @@ This PRD defines requirements for the **{Epic Name}** epic within the {MiniApp N
 
 ## 5. Data Requirements
 
-### 5.1 Required Data
+> **Note**: State data needs at business level — what data, which backend capability owns it, and freshness/offline expectations. API contracts (endpoints, methods, payloads, status codes) belong in DESIGN-EPIC.
 
-| Data | Source | Caching |
-|------|--------|---------|
-| {Entity} | API: `GET /api/v1/{resource}` | 5 min TTL |
-| {Entity 2} | Local DB | Persist |
-
-### 5.2 API Contracts
-
-| Endpoint | Method | Request | Response |
-|----------|--------|---------|----------|
-| `/api/v1/{resource}` | GET | `{ filters }` | `{ data[] }` |
+| Data | Owning Capability | Freshness / Offline Expectation |
+|------|-------------------|--------------------------------|
+| {Entity} | {Backend service/capability, e.g., Learn course catalog} | {e.g., available offline from cache, refreshed on screen open} |
+| {Entity 2} | {Local user data} | {e.g., persisted on device} |
 
 ---
 
@@ -197,6 +203,8 @@ DESIGN-PLATFORM             DESIGN-MINIAPP               DESIGN-EPIC
 ---
 
 ## 7. Acceptance Criteria
+
+Business-level acceptance criteria for the PRD as a whole.
 
 - [ ] All MiniApp FRs in scope are detailed
 - [ ] All Epic FRs have feature specifications
