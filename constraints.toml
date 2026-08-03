@@ -1,24 +1,63 @@
-# Mobile SuperApp Kit Constraints
-# 
-# NOTE: This kit extends SDLC kit and uses its constraint definitions.
-# Mobile-specific ID patterns and traceability rules are documented in:
-# - guides/TAXONOMY.md (ID naming conventions)
-# - codebase/rules.md (traceability rules)
-# - AGENTS.md (agent navigation rules)
+# Mobile SuperApp Kit — Structural Constraints
 #
-# The complex 4-level hierarchy (Platform → MiniApp → Epic → Feature)
-# is enforced through templates and documented conventions rather than
-# constraints.toml validation, as Constructor Studio's constraint system is
-# designed for single-level artifact validation.
+# STATUS: machine enforcement intentionally DISABLED (documentation-only file).
+# `cfs validate` structure checks (headings / ToC / numbering / identifier
+# allowlists) only run for artifact kinds declared in this file, and for this
+# brownfield corpus every declaration mode fails (verified empirically on
+# cfs 1.5.9, engine skill cache, 2026-08-03):
 #
-# KEY ID PATTERNS (for reference):
-# - Platform FR: cpt-{platform}-fr-{slug}
-# - MiniApp FR: cpt-{miniapp}-fr-{slug}  
-# - Epic FR: cpt-{miniapp}-epic-{epic}-fr-{slug}
-# - Feature: cpt-{miniapp}-feature-{slug}
-# - KMP Impl: cpt-kmp-{module}-{type}-{slug}
-# - Android Impl: cpt-android-{module}-{type}-{slug}
-# - iOS Impl: cpt-ios-{module}-{type}-{slug}
-
-# This file is intentionally minimal.
-# Kit inherits SDLC constraints via manifest.toml extends directive.
+#   1. Any kind block with an EMPTY `identifiers` table still triggers the
+#      unconditional identifier-validation phase with an empty allowlist:
+#      every `**ID**:` definition in the corpus errors with
+#      "uses kind `<k>` not allowed (allowed: [])" — 314 errors.
+#
+#   2. Any NON-EMPTY `identifiers` table makes each declared kind a KIT-WIDE
+#      ID token. The engine then runs autodetect slug-consistency checks
+#      requiring every definition ID to parse as
+#      cpt-{parent-prefix}-{system}-{kind}-{rest}. Simulating the exact engine
+#      algorithm over the full token enumeration yields 19 unfixable errors,
+#      because the ~433-ID corpus predates that scheme and is heterogeneous:
+#        - miniapp docs use `cpt-student-*` (no `superapp-` parent prefix),
+#        - auth epic mixes `cpt-superapp-*` and `cpt-superapp-auth-*`,
+#        - feature-flags IDs contain multiple/zero token markers (ambiguous).
+#      Many algo/dod/flow/state IDs are pinned in source code via
+#      @cpt-begin/@cpt-end markers across ~50 files and MUST NOT be renamed.
+#
+# Re-enable enforcement only after either (a) the engine gains a per-kind
+# switch to skip identifier validation, or (b) the corpus IDs are migrated to
+# one consistent hierarchical scheme (a breaking, code-touching migration).
+#
+# ── ID taxonomy (documentation only, NOT enforced) ─────────────────────────
+# Platform FR:  cpt-{platform}-fr-{slug}            e.g. cpt-superapp-fr-analytics-telemetry
+# MiniApp FR:   cpt-{miniapp}-fr-{slug}             e.g. cpt-student-fr-course-list
+# Epic FR:      cpt-{miniapp}-epic-{epic}-fr-{slug} e.g. cpt-student-epic-home-fr-greeting
+# Feature IDs:  cpt-{system}-algo|dod|flow|state-{feature}-{slug}
+# Impl markers: @cpt-impl / @cpt-begin / @cpt-end in KMP, Android, iOS sources.
+# See guides/TAXONOMY.md for the full naming conventions.
+#
+# ── Heading contracts (documentation only, NOT enforced) ───────────────────
+# Verified against artifacts/<KIND>/template.md and the full architecture/
+# corpus (2026-08-03). Kit authors and review agents should keep new artifacts
+# aligned with these outlines:
+#
+# PRD-PLATFORM (H1 title, then H2):
+#   Overview | Scope | Non-Functional Requirements | Risks
+# DESIGN-PLATFORM (H1 title, then H2):
+#   *Overview (e.g. "Architecture Overview") | Traceability
+# DECOMPOSITION-PLATFORM (H1 title, then H2):
+#   Overview | *Entries (e.g. "MiniApp Entries") | Shared Kernel Components | Release Roadmap
+# PRD-MINIAPP (H1 title, then H2):
+#   Overview | Actors | Functional Requirements | Use Cases | Acceptance Criteria
+# DESIGN-MINIAPP (H1 title, then H2):
+#   MiniApp Overview | Module Structure | Kernel Integration | Traceability
+# DECOMPOSITION-MINIAPP (H1 title, then H2):
+#   Overview | Epic Entries | Epic Dependencies | Coverage Matrix | Implementation Order
+# PRD-EPIC (H1 title, then H2):
+#   Overview | Functional Requirements | Acceptance Criteria[ (suffix allowed)]
+# DESIGN-EPIC (H1 title, then H2):
+#   *Overview
+# DECOMPOSITION-EPIC (H1 title, then H2):
+#   *Matrix (coverage or traceability matrix)
+# FEATURE-MOBILE (H1 title, then H2):
+#   Feature Context | Actor Flows (CDSL) | Platform Implementation (CDSL) |
+#   States (CDSL) | Definitions of Done | Acceptance Criteria | Traceability

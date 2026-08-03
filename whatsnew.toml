@@ -1,6 +1,23 @@
 # Mobile SuperApp Kit Changelog
 
 [[releases]]
+version = "1.2.3"
+date = "2026-08-03"
+summary = "Rewrite constraints.toml: remove stale manifest reference, document heading contracts and why machine enforcement is disabled"
+
+[[releases.changes]]
+type = "fixed"
+description = "constraints.toml no longer references a manifest.toml extends directive that was removed; the previous file was broken comments-only content"
+
+[[releases.changes]]
+type = "changed"
+description = "constraints.toml documents per-kind heading contracts (PRD/DESIGN/DECOMPOSITION at platform, miniapp, epic levels plus FEATURE-MOBILE), verified against kit templates and the mobile-superapp architecture corpus"
+
+[[releases.changes]]
+type = "changed"
+description = "Machine enforcement stays disabled with the empirical rationale recorded in-file: an empty identifiers table triggers the unconditional ID allowlist phase (314 errors), and any non-empty identifiers table creates kit-wide kind tokens that fail autodetect slug-consistency on the heterogeneous brownfield ID corpus (19 errors); @cpt-pinned IDs in source cannot be renamed"
+
+[[releases]]
 version = "1.2.2"
 date = "2026-08-03"
 summary = "Fix create-prd workflow frontmatter so cfs generate-agents emits a correct skill description"
